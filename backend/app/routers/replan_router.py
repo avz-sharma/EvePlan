@@ -25,8 +25,8 @@ from ..schemas.plan_state import EventPlan
 from ..services.event_catalog import load_event_catalog
 from ..services.fallback_parser import parse_user_intent
 from ..services.gemini_extractor import (
+    IntentExtractionUnavailable,
     extract_intent_delta,
-    generate_rationale,
     is_gemini_available,
 )
 from ..services.quota_guard import quota_guard
@@ -159,7 +159,13 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
         is_cached = False
 
         if gemini_available:
-            delta_dict, is_cached = await run_in_threadpool(extract_intent_delta, plan_json, req.user_prompt)
+            try:
+                delta_dict, is_cached = await run_in_threadpool(extract_intent_delta, plan_json, req.user_prompt)
+            except IntentExtractionUnavailable:
+                fallback_delta, _ = parse_user_intent(req.user_prompt)
+                delta_dict = fallback_delta.model_dump()
+                gemini_available = False
+                degraded = True
         else:
             # Fallback to deterministic regex parser
             fallback_delta, did_extract = parse_user_intent(req.user_prompt)
@@ -197,21 +203,13 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
         # ── Stage 3: Rationale (templated default, LLM-enhanced optional) ──
         templated_rationale = _build_templated_rationale(diff, tradeoff_options)
 
-        llm_rationale = ""
-        rationale_degraded = True
-        if gemini_available and not is_cached:
-            llm_rationale, rationale_degraded = await run_in_threadpool(generate_rationale,
-                diff.model_dump_json(),
-                json.dumps([o.model_dump() for o in tradeoff_options]),
-            )
-
-        final_rationale = llm_rationale if (llm_rationale and not rationale_degraded) else templated_rationale
-
+        # The intent extraction consumes the one allowed LLM call.
+        # Rationale comes entirely from the checked engine output.
         rationale_payload = json.dumps(
             {
-                "rationale": final_rationale,
-                "source": "gemini" if (llm_rationale and not rationale_degraded) else "template",
-                "degraded_mode": rationale_degraded,
+                "rationale": templated_rationale,
+                "source": "template",
+                "degraded_mode": True,
             }
         )
         yield f"event: rationale\ndata: {rationale_payload}\n\n"

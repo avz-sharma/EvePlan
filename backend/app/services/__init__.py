@@ -1,5 +1,5 @@
 from .fallback_parser import parse_user_intent
-from .gemini_extractor import extract_intent_delta, generate_rationale, is_gemini_available
+from .gemini_extractor import extract_intent_delta, is_gemini_available
 from .quota_guard import QuotaState, quota_guard
 from .upload_validator import (
     FileValidationError,
@@ -14,7 +14,6 @@ __all__ = [
     "QuotaState",
     "UnsupportedFileTypeError",
     "extract_intent_delta",
-    "generate_rationale",
     "is_gemini_available",
     "parse_user_intent",
     "quota_guard",

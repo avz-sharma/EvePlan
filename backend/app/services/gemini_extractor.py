@@ -28,6 +28,10 @@ _CACHE_MAX = 128
 _extraction_cache: OrderedDict[str, dict[str, Any]] = OrderedDict()
 
 
+class IntentExtractionUnavailable(Exception):
+    """The caller should use the deterministic parser without another LLM call."""
+
+
 def _cache_key(plan_json: str, user_prompt: str) -> str:
     """Generate a deterministic cache key from plan state and user prompt."""
     normalized_prompt = " ".join(user_prompt.lower().split())
@@ -85,12 +89,12 @@ def extract_intent_delta(
         return cached, True
 
     if not is_gemini_available():
-        logger.warning("Gemini unavailable, returning empty delta for LLM extraction")
+        # Preserve the direct helper's Phase 1 no-key contract. The route selects
+        # the deterministic parser before calling this helper in that mode.
         return PlanDelta().model_dump(), False
 
     if not quota_guard.try_acquire():
-        logger.warning("Quota exhausted, skipping Gemini extraction")
-        return PlanDelta().model_dump(), False
+        raise IntentExtractionUnavailable("Intent quota is resting")
 
     try:
         from google import genai
@@ -125,56 +129,9 @@ def extract_intent_delta(
             _cache_put(cache_key, result_dict)
             return result_dict, False
         else:
-            logger.warning("Gemini returned empty response")
-            return PlanDelta().model_dump(), False
+            raise IntentExtractionUnavailable("Gemini returned no intent")
 
-    except Exception as e:
-        logger.error("Gemini extraction failed: %s", str(e), exc_info=True)
-        return PlanDelta().model_dump(), False
-
-
-def generate_rationale(
-    diff_json: str,
-    tradeoff_options_json: str,
-) -> tuple[str, bool]:
-    """Generate a human-friendly rationale explanation using Gemini.
-
-    Returns:
-        tuple[str, bool]: (rationale_text, is_degraded)
-    """
-    if not is_gemini_available():
-        return "", True
-
-    if not quota_guard.try_acquire():
-        return "", True
-
-    try:
-        from google import genai
-
-        api_key = settings.GEMINI_API_KEY
-        assert api_key is not None
-        client = genai.Client(api_key=api_key.get_secret_value())
-
-        prompt_template = _load_prompt_template("v1_tradeoff_rationale.txt")
-        engine_output = json.dumps(
-            {"diff": json.loads(diff_json), "tradeoff_options": json.loads(tradeoff_options_json)},
-            indent=2,
-        )
-        full_prompt = prompt_template.replace("{engine_output}", engine_output)
-
-        response = client.models.generate_content(
-            model=settings.GEMINI_MODEL,
-            contents=full_prompt,
-            config={
-                "temperature": 0.3,
-            },
-        )
-
-        if response.text:
-            return response.text.strip(), False
-        return "", True
-
-    except Exception as e:
-        logger.error("Gemini rationale generation failed: %s", str(e), exc_info=True)
-        return "", True
-
+    except Exception as error:
+        # SDK exceptions can include request details; log only their type.
+        logger.warning("Gemini extraction unavailable (%s)", type(error).__name__)
+        raise IntentExtractionUnavailable("Use the deterministic intent parser") from error
