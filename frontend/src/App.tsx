@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useCallback, useEffect, useMemo, useState } from "react";
+import React, { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Eye, GitFork, Redo2, Undo2, Menu, PlusCircle, RefreshCw } from "lucide-react";
 import type { PlanDelta } from "./api/types";
@@ -63,7 +63,7 @@ export const App: React.FC = () => {
     catch (error) { setIsDegraded(true); setStatusMessage(error instanceof Error ? error.message : "Plan could not be loaded. Please retry."); }
     finally { planActions.patch({ isLoading: false }); }
   }, []);
-  useEffect(() => { void initializeDefaultPlan(); }, [initializeDefaultPlan]);
+  useLayoutEffect(() => { void initializeDefaultPlan(); }, [initializeDefaultPlan]);
   const handleUndo = planActions.undo;
   const handleRedo = planActions.redo;
 
@@ -92,7 +92,7 @@ export const App: React.FC = () => {
   const contingency = useMemo(() => plan?.budget_buckets.reduce((sum, bucket) => sum + bucket.contingency_inr, 0) ?? 0, [plan]);
   const cateringBudget = plan?.budget_buckets.find((bucket) => bucket.category.includes("Catering"))?.allocated_max_inr ?? null;
   return <div className="app-shell relative">
-    <div className="app-backdrop" aria-hidden="true"><span /></div>
+    <div className="app-backdrop" aria-hidden="true" />
     <header className="app-header glass-panel border-x-0 border-t-0 rounded-none">
       <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-3 px-4 py-3 lg:px-6">
         <div className="flex min-w-[160px] items-center gap-3"><img src="/eveplan-logo.png" alt="" aria-hidden="true" width="56" height="56" className="size-14 rounded-xl bg-white/80 object-contain p-1" /><div><div className="font-semibold text-accent">EvePlan</div><div className="max-w-52 truncate text-xs text-muted">{plan?.title ?? "Celebration planner"}</div></div></div>

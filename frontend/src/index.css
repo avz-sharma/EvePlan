@@ -62,19 +62,20 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
 :focus-visible { outline: 3px solid rgb(var(--focus)); outline-offset: 3px; }
 ::selection { background: rgb(var(--accent) / 0.18); }
 
-.app-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.app-backdrop::before, .app-backdrop::after {
-  content: ""; position: absolute; width: min(58vw, 760px); aspect-ratio: 1;
-  border-radius: 50%; filter: blur(80px); opacity: .44;
+.app-backdrop {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 8% 2%, rgb(var(--blob-blush) / .44), transparent 48%),
+    radial-gradient(ellipse at 94% 46%, rgb(var(--blob-sky) / .44), transparent 48%),
+    radial-gradient(ellipse at 52% 100%, rgb(var(--blob-gold) / .32), transparent 48%);
 }
-.app-backdrop::before { left: -14vw; top: -20vw; background: rgb(var(--blob-blush)); }
-.app-backdrop::after { right: -16vw; top: 18vh; background: rgb(var(--blob-sky)); }
-.app-backdrop span { position: absolute; width: min(44vw, 580px); aspect-ratio: 1; border-radius: 50%; filter: blur(90px); opacity: .32; left: 30vw; bottom: -28vw; background: rgb(var(--blob-gold)); }
 
 .glass-panel {
   background: rgb(var(--surface) / .68);
   border: 1px solid rgb(var(--line) / .82);
   box-shadow: inset 0 1px 0 rgb(var(--surface) / .82), 0 12px 32px rgb(var(--shadow) / .08);
+}
+.app-header.glass-panel, [role="dialog"].glass-panel {
   -webkit-backdrop-filter: blur(16px) saturate(125%);
   backdrop-filter: blur(16px) saturate(125%);
 }
@@ -95,7 +96,6 @@ h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
 .field-control { min-height: 44px; width: 100%; border: 1px solid rgb(var(--line)); border-radius: 12px; background: rgb(var(--surface) / .78); padding: 8px 12px; color: rgb(var(--ink)); }
 .money { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
 .sr-only-table { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-.text-slate-950 { color: rgb(var(--ink)) !important; }
 
 @media (max-width: 760px) {
   .app-main { width: min(100% - 24px, 1440px); padding-top: 16px; }
