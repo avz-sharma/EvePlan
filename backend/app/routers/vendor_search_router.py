@@ -1,7 +1,9 @@
-from typing import Literal, Self
+from typing import Literal, Self, cast
 
-from fastapi import APIRouter, HTTPException, Path
+import httpx
+from fastapi import APIRouter, HTTPException, Path, Request
 from pydantic import BaseModel, ConfigDict, Field, model_validator
+from starlette.concurrency import run_in_threadpool
 
 from ..config import settings
 from ..services.quota_guard import QuotaState
@@ -46,18 +48,18 @@ class VendorSearchRequest(BaseModel):
         return self
 
 
-def _service() -> VendorSearchService:
+def _service(request: Request) -> VendorSearchService:
     provider: VendorSearchProvider
     key = settings.GOOGLE_PLACES_API_KEY
     if key is None or not key.get_secret_value().strip():
         provider = MapsLinkProvider()
     else:
-        provider = GooglePlacesProvider(key.get_secret_value())
+        provider = GooglePlacesProvider(key.get_secret_value(), client=cast(httpx.Client, request.app.state.places_client))
     return VendorSearchService(provider, google_quota, place_id_cache)
 
 
 @router.post("/search")
-def search_vendors(request: VendorSearchRequest) -> dict[str, object]:
+async def search_vendors(request: VendorSearchRequest, http_request: Request) -> dict[str, object]:
     query = VendorSearchQuery(
         category=request.category,
         city=request.city,
@@ -67,15 +69,15 @@ def search_vendors(request: VendorSearchRequest) -> dict[str, object]:
         keyword=request.keyword,
     )
     try:
-        return _service().search(query)
+        return await run_in_threadpool(_service(http_request).search, query)
     except GooglePlacesError as error:
         raise HTTPException(status_code=error.status_code, detail=error.detail) from error
 
 
 @router.get("/{place_id}")
-def get_vendor_details(place_id: str = Path(min_length=1, max_length=512)) -> dict[str, object]:
+async def get_vendor_details(http_request: Request, place_id: str = Path(min_length=1, max_length=512)) -> dict[str, object]:
     try:
-        return _service().details(place_id)
+        return await run_in_threadpool(_service(http_request).details, place_id)
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
     except GooglePlacesError as error:

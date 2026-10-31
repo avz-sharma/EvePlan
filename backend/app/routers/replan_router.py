@@ -16,6 +16,7 @@ from datetime import date
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConfigDict, Field
+from starlette.concurrency import run_in_threadpool
 
 from ..engine.budget_tradeoffs import evaluate_budget_tradeoffs
 from ..engine.cascade_replanner import apply_delta, apply_event_plan_delta
@@ -117,10 +118,10 @@ def _run_deterministic_replan(
 
 
 @router.post("/replan", response_model=ReplanResponse)
-def replan_event(req: ReplanRequest) -> ReplanResponse:
+async def replan_event(req: ReplanRequest) -> ReplanResponse:
     """Pure deterministic replanning endpoint complying with LAW-01 & Free-Tier guidelines."""
     try:
-        updated_plan, diff, tradeoff_options = _run_deterministic_replan(req.plan, req.delta)
+        updated_plan, diff, tradeoff_options = await run_in_threadpool(_run_deterministic_replan, req.plan, req.delta)
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
 
@@ -158,7 +159,7 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
         is_cached = False
 
         if gemini_available:
-            delta_dict, is_cached = extract_intent_delta(plan_json, req.user_prompt)
+            delta_dict, is_cached = await run_in_threadpool(extract_intent_delta, plan_json, req.user_prompt)
         else:
             # Fallback to deterministic regex parser
             fallback_delta, did_extract = parse_user_intent(req.user_prompt)
@@ -180,7 +181,7 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
         yield f"event: delta\ndata: {delta_payload}\n\n"
 
         # ── Stage 2: Deterministic Engine Diff (immediate, <10ms) ─────
-        updated_plan, diff, tradeoff_options = _run_deterministic_replan(req.plan, delta)
+        updated_plan, diff, tradeoff_options = await run_in_threadpool(_run_deterministic_replan, req.plan, delta)
 
         engine_payload = json.dumps(
             {
@@ -199,7 +200,7 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
         llm_rationale = ""
         rationale_degraded = True
         if gemini_available and not is_cached:
-            llm_rationale, rationale_degraded = generate_rationale(
+            llm_rationale, rationale_degraded = await run_in_threadpool(generate_rationale,
                 diff.model_dump_json(),
                 json.dumps([o.model_dump() for o in tradeoff_options]),
             )
@@ -232,7 +233,7 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
 
 
 @router.get("/quota")
-def get_quota_status() -> dict[str, object]:
+async def get_quota_status() -> dict[str, object]:
     """Returns current Gemini quota availability for frontend status badges."""
     return {
         "gemini_available": is_gemini_available(),

@@ -3,6 +3,7 @@ from typing import Any, Literal
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
+from starlette.concurrency import run_in_threadpool
 
 from ..engine.plan_builder import (
     assign_vendor,
@@ -92,7 +93,7 @@ def _example_days(preset_id: str, catalog: dict[str, Any]) -> list[EventDay]:
 
 
 @router.get("/catalog")
-def get_event_catalog() -> dict[str, object]:
+async def get_event_catalog() -> dict[str, object]:
     catalog = load_event_catalog()
     # Internal tradition tags are only consumed by the pure inference function.
     public_events = [{key: value for key, value in event.items() if key != "tradition_tags"} for event in catalog["events"]]
@@ -104,7 +105,7 @@ def get_event_catalog() -> dict[str, object]:
 
 
 @router.get("/examples")
-def get_example_selections() -> list[dict[str, object]]:
+async def get_example_selections() -> list[dict[str, object]]:
     """Return event selections that have passed through the same builder used for final plans."""
     catalog = load_event_catalog()
     today = _today()
@@ -133,30 +134,30 @@ def get_example_selections() -> list[dict[str, object]]:
 
 
 @router.post("/map-custom-event")
-def map_custom_event(req: CustomEventMapRequest) -> dict[str, object]:
+async def map_custom_event(req: CustomEventMapRequest) -> dict[str, object]:
     return {"suggestion": suggest_catalog_event(req.text)}
 
 
 @router.post("/build", response_model=EventPlan)
-def build_plan(req: EventPlan) -> EventPlan:
+async def build_plan(req: EventPlan) -> EventPlan:
     try:
-        return build_event_plan(req, load_event_catalog(), _today())
+        return await run_in_threadpool(build_event_plan, req, load_event_catalog(), _today())
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
 
 
 @router.post("/scenarios")
-def get_plan_scenario_fixtures(req: ScenarioFixtureRequest) -> list[dict[str, object]]:
+async def get_plan_scenario_fixtures(req: ScenarioFixtureRequest) -> list[dict[str, object]]:
     try:
-        return build_quick_scenario_fixtures(req.plan, load_event_catalog(), _today())
+        return await run_in_threadpool(build_quick_scenario_fixtures, req.plan, load_event_catalog(), _today())
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
 
 
 @router.post("/events/edit")
-def edit_plan_events(req: EventEditRequest) -> dict[str, object]:
+async def edit_plan_events(req: EventEditRequest) -> dict[str, object]:
     try:
-        updated_plan, diff = edit_event_plan(
+        updated_plan, diff = await run_in_threadpool(edit_event_plan,
             req.plan,
             load_event_catalog(),
             _today(),
@@ -173,9 +174,9 @@ def edit_plan_events(req: EventEditRequest) -> dict[str, object]:
 
 
 @router.post("/vendors/assign")
-def assign_plan_vendor(req: VendorAssignmentRequest) -> dict[str, object]:
+async def assign_plan_vendor(req: VendorAssignmentRequest) -> dict[str, object]:
     try:
-        updated_plan, diff = assign_vendor(req.plan, load_event_catalog(), _today(), req.assignment)
+        updated_plan, diff = await run_in_threadpool(assign_vendor, req.plan, load_event_catalog(), _today(), req.assignment)
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
     return {"updated_plan": updated_plan, "diff": diff}

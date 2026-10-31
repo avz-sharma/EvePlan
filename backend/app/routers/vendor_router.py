@@ -1,5 +1,6 @@
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
 from pydantic import BaseModel, ConfigDict, Field
+from starlette.concurrency import run_in_threadpool
 
 from ..engine.vendor_comparator import compare_vendor_quote
 from ..schemas.vendor_quote import (
@@ -26,7 +27,7 @@ class CompareRequest(BaseModel):
 
 
 @router.post("/compare", response_model=QuoteComparison)
-def compare_quote(req: CompareRequest) -> QuoteComparison:
+async def compare_quote(req: CompareRequest) -> QuoteComparison:
     """Compare the host-entered quote with the host-entered budget without estimating market fees."""
     return compare_vendor_quote(
         quote=req.quote,
@@ -46,7 +47,7 @@ async def upload_quote_document(file: UploadFile = File(...)) -> None:
     content = await file.read(MAX_UPLOAD_BYTES + 1)
 
     try:
-        validate_quote_upload(content, file.filename or "quote")
+        await run_in_threadpool(validate_quote_upload, content, file.filename or "quote")
     except UnsupportedFileTypeError as e:
         raise HTTPException(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
