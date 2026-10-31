@@ -110,7 +110,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EventPlan-Input"
+                "$ref": "#/components/schemas/EventPlan"
               }
             }
           },
@@ -122,7 +122,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EventPlan-Output"
+                  "$ref": "#/components/schemas/EventPlan"
                 }
               }
             }
@@ -812,43 +812,7 @@
         "type": "object",
         "title": "DietarySplit"
       },
-      "EventDay-Input": {
-        "properties": {
-          "day_number": {
-            "type": "integer",
-            "maximum": 5.0,
-            "minimum": 1.0,
-            "title": "Day Number"
-          },
-          "date": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Date"
-          },
-          "events": {
-            "items": {
-              "$ref": "#/components/schemas/PlanEvent"
-            },
-            "type": "array",
-            "maxItems": 20,
-            "title": "Events"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "day_number"
-        ],
-        "title": "EventDay"
-      },
-      "EventDay-Output": {
+      "EventDay": {
         "properties": {
           "day_number": {
             "type": "integer",
@@ -887,7 +851,7 @@
       "EventEditRequest": {
         "properties": {
           "plan": {
-            "$ref": "#/components/schemas/EventPlan-Input"
+            "$ref": "#/components/schemas/EventPlan"
           },
           "operation": {
             "type": "string",
@@ -972,7 +936,7 @@
         ],
         "title": "EventEditRequest"
       },
-      "EventPlan-Input": {
+      "EventPlan": {
         "properties": {
           "id": {
             "type": "string",
@@ -1111,227 +1075,7 @@
           },
           "days": {
             "items": {
-              "$ref": "#/components/schemas/EventDay-Input"
-            },
-            "type": "array",
-            "maxItems": 5,
-            "minItems": 1,
-            "title": "Days"
-          },
-          "special_diets": {
-            "additionalProperties": {
-              "type": "integer"
-            },
-            "propertyNames": {
-              "maxLength": 60,
-              "minLength": 1
-            },
-            "type": "object",
-            "maxProperties": 20,
-            "title": "Special Diets",
-            "description": "User-entered dietary counts"
-          },
-          "accessibility_needs": {
-            "items": {
-              "type": "string",
-              "maxLength": 120
-            },
-            "type": "array",
-            "maxItems": 40,
-            "title": "Accessibility Needs",
-            "description": "User-entered accessibility needs"
-          },
-          "elder_members": {
-            "type": "integer",
-            "maximum": 100000.0,
-            "minimum": 0.0,
-            "title": "Elder Members",
-            "default": 0
-          },
-          "vendor_assignments": {
-            "items": {
-              "$ref": "#/components/schemas/VendorAssignment"
-            },
-            "type": "array",
-            "maxItems": 700,
-            "title": "Vendor Assignments"
-          },
-          "profile_hints": {
-            "additionalProperties": {
-              "items": {
-                "type": "string",
-                "maxLength": 500
-              },
-              "type": "array",
-              "maxItems": 40
-            },
-            "propertyNames": {
-              "maxLength": 80
-            },
-            "type": "object",
-            "maxProperties": 10,
-            "title": "Profile Hints",
-            "description": "Derived from selected events; contains no religion field"
-          },
-          "notes": {
-            "items": {
-              "type": "string",
-              "maxLength": 500
-            },
-            "type": "array",
-            "maxItems": 100,
-            "title": "Notes",
-            "description": "Event planning notes and constraint warnings"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "id",
-          "title"
-        ],
-        "title": "EventPlan"
-      },
-      "EventPlan-Output": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "maxLength": 80,
-            "minLength": 1,
-            "title": "Id",
-            "description": "Plan unique identifier"
-          },
-          "title": {
-            "type": "string",
-            "maxLength": 120,
-            "minLength": 1,
-            "title": "Title",
-            "description": "Event celebration title"
-          },
-          "template": {
-            "type": "string",
-            "maxLength": 80,
-            "title": "Template",
-            "description": "Selected event plan template",
-            "default": "celebration"
-          },
-          "guest_count": {
-            "type": "integer",
-            "maximum": 100000.0,
-            "exclusiveMinimum": 0.0,
-            "title": "Guest Count",
-            "description": "Total guests; each event defaults to this count",
-            "default": 1
-          },
-          "total_budget_cap_inr": {
-            "type": "number",
-            "minimum": 0.0,
-            "title": "Total Budget Cap Inr",
-            "description": "User-entered total budget ceiling",
-            "default": 0.0
-          },
-          "budget_range_min_inr": {
-            "type": "number",
-            "minimum": 0.0,
-            "title": "Budget Range Min Inr",
-            "default": 0.0
-          },
-          "budget_range_max_inr": {
-            "type": "number",
-            "minimum": 0.0,
-            "title": "Budget Range Max Inr",
-            "default": 0.0
-          },
-          "per_plate_min_inr": {
-            "type": "number",
-            "minimum": 0.0,
-            "title": "Per Plate Min Inr",
-            "description": "User-entered minimum per-plate budget",
-            "default": 0.0
-          },
-          "per_plate_max_inr": {
-            "type": "number",
-            "minimum": 0.0,
-            "title": "Per Plate Max Inr",
-            "description": "User-entered maximum per-plate budget",
-            "default": 0.0
-          },
-          "venue_capacity": {
-            "anyOf": [
-              {
-                "type": "integer",
-                "exclusiveMinimum": 0.0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Venue Capacity",
-            "description": "Deprecated plan-wide capacity compatibility field"
-          },
-          "days_until_event": {
-            "type": "integer",
-            "minimum": 0.0,
-            "title": "Days Until Event",
-            "description": "Days to the first event; compatibility summary",
-            "default": 0
-          },
-          "dietary_split": {
-            "$ref": "#/components/schemas/DietarySplit",
-            "description": "Deprecated dietary compatibility summary"
-          },
-          "accessibility": {
-            "$ref": "#/components/schemas/AccessibilityNeeds",
-            "description": "Accessibility requirements"
-          },
-          "sub_events": {
-            "items": {
-              "$ref": "#/components/schemas/SubEventType"
-            },
-            "type": "array",
-            "maxItems": 4,
-            "title": "Sub Events",
-            "description": "Deprecated Phase 1 compatibility field"
-          },
-          "budget_buckets": {
-            "items": {
-              "$ref": "#/components/schemas/BudgetBucket"
-            },
-            "type": "array",
-            "maxItems": 30,
-            "title": "Budget Buckets",
-            "description": "Budget amounts from user inputs or quotes"
-          },
-          "tasks": {
-            "items": {
-              "$ref": "#/components/schemas/TaskNode"
-            },
-            "type": "array",
-            "maxItems": 1000,
-            "title": "Tasks",
-            "description": "DAG nodes generated from selected events"
-          },
-          "city": {
-            "type": "string",
-            "maxLength": 120,
-            "title": "City",
-            "default": ""
-          },
-          "first_event_date": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "First Event Date"
-          },
-          "days": {
-            "items": {
-              "$ref": "#/components/schemas/EventDay-Output"
+              "$ref": "#/components/schemas/EventDay"
             },
             "type": "array",
             "maxItems": 5,
@@ -1468,7 +1212,7 @@
       "NaturalLanguageReplanRequest": {
         "properties": {
           "plan": {
-            "$ref": "#/components/schemas/EventPlan-Input",
+            "$ref": "#/components/schemas/EventPlan",
             "description": "Current client-persisted plan state"
           },
           "user_prompt": {
@@ -1862,7 +1606,7 @@
       "ReplanRequest": {
         "properties": {
           "plan": {
-            "$ref": "#/components/schemas/EventPlan-Input",
+            "$ref": "#/components/schemas/EventPlan",
             "description": "Current client-persisted plan state"
           },
           "delta": {
@@ -1881,7 +1625,7 @@
       "ReplanResponse": {
         "properties": {
           "updated_plan": {
-            "$ref": "#/components/schemas/EventPlan-Output",
+            "$ref": "#/components/schemas/EventPlan",
             "description": "Healed and rescheduled plan state"
           },
           "diff": {
@@ -1920,7 +1664,7 @@
       "ScenarioFixtureRequest": {
         "properties": {
           "plan": {
-            "$ref": "#/components/schemas/EventPlan-Input"
+            "$ref": "#/components/schemas/EventPlan"
           }
         },
         "additionalProperties": false,
@@ -2308,7 +2052,7 @@
       "VendorAssignmentRequest": {
         "properties": {
           "plan": {
-            "$ref": "#/components/schemas/EventPlan-Input"
+            "$ref": "#/components/schemas/EventPlan"
           },
           "assignment": {
             "$ref": "#/components/schemas/VendorAssignment"

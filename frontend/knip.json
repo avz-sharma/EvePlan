@@ -1,5 +1,5 @@
 {
   "entry": ["src/**/*.test.{ts,tsx}", "scripts/*.mjs", "e2e/*.ts"],
-  "project": ["src/**/*.{ts,tsx,css}", "scripts/*.mjs"],
+  "project": ["src/**/*.{ts,tsx,css}", "scripts/*.{mjs,ts}"],
   "ignoreDependencies": ["chrome-devtools-mcp"]
 }

@@ -424,16 +424,7 @@ export interface components {
             kids: number;
         };
         /** EventDay */
-        "EventDay-Input": {
-            /** Day Number */
-            day_number: number;
-            /** Date */
-            date?: string | null;
-            /** Events */
-            events?: components["schemas"]["PlanEvent"][];
-        };
-        /** EventDay */
-        "EventDay-Output": {
+        EventDay: {
             /** Day Number */
             day_number: number;
             /** Date */
@@ -443,7 +434,7 @@ export interface components {
         };
         /** EventEditRequest */
         EventEditRequest: {
-            plan: components["schemas"]["EventPlan-Input"];
+            plan: components["schemas"]["EventPlan"];
             /**
              * Operation
              * @enum {string}
@@ -460,7 +451,7 @@ export interface components {
             guest_count?: number | null;
         };
         /** EventPlan */
-        "EventPlan-Input": {
+        EventPlan: {
             /**
              * Id
              * @description Plan unique identifier
@@ -549,130 +540,7 @@ export interface components {
             /** First Event Date */
             first_event_date?: string | null;
             /** Days */
-            days?: components["schemas"]["EventDay-Input"][];
-            /**
-             * Special Diets
-             * @description User-entered dietary counts
-             */
-            special_diets?: {
-                [key: string]: number;
-            };
-            /**
-             * Accessibility Needs
-             * @description User-entered accessibility needs
-             */
-            accessibility_needs?: string[];
-            /**
-             * Elder Members
-             * @default 0
-             */
-            elder_members: number;
-            /** Vendor Assignments */
-            vendor_assignments?: components["schemas"]["VendorAssignment"][];
-            /**
-             * Profile Hints
-             * @description Derived from selected events; contains no religion field
-             */
-            profile_hints?: {
-                [key: string]: string[];
-            };
-            /**
-             * Notes
-             * @description Event planning notes and constraint warnings
-             */
-            notes?: string[];
-        };
-        /** EventPlan */
-        "EventPlan-Output": {
-            /**
-             * Id
-             * @description Plan unique identifier
-             */
-            id: string;
-            /**
-             * Title
-             * @description Event celebration title
-             */
-            title: string;
-            /**
-             * Template
-             * @description Selected event plan template
-             * @default celebration
-             */
-            template: string;
-            /**
-             * Guest Count
-             * @description Total guests; each event defaults to this count
-             * @default 1
-             */
-            guest_count: number;
-            /**
-             * Total Budget Cap Inr
-             * @description User-entered total budget ceiling
-             * @default 0
-             */
-            total_budget_cap_inr: number;
-            /**
-             * Budget Range Min Inr
-             * @default 0
-             */
-            budget_range_min_inr: number;
-            /**
-             * Budget Range Max Inr
-             * @default 0
-             */
-            budget_range_max_inr: number;
-            /**
-             * Per Plate Min Inr
-             * @description User-entered minimum per-plate budget
-             * @default 0
-             */
-            per_plate_min_inr: number;
-            /**
-             * Per Plate Max Inr
-             * @description User-entered maximum per-plate budget
-             * @default 0
-             */
-            per_plate_max_inr: number;
-            /**
-             * Venue Capacity
-             * @description Deprecated plan-wide capacity compatibility field
-             */
-            venue_capacity?: number | null;
-            /**
-             * Days Until Event
-             * @description Days to the first event; compatibility summary
-             * @default 0
-             */
-            days_until_event: number;
-            /** @description Deprecated dietary compatibility summary */
-            dietary_split?: components["schemas"]["DietarySplit"];
-            /** @description Accessibility requirements */
-            accessibility?: components["schemas"]["AccessibilityNeeds"];
-            /**
-             * Sub Events
-             * @description Deprecated Phase 1 compatibility field
-             */
-            sub_events?: components["schemas"]["SubEventType"][];
-            /**
-             * Budget Buckets
-             * @description Budget amounts from user inputs or quotes
-             */
-            budget_buckets?: components["schemas"]["BudgetBucket"][];
-            /**
-             * Tasks
-             * @description DAG nodes generated from selected events
-             */
-            tasks?: components["schemas"]["TaskNode"][];
-            /**
-             * City
-             * @default
-             */
-            city: string;
-            /** First Event Date */
-            first_event_date?: string | null;
-            /** Days */
-            days?: components["schemas"]["EventDay-Output"][];
+            days?: components["schemas"]["EventDay"][];
             /**
              * Special Diets
              * @description User-entered dietary counts
@@ -736,7 +604,7 @@ export interface components {
         /** NaturalLanguageReplanRequest */
         NaturalLanguageReplanRequest: {
             /** @description Current client-persisted plan state */
-            plan: components["schemas"]["EventPlan-Input"];
+            plan: components["schemas"]["EventPlan"];
             /**
              * User Prompt
              * @description Free-text user instruction (capped at 500 chars)
@@ -939,14 +807,14 @@ export interface components {
         /** ReplanRequest */
         ReplanRequest: {
             /** @description Current client-persisted plan state */
-            plan: components["schemas"]["EventPlan-Input"];
+            plan: components["schemas"]["EventPlan"];
             /** @description Structured delta to apply */
             delta: components["schemas"]["PlanDelta"];
         };
         /** ReplanResponse */
         ReplanResponse: {
             /** @description Healed and rescheduled plan state */
-            updated_plan: components["schemas"]["EventPlan-Output"];
+            updated_plan: components["schemas"]["EventPlan"];
             /** @description Exact impact diff with hop levels and violations */
             diff: components["schemas"]["CascadeDiff"];
             /**
@@ -969,7 +837,7 @@ export interface components {
         };
         /** ScenarioFixtureRequest */
         ScenarioFixtureRequest: {
-            plan: components["schemas"]["EventPlan-Input"];
+            plan: components["schemas"]["EventPlan"];
         };
         /**
          * SubEventType
@@ -1157,7 +1025,7 @@ export interface components {
         };
         /** VendorAssignmentRequest */
         VendorAssignmentRequest: {
-            plan: components["schemas"]["EventPlan-Input"];
+            plan: components["schemas"]["EventPlan"];
             assignment: components["schemas"]["VendorAssignment"];
         };
         /**
@@ -1283,7 +1151,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["EventPlan-Input"];
+                "application/json": components["schemas"]["EventPlan"];
             };
         };
         responses: {
@@ -1293,7 +1161,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["EventPlan-Output"];
+                    "application/json": components["schemas"]["EventPlan"];
                 };
             };
             /** @description Validation Error */
