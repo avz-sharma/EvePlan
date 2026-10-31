@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face { font-family: "EvePlan Sans"; src: url("/fonts/source-sans-3-latin.19143dca0759.woff2") format("woff2"); font-style: normal; font-weight: 200 900; font-display: swap; }
+@font-face { font-family: "EvePlan Serif"; src: url("/fonts/source-serif-4-latin.382475f38242.woff2") format("woff2"); font-style: normal; font-weight: 200 900; font-display: swap; }
+
 :root {
   color-scheme: light;
-  --font-ui: "Aptos", "Segoe UI", sans-serif;
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-ui: "EvePlan Sans", "Aptos", "Segoe UI", sans-serif;
+  --font-display: "EvePlan Serif", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --page: 247 245 240;
   --ink: 36 49 57;
   --muted: 83 98 105;
