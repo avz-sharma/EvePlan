@@ -10,6 +10,7 @@ from ..services.vendor_search import (
     GooglePlacesProvider,
     MapsLinkProvider,
     PlaceIdCache,
+    VendorSearchProvider,
     VendorSearchQuery,
     VendorSearchService,
 )
@@ -46,6 +47,7 @@ class VendorSearchRequest(BaseModel):
 
 
 def _service() -> VendorSearchService:
+    provider: VendorSearchProvider
     key = settings.GOOGLE_PLACES_API_KEY
     if key is None or not key.get_secret_value().strip():
         provider = MapsLinkProvider()

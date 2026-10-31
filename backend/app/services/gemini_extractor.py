@@ -93,7 +93,7 @@ def extract_intent_delta(
         return PlanDelta().model_dump(), False
 
     try:
-        from google import genai  # type: ignore[import-not-found]
+        from google import genai
 
         api_key = settings.GEMINI_API_KEY
         assert api_key is not None

@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from typing import Literal
+from typing import Any, Literal
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
@@ -71,7 +71,7 @@ def _today() -> date:
     return date.today()
 
 
-def _example_days(preset_id: str, catalog: dict) -> list[EventDay]:
+def _example_days(preset_id: str, catalog: dict[str, Any]) -> list[EventDay]:
     _, selection = EXAMPLE_SELECTIONS[preset_id]
     by_id = {item["id"]: item for item in catalog["events"]}
     return [

@@ -1,3 +1,5 @@
+from typing import cast
+
 from ..schemas.plan_state import EventPlan
 from .planning_heuristics import CONTINGENCY_RATE
 
@@ -12,8 +14,11 @@ def evaluate_conflicts(plan: EventPlan) -> tuple[list[str], list[str]]:
     tasks_to_reopen: list[str] = []
 
     # 1. Venue Capacity Overrun Check
-    if plan.guest_count > plan.venue_capacity:
-        excess = plan.guest_count - plan.venue_capacity
+    # Phase 1 compatibility callers supply a concrete capacity. Phase 2 checks
+    # optional capacities per assignment in the event-aware builder instead.
+    capacity = cast(int, plan.venue_capacity)
+    if plan.guest_count > capacity:
+        excess = plan.guest_count - capacity
         violations.append(
             f"CRITICAL: Headcount ({plan.guest_count}) exceeds venue capacity "
             f"({plan.venue_capacity}) by {excess} guests! Safety & fire code violation."
@@ -67,4 +72,5 @@ def evaluate_conflicts(plan: EventPlan) -> tuple[list[str], list[str]]:
         )
 
     return violations, list(set(tasks_to_reopen))
+
 

@@ -3,6 +3,7 @@
 import json
 from functools import lru_cache
 from pathlib import Path
+from typing import cast
 
 from .event_catalog import load_event_catalog
 
@@ -10,7 +11,7 @@ from .event_catalog import load_event_catalog
 @lru_cache(maxsize=1)
 def _mapping_fixtures() -> list[dict[str, str]]:
     path = Path(__file__).resolve().parents[1] / "fixtures" / "custom_event_mappings.json"
-    return json.loads(path.read_text(encoding="utf-8"))["mappings"]
+    return cast(list[dict[str, str]], json.loads(path.read_text(encoding="utf-8"))["mappings"])
 
 
 def suggest_catalog_event(text: str) -> dict[str, str] | None:

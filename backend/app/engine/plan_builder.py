@@ -272,15 +272,15 @@ def build_event_plan(
         raise ValueError("Minimum per-plate budget cannot exceed maximum")
 
     days = sorted(plan.days, key=lambda item: item.day_number)
-    for index, day in enumerate(days):
-        if day.day_number != index + 1:
+    for day_index, day in enumerate(days):
+        if day.day_number != day_index + 1:
             raise ValueError("Day numbers must be consecutive, starting at 1")
-        event_date = plan.first_event_date + timedelta(days=index)
+        event_date = plan.first_event_date + timedelta(days=day_index)
         events: list[PlanEvent] = []
         for event in day.events:
             count = plan.guest_count if event.guest_count is None else event.guest_count
             events.append(event.model_copy(update={"guest_count": count}))
-        days[index] = day.model_copy(update={"date": event_date, "events": events})
+        days[day_index] = day.model_copy(update={"date": event_date, "events": events})
 
     resolved = plan.model_copy(update={
         "days": days,
@@ -452,9 +452,9 @@ def edit_event_plan(
         affected_budget_categories=sorted(affected_categories | changed_budgets),
         node_hops=hops,
         violations=[
-            f"{assignment.category.value} vendor capacity ({assignment.capacity}) is below event attendance ({next((item.guest_count for day in rebuilt.days for item in day.events if item.id == assignment.event_id), 0)})."
+            f"{assignment.category.value} vendor capacity ({assignment.capacity}) is below event attendance ({next(((item.guest_count or 0) for day in rebuilt.days for item in day.events if item.id == assignment.event_id), 0)})."
             for assignment in rebuilt.vendor_assignments
-            if assignment.capacity is not None and assignment.capacity < next((item.guest_count for day in rebuilt.days for item in day.events if item.id == assignment.event_id), 0)
+            if assignment.capacity is not None and assignment.capacity < next(((item.guest_count or 0) for day in rebuilt.days for item in day.events if item.id == assignment.event_id), 0)
         ],
         summary=summary,
     )
@@ -487,7 +487,7 @@ def assign_vendor(
         if task.event_id == assignment.event_id and task.budget_category == task_category
     }
     hops = _dependent_hops(updated.tasks, roots)
-    event_guests = next(event.guest_count for day in updated.days for event in day.events if event.id == assignment.event_id)
+    event_guests = next((event.guest_count or 0) for day in updated.days for event in day.events if event.id == assignment.event_id)
     violations = []
     if assignment.capacity is not None and assignment.capacity < event_guests:
         violations.append(f"{assignment.category.value} vendor capacity ({assignment.capacity}) is below event attendance ({event_guests}).")

@@ -295,9 +295,9 @@ def apply_event_plan_delta(
         if next((before for before in plan.budget_buckets if before.category == after.category), None) != after
     }
     violations = [
-        f"{assignment.category.value} vendor capacity ({assignment.capacity}) is below event attendance ({next((event.guest_count for day in rebuilt.days for event in day.events if event.id == assignment.event_id), 0)})."
+        f"{assignment.category.value} vendor capacity ({assignment.capacity}) is below event attendance ({next(((event.guest_count or 0) for day in rebuilt.days for event in day.events if event.id == assignment.event_id), 0)})."
         for assignment in rebuilt.vendor_assignments
-        if assignment.capacity is not None and assignment.capacity < next((event.guest_count for day in rebuilt.days for event in day.events if event.id == assignment.event_id), 0)
+        if assignment.capacity is not None and assignment.capacity < next(((event.guest_count or 0) for day in rebuilt.days for event in day.events if event.id == assignment.event_id), 0)
     ]
     violations.extend(note for note in rebuilt.notes if "Venue capacity" in note)
     diff = CascadeDiff(

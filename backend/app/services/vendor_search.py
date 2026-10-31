@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass
-from typing import Any, Protocol
+from typing import Any, Callable, Protocol, cast
 from urllib.parse import quote_plus
 
 import httpx
@@ -91,7 +91,7 @@ class GooglePlacesProvider:
             except (ValueError, AttributeError):
                 detail = response.text
             raise GooglePlacesError(response.status_code, detail)
-        return response.json()
+        return cast(dict[str, Any], response.json())
 
     def search(self, query: VendorSearchQuery) -> list[dict[str, Any]]:
         body: dict[str, Any] = {"textQuery": query.text_query, "maxResultCount": 20}
@@ -160,7 +160,7 @@ class MapsLinkProvider:
 class PlaceIdCache:
     """Short-lived query cache containing only place IDs, as allowed by Places policy."""
 
-    def __init__(self, ttl_seconds: int = 30, clock=time.monotonic):
+    def __init__(self, ttl_seconds: int = 30, clock: Callable[[], float] = time.monotonic):
         self.ttl_seconds = ttl_seconds
         self.clock = clock
         self._items: dict[str, tuple[float, tuple[str, ...]]] = {}
