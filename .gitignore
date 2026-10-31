@@ -43,3 +43,6 @@ test-results/
 .DS_Store
 Thumbs.db
 
+
+# Local audit and report documents
+/audits/
