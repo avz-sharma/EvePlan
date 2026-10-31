@@ -7,8 +7,7 @@ import { streamReplan } from "./api/sseClient";
 import { tabs, type TabId } from "./tabs.config";
 import { Tabs } from "./components/ui/Tabs";
 import { Banner, Button, GlassPanel, IconButton, Skeleton, Stat, Toast } from "./components/ui";
-import { VendorQuoteModal } from "./components/VendorQuoteModal";
-import { OnboardingWizard } from "./components/OnboardingWizard";
+import { LazyQuoteModal as VendorQuoteModal, LazyWizard as OnboardingWizard } from "./components/LazyDialogs";
 import type { PlanViewProps } from "./views/types";
 import { formatCompactMoney, formatNumber } from "./lib/format";
 
