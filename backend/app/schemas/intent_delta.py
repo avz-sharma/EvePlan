@@ -6,7 +6,7 @@ from .plan_state import SubEventType
 
 
 class PlanDelta(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     guest_count_delta: int = Field(default=0, description="Change in total guest headcount")
     sub_event_filter: list[SubEventType] | None = Field(default=None, max_length=4, description="Subset of active sub-events")

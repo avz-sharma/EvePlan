@@ -2,7 +2,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class NormalizedQuoteItem(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     name: str = Field(min_length=1, max_length=160, description="Line item description")
     category: str = Field(min_length=1, max_length=80, description="Item category, e.g., Buffet, Live Counter, Beverages")
@@ -13,7 +13,7 @@ class NormalizedQuoteItem(BaseModel):
 
 
 class NormalizedQuote(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     vendor_name: str = Field(min_length=1, max_length=120, description="Vendor or agency name")
     category: str = Field(min_length=1, max_length=80, description="Vendor service category (Catering, Decor, Venue, Photography)")
@@ -27,7 +27,7 @@ class NormalizedQuote(BaseModel):
 
 
 class HiddenCostFlag(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     name: str = Field(description="Name of the missing or hidden item")
     estimated_impact_inr: float | None = Field(default=None, ge=0.0, description="Vendor-entered or confirmed impact; null when no amount is known")
@@ -36,7 +36,7 @@ class HiddenCostFlag(BaseModel):
 
 
 class QuoteComparison(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     normalized_quote: NormalizedQuote = Field(description="Parsed and normalized vendor quote")
     budget_allocated_max_inr: float = Field(ge=0.0, description="Budget cap allocated for this category")

@@ -38,7 +38,7 @@ class VendorCategory(str, Enum):
 
 
 class PlanEvent(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     id: str = Field(min_length=1, max_length=80)
     catalog_id: str | None = Field(default=None, min_length=1, max_length=80)
@@ -163,7 +163,7 @@ class EventPlan(BaseModel):
 
 
 class VendorAssignment(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", frozen=True)
 
     event_id: str = Field(min_length=1, max_length=80)
     category: VendorCategory
