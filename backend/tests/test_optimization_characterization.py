@@ -45,6 +45,7 @@ def test_sse_matches_post_engine_result_and_orders_events(monkeypatch) -> None:
         })
         assert response.status_code == 200
         assert response.headers["content-type"].startswith("text/event-stream")
+        assert "content-encoding" not in response.headers
         events = [block.splitlines() for block in response.text.strip().split("\n\n")]
         assert [lines[0] for lines in events] == [
             "event: delta", "event: engine_diff", "event: rationale",

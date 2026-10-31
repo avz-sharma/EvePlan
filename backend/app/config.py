@@ -1,4 +1,6 @@
-from pydantic import SecretStr
+from urllib.parse import urlsplit
+
+from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -22,6 +24,17 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
     ]
     MAX_UPLOAD_BYTES: int = 5_242_880
+    MAX_REQUEST_BYTES: int = Field(default=6_291_456, ge=1024, le=16_777_216)
+    API_REQUESTS_PER_MINUTE: int = Field(default=240, ge=1, le=10000)
+
+    @field_validator("ALLOWED_ORIGINS")
+    @classmethod
+    def exact_origins(cls, origins: list[str]) -> list[str]:
+        for origin in origins:
+            parsed = urlsplit(origin)
+            if parsed.scheme not in {"http", "https"} or not parsed.netloc or "*" in origin or parsed.path or parsed.query or parsed.fragment or parsed.username:
+                raise ValueError("ALLOWED_ORIGINS must contain exact HTTP(S) origins without paths or wildcards")
+        return origins
 
 
 settings = Settings()
