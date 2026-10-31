@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { CascadeGraphView } from "../components/CascadeGraphView";
 import { TimelineChecklist } from "../components/TimelineChecklist";
 import { Button, GlassPanel } from "../components/ui";
-import type { TimelineProps } from "./types";
+import { useCurrentPlan, usePlanStore } from "../state/planStore";
 
-export const TimelineTab: React.FC<TimelineProps> = ({ plan, lastDiff }) => {
+export const TimelineTab: React.FC = () => {
+  const plan = useCurrentPlan();
+  const lastDiff = usePlanStore(state => state.lastDiff);
+
   const [view, setView] = useState<"map" | "checklist">("map");
   return <GlassPanel className="space-y-5">
     <header className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-xs font-semibold uppercase tracking-wider text-accent">Dates and dependencies</p><h1 className="mt-1 text-2xl">Event timeline</h1><p className="mt-1 text-sm text-muted">See which tasks depend on each other and what needs attention first.</p></div>

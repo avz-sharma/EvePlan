@@ -9,7 +9,7 @@ const output = '../docs/measurements';
 await mkdir(output, { recursive: true });
 await build({
   resolve: profiling ? { alias: { 'react-dom/client': 'react-dom/profiling' } } : {},
-  plugins: [visualizer({ filename: `${output}/${phase}-bundle.html`, gzipSize: true }),
+  plugins: [visualizer({ filename: `${output}/${phase}${profiling ? '-profile' : ''}-bundle.html`, gzipSize: true }),
     ...(profiling ? [{ name: 'measurement-only-profiler', enforce: 'pre',
       transform(code, id) {
         if (!id.endsWith('/src/main.tsx')) return;

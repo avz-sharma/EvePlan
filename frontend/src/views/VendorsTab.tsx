@@ -5,7 +5,7 @@ import { apiUrl } from "../api/client";
 import { Button, EmptyState, GlassPanel } from "../components/ui";
 import { VendorMapPanel } from "../components/VendorMapPanel";
 import { VendorResultCard } from "../components/VendorResultCard";
-import type { PlanViewProps } from "./types";
+import { useCurrentPlan, usePlanStore, planActions } from "../state/planStore";
 
 interface SearchPayload { mode: "google_places" | "maps_link"; results: VendorSearchResult[]; map_search_url: string | null; banner: string | null; attribution?: string | null }
 interface Shortlisted { result: VendorSearchResult; quote: number | null; categoryCap: number | null; capacity: number | null }
@@ -21,7 +21,11 @@ const interviewTemplates: Record<VendorCategory, string[]> = {
   transport: ["How many vehicles and seats are included?", "How are timing changes and waiting time handled?", "What accessibility and backup options are available?"],
 };
 
-export const VendorsTab: React.FC<PlanViewProps> = ({ plan, forkedPlan, onAssignVendor }) => {
+export const VendorsTab: React.FC = () => {
+  const plan = useCurrentPlan();
+  const forkedPlan = usePlanStore(state => state.forkedPlan);
+  const onAssignVendor = planActions.assignVendor;
+
   const [branch, setBranch] = useState<"A" | "B">("A");
   const activePlan = branch === "B" && forkedPlan ? forkedPlan : plan;
   const events = useMemo(() => activePlan.days.flatMap((day) => day.events.map((event) => ({ day, event }))), [activePlan.days]);

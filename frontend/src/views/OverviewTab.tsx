@@ -1,11 +1,15 @@
 import React from "react";
 import { CalendarDays, Users } from "lucide-react";
-import type { PlanViewProps } from "./types";
+import { useCurrentPlan, usePlanStore, planActions } from "../state/planStore";
 import { Chip, GlassPanel, Stat } from "../components/ui";
 import { QuickScenarioChips } from "../components/QuickScenarioChips";
 import { formatCompactMoney } from "../lib/format";
 
-export const OverviewTab: React.FC<PlanViewProps> = ({ plan, onPlanUpdated, isLoading }) => {
+export const OverviewTab: React.FC = () => {
+  const plan = useCurrentPlan();
+  const onPlanUpdated = planActions.updated;
+  const isLoading = usePlanStore(state => state.isLoading);
+
   const tasks = [...plan.tasks].filter((task) => task.is_critical).sort((a, b) => a.earliest_start - b.earliest_start).slice(0, 3);
   const projected = plan.budget_buckets.reduce((total, bucket) => total + bucket.allocated_max_inr + bucket.contingency_inr, 0);
   return <div className="space-y-6">

@@ -1,10 +1,16 @@
 import React from "react";
-import type { PlanViewProps } from "./types";
+import { useCurrentPlan, usePlanStore, planActions } from "../state/planStore";
 import { BudgetAllocationBars } from "../components/BudgetAllocationBars";
 import { TradeOffCards } from "../components/TradeOffCards";
 import { EmptyState } from "../components/ui";
 
-export const BudgetTab: React.FC<PlanViewProps> = ({ plan, tradeoffOptions, previewAdjustments, onPreview, onApplyTradeOff }) => {
+export const BudgetTab: React.FC = () => {
+  const plan = useCurrentPlan();
+  const tradeoffOptions = usePlanStore(state => state.tradeoffOptions);
+  const previewAdjustments = usePlanStore(state => state.previewAdjustments);
+  const onPreview = planActions.preview;
+  const onApplyTradeOff = planActions.applyTradeOff;
+
   const projected = plan.budget_buckets.reduce((sum, bucket) => sum + bucket.allocated_max_inr + bucket.contingency_inr, 0);
   const overBudget = projected > plan.total_budget_cap_inr;
   return <div className="space-y-6">

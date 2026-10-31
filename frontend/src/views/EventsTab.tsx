@@ -3,13 +3,16 @@ import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import type { CatalogEvent, CascadeDiff, EventPlan, PlanEvent, TimeSlot, VendorCategory } from "../api/types";
 import { apiUrl } from "../api/client";
 import { Button, GlassPanel } from "../components/ui";
-import type { PlanViewProps } from "./types";
+import { useCurrentPlan, planActions } from "../state/planStore";
 
 const categories: VendorCategory[] = ["venue", "caterer", "decorator", "photographer", "makeup", "music", "transport"];
 const slots: TimeSlot[] = ["morning", "afternoon", "evening", "night"];
 const makeId = () => globalThis.crypto?.randomUUID?.() ?? `event-${Date.now()}`;
 
-export const EventsTab: React.FC<PlanViewProps> = ({ plan, onPlanUpdated }) => {
+export const EventsTab: React.FC = () => {
+  const plan = useCurrentPlan();
+  const onPlanUpdated = planActions.updated;
+
   const [catalog, setCatalog] = useState<CatalogEvent[]>([]);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
