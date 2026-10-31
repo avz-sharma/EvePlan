@@ -38,7 +38,7 @@ Open `http://localhost:5173`. API health is at `http://localhost:8000/health`; l
 
 ## Environment and keys
 
-All keys are optional. Start with empty values to use the deterministic and manual workflows.
+Gemini is optional. Google OAuth credentials are required for sign-in; AUTH_REQUIRED=false enables isolated local testing only. Vendor discovery needs no API key.
 
 | Variable | Purpose |
 | --- | --- |
@@ -108,7 +108,7 @@ ALLOWED_ORIGINS: '["https://your-site.example"]'
 gcloud run deploy eveplan-api --source . --region asia-south1 --allow-unauthenticated --min-instances 0 --max-instances 1 --concurrency 8 --timeout 300 --cpu 1 --memory 512Mi --env-vars-file deploy.env.yaml
 ```
 
-Use Secret Manager references for optional server keys. Build the frontend with its API base and optional browser key, then publish `frontend/dist` on a static host that supports `_headers` (for example Netlify or Cloudflare Pages). Other hosts must apply the generated headers themselves. The build emits CSP and security headers, adds the configured API origin to `connect-src`, and gives hashed assets/fonts a one-year immutable cache policy. HTML revalidates. The Vercel deployment is at https://eveplan-beige.vercel.app; Google login is pending OAuth client configuration.
+Use Secret Manager references for optional server keys. Build the frontend with its API base, then publish `frontend/dist` on a static host that supports `_headers` (for example Netlify or Cloudflare Pages). Other hosts must apply the generated headers themselves. The build emits CSP and security headers, adds the configured API origin to `connect-src`, and gives hashed assets/fonts a one-year immutable cache policy. HTML revalidates. The Vercel deployment is at https://eveplan-beige.vercel.app; Google sign-in is configured and required before celebration setup.
 
 ## Five-minute demo
 
@@ -123,7 +123,7 @@ Use Secret Manager references for optional server keys. Build the frontend with 
 - Performance and test measurement artifacts are kept in [docs/measurements/](docs/measurements/).
 - Audit reports, requirements mapping, and deployment notes are kept locally in the audits/ folder. This folder is gitignored and is not included in GitHub checkouts.
 - Automated checks run in [GitHub Actions](https://github.com/avz-sharma/EvePlan/actions/workflows/quality.yml).
-- Deployment: [EvePlan on Vercel](https://eveplan-beige.vercel.app). Google OAuth credentials still need to be configured before sign-in works.
+- Deployment: [EvePlan on Vercel](https://eveplan-beige.vercel.app). Google sign-in is configured; new users reach celebration setup after signing in.
 
 ## Google sign-in and Vercel
 
@@ -137,4 +137,4 @@ Google sign-in appears before celebration setup. The backend verifies Google's a
 
 For isolated local testing only, AUTH_REQUIRED=false enables the existing offline workflow. Vercel always enforces login even if this flag is false. Production with missing credentials stays locked and shows a setup-pending message. The CI smoke API explicitly sets the local bypass and mocks sign-in in dedicated tests. In-memory quota/rate guards remain per function instance on Vercel; enforce optional provider project quotas separately.
 
-Setup references: [Google OAuth web server flow](https://developers.google.com/identity/protocols/oauth2/web-server), [Vercel Python runtime](https://vercel.com/docs/functions/runtimes/python). The app is deployed at [eveplan-beige.vercel.app](https://eveplan-beige.vercel.app). Google OAuth credentials are not yet configured, so the live application stays locked at the login setup screen. The registered callback must be `https://eveplan-beige.vercel.app/api/auth/callback`.
+Setup references: [Google OAuth web server flow](https://developers.google.com/identity/protocols/oauth2/web-server), [Vercel Python runtime](https://vercel.com/docs/functions/runtimes/python). The app is deployed at [eveplan-beige.vercel.app](https://eveplan-beige.vercel.app). Google OAuth credentials are configured, and the live authorization redirect has been verified to reach Google’s sign-in page. Completing Google account sign-in then returns to the celebration setup workflow. The registered callback must be `https://eveplan-beige.vercel.app/api/auth/callback`.
