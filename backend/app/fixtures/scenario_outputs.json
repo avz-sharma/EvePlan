@@ -1,0 +1,2014 @@
+{
+  "_note": "Builder-produced, validated scenario output snapshot. The API regenerates outcomes from each active plan.",
+  "reference_plan_id": "saved-fixture-three-day",
+  "fixtures": [
+    {
+      "id": "guest_increase",
+      "title": "Add 12 guests to Mehendi",
+      "description": "Uses the per-plate range you entered and updates this event's venue fit.",
+      "updated_plan": {
+        "id": "saved-fixture-three-day",
+        "title": "Saved three-day example",
+        "template": "celebration",
+        "guest_count": 132,
+        "total_budget_cap_inr": 1500000.0,
+        "budget_range_min_inr": 1000000.0,
+        "budget_range_max_inr": 1500000.0,
+        "per_plate_min_inr": 700.0,
+        "per_plate_max_inr": 1000.0,
+        "venue_capacity": null,
+        "days_until_event": 214,
+        "dietary_split": {
+          "regular": 132,
+          "jain": 0,
+          "vegan": 0,
+          "kids": 0
+        },
+        "accessibility": {
+          "elderly_count": 0,
+          "wheelchair_access_required": false,
+          "ground_floor_dining": false
+        },
+        "sub_events": [],
+        "budget_buckets": [
+          {
+            "category": "Catering",
+            "allocated_min_inr": 260400.0,
+            "allocated_max_inr": 372000.0,
+            "contingency_inr": 37200.0,
+            "assumptions": [
+              "Based on user-entered per-plate range and event guest counts."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Decor",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Makeup",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Music",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Photography",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Transport",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Venue",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          }
+        ],
+        "tasks": [
+          {
+            "id": "event-three_day_celebration-1-1:venue_booking",
+            "title": "Confirm event venue",
+            "category": "Venue",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-01-02",
+            "lead_time_days": 150,
+            "budget_category": "Venue",
+            "duration_days": 3,
+            "dependencies": [],
+            "status": "PENDING",
+            "earliest_start": 0,
+            "latest_start": 1,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:catering_menu_lock",
+            "title": "Confirm food plan and per-plate range",
+            "category": "Catering",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-04-17",
+            "lead_time_days": 45,
+            "budget_category": "Catering",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking",
+              "event-three_day_celebration-2-1:venue_booking",
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 4,
+            "slack_days": 0,
+            "is_critical": true,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:decor_plan",
+            "title": "Confirm decor requirements",
+            "category": "Decor",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-02",
+            "lead_time_days": 30,
+            "budget_category": "Decor",
+            "duration_days": 2,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 6,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:vendor_brief",
+            "title": "Share event brief with vendors",
+            "category": "Coordination",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-18",
+            "lead_time_days": 14,
+            "budget_category": "Coordination",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:catering_menu_lock"
+            ],
+            "status": "PENDING",
+            "earliest_start": 7,
+            "latest_start": 7,
+            "slack_days": 0,
+            "is_critical": true,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:photo_brief",
+            "title": "Share photography brief",
+            "category": "Photography",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-11",
+            "lead_time_days": 21,
+            "budget_category": "Photography",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:makeup_plan",
+            "title": "Confirm makeup schedule and needs",
+            "category": "Makeup",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-02",
+            "lead_time_days": 30,
+            "budget_category": "Makeup",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:music_plan",
+            "title": "Confirm music and sound requirements",
+            "category": "Music",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-02",
+            "lead_time_days": 30,
+            "budget_category": "Music",
+            "duration_days": 2,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 6,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:transport_plan",
+            "title": "Confirm event transport plan",
+            "category": "Transport",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-11",
+            "lead_time_days": 21,
+            "budget_category": "Transport",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:venue_booking",
+            "title": "Confirm event venue",
+            "category": "Venue",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-01-03",
+            "lead_time_days": 150,
+            "budget_category": "Venue",
+            "duration_days": 3,
+            "dependencies": [],
+            "status": "PENDING",
+            "earliest_start": 0,
+            "latest_start": 1,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:catering_menu_lock",
+            "title": "Confirm food plan and per-plate range",
+            "category": "Catering",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-04-18",
+            "lead_time_days": 45,
+            "budget_category": "Catering",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking",
+              "event-three_day_celebration-2-1:venue_booking",
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 5,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:decor_plan",
+            "title": "Confirm stage and decor requirements",
+            "category": "Decor",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-04-18",
+            "lead_time_days": 45,
+            "budget_category": "Decor",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 5,
+            "slack_days": 2,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:music_plan",
+            "title": "Confirm music and sound requirements",
+            "category": "Music",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-05-03",
+            "lead_time_days": 30,
+            "budget_category": "Music",
+            "duration_days": 2,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 6,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:photo_brief",
+            "title": "Share photography brief",
+            "category": "Photography",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-05-12",
+            "lead_time_days": 21,
+            "budget_category": "Photography",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:transport_plan",
+            "title": "Confirm event transport plan",
+            "category": "Transport",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-05-12",
+            "lead_time_days": 21,
+            "budget_category": "Transport",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:venue_booking",
+            "title": "Confirm ceremony venue",
+            "category": "Venue",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2026-12-05",
+            "lead_time_days": 180,
+            "budget_category": "Venue",
+            "duration_days": 4,
+            "dependencies": [],
+            "status": "PENDING",
+            "earliest_start": 0,
+            "latest_start": 0,
+            "slack_days": 0,
+            "is_critical": true,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:catering_menu_lock",
+            "title": "Confirm food plan and per-plate range",
+            "category": "Catering",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-04-19",
+            "lead_time_days": 45,
+            "budget_category": "Catering",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking",
+              "event-three_day_celebration-2-1:venue_booking",
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 5,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:decor_plan",
+            "title": "Confirm ceremony decor requirements",
+            "category": "Decor",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-04-04",
+            "lead_time_days": 60,
+            "budget_category": "Decor",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 5,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:photo_brief",
+            "title": "Share photography brief",
+            "category": "Photography",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-05-13",
+            "lead_time_days": 21,
+            "budget_category": "Photography",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 7,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:makeup_plan",
+            "title": "Confirm makeup schedule and needs",
+            "category": "Makeup",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-05-04",
+            "lead_time_days": 30,
+            "budget_category": "Makeup",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 7,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:transport_plan",
+            "title": "Confirm event transport plan",
+            "category": "Transport",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-05-13",
+            "lead_time_days": 21,
+            "budget_category": "Transport",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 7,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          }
+        ],
+        "city": "Pune",
+        "first_event_date": "2027-06-01",
+        "days": [
+          {
+            "day_number": 1,
+            "date": "2027-06-01",
+            "events": [
+              {
+                "id": "event-three_day_celebration-1-1",
+                "catalog_id": "mehendi",
+                "custom_name": null,
+                "time_slot": "afternoon",
+                "guest_count": 132,
+                "venue_type": "outdoor",
+                "vendor_categories": []
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "date": "2027-06-02",
+            "events": [
+              {
+                "id": "event-three_day_celebration-2-1",
+                "catalog_id": "sangeet",
+                "custom_name": null,
+                "time_slot": "evening",
+                "guest_count": 120,
+                "venue_type": null,
+                "vendor_categories": []
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "date": "2027-06-03",
+            "events": [
+              {
+                "id": "event-three_day_celebration-3-1",
+                "catalog_id": "pheras",
+                "custom_name": null,
+                "time_slot": "evening",
+                "guest_count": 120,
+                "venue_type": null,
+                "vendor_categories": []
+              }
+            ]
+          }
+        ],
+        "special_diets": {},
+        "accessibility_needs": [],
+        "elder_members": 0,
+        "vendor_assignments": [],
+        "profile_hints": {
+          "food_defaults": [
+            "Ask the host to confirm meal preferences and counts; do not infer diet counts."
+          ],
+          "wording": [
+            "Use the event names and wording selected by the host."
+          ],
+          "vendor_search_terms": [
+            "Catering Mehendi Pune",
+            "Catering Sangeet Pune",
+            "Catering Pheras Pune",
+            "Decor Mehendi Pune",
+            "Decor Sangeet Pune",
+            "Decor Pheras Pune",
+            "Makeup Mehendi Pune",
+            "Makeup Sangeet Pune",
+            "Makeup Pheras Pune",
+            "Music Mehendi Pune",
+            "Music Sangeet Pune",
+            "Music Pheras Pune",
+            "Photography Mehendi Pune",
+            "Photography Sangeet Pune",
+            "Photography Pheras Pune",
+            "Transport Mehendi Pune",
+            "Transport Sangeet Pune",
+            "Transport Pheras Pune",
+            "Venue Mehendi Pune",
+            "Venue Sangeet Pune",
+            "Venue Pheras Pune"
+          ]
+        },
+        "notes": []
+      },
+      "diff": {
+        "mutated_attribute": "set_guest_count",
+        "affected_task_ids": [
+          "event-three_day_celebration-1-1:catering_menu_lock",
+          "event-three_day_celebration-1-1:vendor_brief"
+        ],
+        "affected_budget_categories": [
+          "Catering",
+          "Venue"
+        ],
+        "node_hops": {
+          "event-three_day_celebration-1-1:catering_menu_lock": 0,
+          "event-three_day_celebration-1-1:vendor_brief": 1
+        },
+        "violations": [],
+        "summary": "Set guest count updated 2 dependent task(s) across 3 day(s)."
+      },
+      "is_saved_fixture": true
+    },
+    {
+      "id": "outdoor_venue_loss",
+      "title": "Move Mehendi indoors",
+      "description": "Applies only because this event is marked as an outdoor venue.",
+      "updated_plan": {
+        "id": "saved-fixture-three-day",
+        "title": "Saved three-day example",
+        "template": "celebration",
+        "guest_count": 120,
+        "total_budget_cap_inr": 1500000.0,
+        "budget_range_min_inr": 1000000.0,
+        "budget_range_max_inr": 1500000.0,
+        "per_plate_min_inr": 700.0,
+        "per_plate_max_inr": 1000.0,
+        "venue_capacity": null,
+        "days_until_event": 214,
+        "dietary_split": {
+          "regular": 120,
+          "jain": 0,
+          "vegan": 0,
+          "kids": 0
+        },
+        "accessibility": {
+          "elderly_count": 0,
+          "wheelchair_access_required": false,
+          "ground_floor_dining": false
+        },
+        "sub_events": [],
+        "budget_buckets": [
+          {
+            "category": "Catering",
+            "allocated_min_inr": 252000.0,
+            "allocated_max_inr": 360000.0,
+            "contingency_inr": 36000.0,
+            "assumptions": [
+              "Based on user-entered per-plate range and event guest counts."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Decor",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Makeup",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Music",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Photography",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Transport",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Venue",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          }
+        ],
+        "tasks": [
+          {
+            "id": "event-three_day_celebration-1-1:venue_booking",
+            "title": "Confirm event venue",
+            "category": "Venue",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-01-02",
+            "lead_time_days": 150,
+            "budget_category": "Venue",
+            "duration_days": 3,
+            "dependencies": [],
+            "status": "PENDING",
+            "earliest_start": 0,
+            "latest_start": 1,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:catering_menu_lock",
+            "title": "Confirm food plan and per-plate range",
+            "category": "Catering",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-04-17",
+            "lead_time_days": 45,
+            "budget_category": "Catering",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking",
+              "event-three_day_celebration-2-1:venue_booking",
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 4,
+            "slack_days": 0,
+            "is_critical": true,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:decor_plan",
+            "title": "Confirm decor requirements",
+            "category": "Decor",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-02",
+            "lead_time_days": 30,
+            "budget_category": "Decor",
+            "duration_days": 2,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 6,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:vendor_brief",
+            "title": "Share event brief with vendors",
+            "category": "Coordination",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-18",
+            "lead_time_days": 14,
+            "budget_category": "Coordination",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:catering_menu_lock"
+            ],
+            "status": "PENDING",
+            "earliest_start": 7,
+            "latest_start": 7,
+            "slack_days": 0,
+            "is_critical": true,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:photo_brief",
+            "title": "Share photography brief",
+            "category": "Photography",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-11",
+            "lead_time_days": 21,
+            "budget_category": "Photography",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:makeup_plan",
+            "title": "Confirm makeup schedule and needs",
+            "category": "Makeup",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-02",
+            "lead_time_days": 30,
+            "budget_category": "Makeup",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:music_plan",
+            "title": "Confirm music and sound requirements",
+            "category": "Music",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-02",
+            "lead_time_days": 30,
+            "budget_category": "Music",
+            "duration_days": 2,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 6,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:transport_plan",
+            "title": "Confirm event transport plan",
+            "category": "Transport",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-06-01",
+            "due_date": "2027-05-11",
+            "lead_time_days": 21,
+            "budget_category": "Transport",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:venue_booking",
+            "title": "Confirm event venue",
+            "category": "Venue",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-01-03",
+            "lead_time_days": 150,
+            "budget_category": "Venue",
+            "duration_days": 3,
+            "dependencies": [],
+            "status": "PENDING",
+            "earliest_start": 0,
+            "latest_start": 1,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:catering_menu_lock",
+            "title": "Confirm food plan and per-plate range",
+            "category": "Catering",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-04-18",
+            "lead_time_days": 45,
+            "budget_category": "Catering",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking",
+              "event-three_day_celebration-2-1:venue_booking",
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 5,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:decor_plan",
+            "title": "Confirm stage and decor requirements",
+            "category": "Decor",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-04-18",
+            "lead_time_days": 45,
+            "budget_category": "Decor",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 5,
+            "slack_days": 2,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:music_plan",
+            "title": "Confirm music and sound requirements",
+            "category": "Music",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-05-03",
+            "lead_time_days": 30,
+            "budget_category": "Music",
+            "duration_days": 2,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 6,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:photo_brief",
+            "title": "Share photography brief",
+            "category": "Photography",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-05-12",
+            "lead_time_days": 21,
+            "budget_category": "Photography",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:transport_plan",
+            "title": "Confirm event transport plan",
+            "category": "Transport",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-06-02",
+            "due_date": "2027-05-12",
+            "lead_time_days": 21,
+            "budget_category": "Transport",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:venue_booking",
+            "title": "Confirm ceremony venue",
+            "category": "Venue",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2026-12-05",
+            "lead_time_days": 180,
+            "budget_category": "Venue",
+            "duration_days": 4,
+            "dependencies": [],
+            "status": "PENDING",
+            "earliest_start": 0,
+            "latest_start": 0,
+            "slack_days": 0,
+            "is_critical": true,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:catering_menu_lock",
+            "title": "Confirm food plan and per-plate range",
+            "category": "Catering",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-04-19",
+            "lead_time_days": 45,
+            "budget_category": "Catering",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking",
+              "event-three_day_celebration-2-1:venue_booking",
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 5,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:decor_plan",
+            "title": "Confirm ceremony decor requirements",
+            "category": "Decor",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-04-04",
+            "lead_time_days": 60,
+            "budget_category": "Decor",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 5,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:photo_brief",
+            "title": "Share photography brief",
+            "category": "Photography",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-05-13",
+            "lead_time_days": 21,
+            "budget_category": "Photography",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 7,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:makeup_plan",
+            "title": "Confirm makeup schedule and needs",
+            "category": "Makeup",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-05-04",
+            "lead_time_days": 30,
+            "budget_category": "Makeup",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 7,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:transport_plan",
+            "title": "Confirm event transport plan",
+            "category": "Transport",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-06-03",
+            "due_date": "2027-05-13",
+            "lead_time_days": 21,
+            "budget_category": "Transport",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 7,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          }
+        ],
+        "city": "Pune",
+        "first_event_date": "2027-06-01",
+        "days": [
+          {
+            "day_number": 1,
+            "date": "2027-06-01",
+            "events": [
+              {
+                "id": "event-three_day_celebration-1-1",
+                "catalog_id": "mehendi",
+                "custom_name": null,
+                "time_slot": "afternoon",
+                "guest_count": 120,
+                "venue_type": "indoor",
+                "vendor_categories": []
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "date": "2027-06-02",
+            "events": [
+              {
+                "id": "event-three_day_celebration-2-1",
+                "catalog_id": "sangeet",
+                "custom_name": null,
+                "time_slot": "evening",
+                "guest_count": 120,
+                "venue_type": null,
+                "vendor_categories": []
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "date": "2027-06-03",
+            "events": [
+              {
+                "id": "event-three_day_celebration-3-1",
+                "catalog_id": "pheras",
+                "custom_name": null,
+                "time_slot": "evening",
+                "guest_count": 120,
+                "venue_type": null,
+                "vendor_categories": []
+              }
+            ]
+          }
+        ],
+        "special_diets": {},
+        "accessibility_needs": [],
+        "elder_members": 0,
+        "vendor_assignments": [],
+        "profile_hints": {
+          "food_defaults": [
+            "Ask the host to confirm meal preferences and counts; do not infer diet counts."
+          ],
+          "wording": [
+            "Use the event names and wording selected by the host."
+          ],
+          "vendor_search_terms": [
+            "Catering Mehendi Pune",
+            "Catering Sangeet Pune",
+            "Catering Pheras Pune",
+            "Decor Mehendi Pune",
+            "Decor Sangeet Pune",
+            "Decor Pheras Pune",
+            "Makeup Mehendi Pune",
+            "Makeup Sangeet Pune",
+            "Makeup Pheras Pune",
+            "Music Mehendi Pune",
+            "Music Sangeet Pune",
+            "Music Pheras Pune",
+            "Photography Mehendi Pune",
+            "Photography Sangeet Pune",
+            "Photography Pheras Pune",
+            "Transport Mehendi Pune",
+            "Transport Sangeet Pune",
+            "Transport Pheras Pune",
+            "Venue Mehendi Pune",
+            "Venue Sangeet Pune",
+            "Venue Pheras Pune"
+          ]
+        },
+        "notes": []
+      },
+      "diff": {
+        "mutated_attribute": "update_event",
+        "affected_task_ids": [
+          "event-three_day_celebration-1-1:catering_menu_lock",
+          "event-three_day_celebration-1-1:decor_plan",
+          "event-three_day_celebration-1-1:makeup_plan",
+          "event-three_day_celebration-1-1:music_plan",
+          "event-three_day_celebration-1-1:photo_brief",
+          "event-three_day_celebration-1-1:transport_plan",
+          "event-three_day_celebration-1-1:vendor_brief",
+          "event-three_day_celebration-1-1:venue_booking",
+          "event-three_day_celebration-2-1:catering_menu_lock",
+          "event-three_day_celebration-3-1:catering_menu_lock"
+        ],
+        "affected_budget_categories": [],
+        "node_hops": {
+          "event-three_day_celebration-1-1:photo_brief": 0,
+          "event-three_day_celebration-1-1:decor_plan": 0,
+          "event-three_day_celebration-1-1:vendor_brief": 0,
+          "event-three_day_celebration-1-1:transport_plan": 0,
+          "event-three_day_celebration-1-1:makeup_plan": 0,
+          "event-three_day_celebration-1-1:venue_booking": 0,
+          "event-three_day_celebration-1-1:catering_menu_lock": 0,
+          "event-three_day_celebration-1-1:music_plan": 0,
+          "event-three_day_celebration-2-1:catering_menu_lock": 1,
+          "event-three_day_celebration-3-1:catering_menu_lock": 1
+        },
+        "violations": [],
+        "summary": "Update event updated 10 dependent task(s) across 3 day(s)."
+      },
+      "is_saved_fixture": true
+    },
+    {
+      "id": "date_shift",
+      "title": "Move the first event two weeks earlier",
+      "description": "Recalculates every event-relative task date across all days.",
+      "updated_plan": {
+        "id": "saved-fixture-three-day",
+        "title": "Saved three-day example",
+        "template": "celebration",
+        "guest_count": 120,
+        "total_budget_cap_inr": 1500000.0,
+        "budget_range_min_inr": 1000000.0,
+        "budget_range_max_inr": 1500000.0,
+        "per_plate_min_inr": 700.0,
+        "per_plate_max_inr": 1000.0,
+        "venue_capacity": null,
+        "days_until_event": 200,
+        "dietary_split": {
+          "regular": 120,
+          "jain": 0,
+          "vegan": 0,
+          "kids": 0
+        },
+        "accessibility": {
+          "elderly_count": 0,
+          "wheelchair_access_required": false,
+          "ground_floor_dining": false
+        },
+        "sub_events": [],
+        "budget_buckets": [
+          {
+            "category": "Catering",
+            "allocated_min_inr": 252000.0,
+            "allocated_max_inr": 360000.0,
+            "contingency_inr": 36000.0,
+            "assumptions": [
+              "Based on user-entered per-plate range and event guest counts."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Decor",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Makeup",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Music",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Photography",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Transport",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          },
+          {
+            "category": "Venue",
+            "allocated_min_inr": 0.0,
+            "allocated_max_inr": 0.0,
+            "contingency_inr": 0.0,
+            "assumptions": [
+              "No user-entered quote; amount is not estimated."
+            ],
+            "is_violated": false,
+            "category_budget_cap_inr": null
+          }
+        ],
+        "tasks": [
+          {
+            "id": "event-three_day_celebration-1-1:venue_booking",
+            "title": "Confirm event venue",
+            "category": "Venue",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-05-18",
+            "due_date": "2026-12-19",
+            "lead_time_days": 150,
+            "budget_category": "Venue",
+            "duration_days": 3,
+            "dependencies": [],
+            "status": "PENDING",
+            "earliest_start": 0,
+            "latest_start": 1,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:catering_menu_lock",
+            "title": "Confirm food plan and per-plate range",
+            "category": "Catering",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-05-18",
+            "due_date": "2027-04-03",
+            "lead_time_days": 45,
+            "budget_category": "Catering",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking",
+              "event-three_day_celebration-2-1:venue_booking",
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 4,
+            "slack_days": 0,
+            "is_critical": true,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:decor_plan",
+            "title": "Confirm decor requirements",
+            "category": "Decor",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-05-18",
+            "due_date": "2027-04-18",
+            "lead_time_days": 30,
+            "budget_category": "Decor",
+            "duration_days": 2,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 6,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:vendor_brief",
+            "title": "Share event brief with vendors",
+            "category": "Coordination",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-05-18",
+            "due_date": "2027-05-04",
+            "lead_time_days": 14,
+            "budget_category": "Coordination",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:catering_menu_lock"
+            ],
+            "status": "PENDING",
+            "earliest_start": 7,
+            "latest_start": 7,
+            "slack_days": 0,
+            "is_critical": true,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:photo_brief",
+            "title": "Share photography brief",
+            "category": "Photography",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-05-18",
+            "due_date": "2027-04-27",
+            "lead_time_days": 21,
+            "budget_category": "Photography",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:makeup_plan",
+            "title": "Confirm makeup schedule and needs",
+            "category": "Makeup",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-05-18",
+            "due_date": "2027-04-18",
+            "lead_time_days": 30,
+            "budget_category": "Makeup",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:music_plan",
+            "title": "Confirm music and sound requirements",
+            "category": "Music",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-05-18",
+            "due_date": "2027-04-18",
+            "lead_time_days": 30,
+            "budget_category": "Music",
+            "duration_days": 2,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 6,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-1-1:transport_plan",
+            "title": "Confirm event transport plan",
+            "category": "Transport",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-1-1",
+            "event_name": "Mehendi",
+            "event_date": "2027-05-18",
+            "due_date": "2027-04-27",
+            "lead_time_days": 21,
+            "budget_category": "Transport",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:venue_booking",
+            "title": "Confirm event venue",
+            "category": "Venue",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-05-19",
+            "due_date": "2026-12-20",
+            "lead_time_days": 150,
+            "budget_category": "Venue",
+            "duration_days": 3,
+            "dependencies": [],
+            "status": "PENDING",
+            "earliest_start": 0,
+            "latest_start": 1,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:catering_menu_lock",
+            "title": "Confirm food plan and per-plate range",
+            "category": "Catering",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-05-19",
+            "due_date": "2027-04-04",
+            "lead_time_days": 45,
+            "budget_category": "Catering",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking",
+              "event-three_day_celebration-2-1:venue_booking",
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 5,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:decor_plan",
+            "title": "Confirm stage and decor requirements",
+            "category": "Decor",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-05-19",
+            "due_date": "2027-04-04",
+            "lead_time_days": 45,
+            "budget_category": "Decor",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 5,
+            "slack_days": 2,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:music_plan",
+            "title": "Confirm music and sound requirements",
+            "category": "Music",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-05-19",
+            "due_date": "2027-04-19",
+            "lead_time_days": 30,
+            "budget_category": "Music",
+            "duration_days": 2,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 6,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:photo_brief",
+            "title": "Share photography brief",
+            "category": "Photography",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-05-19",
+            "due_date": "2027-04-28",
+            "lead_time_days": 21,
+            "budget_category": "Photography",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-2-1:transport_plan",
+            "title": "Confirm event transport plan",
+            "category": "Transport",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-2-1",
+            "event_name": "Sangeet",
+            "event_date": "2027-05-19",
+            "due_date": "2027-04-28",
+            "lead_time_days": 21,
+            "budget_category": "Transport",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-2-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 3,
+            "latest_start": 7,
+            "slack_days": 4,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:venue_booking",
+            "title": "Confirm ceremony venue",
+            "category": "Venue",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-05-20",
+            "due_date": "2026-11-21",
+            "lead_time_days": 180,
+            "budget_category": "Venue",
+            "duration_days": 4,
+            "dependencies": [],
+            "status": "PENDING",
+            "earliest_start": 0,
+            "latest_start": 0,
+            "slack_days": 0,
+            "is_critical": true,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:catering_menu_lock",
+            "title": "Confirm food plan and per-plate range",
+            "category": "Catering",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-05-20",
+            "due_date": "2027-04-05",
+            "lead_time_days": 45,
+            "budget_category": "Catering",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-1-1:venue_booking",
+              "event-three_day_celebration-2-1:venue_booking",
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 5,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:decor_plan",
+            "title": "Confirm ceremony decor requirements",
+            "category": "Decor",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-05-20",
+            "due_date": "2027-03-21",
+            "lead_time_days": 60,
+            "budget_category": "Decor",
+            "duration_days": 3,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 5,
+            "slack_days": 1,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:photo_brief",
+            "title": "Share photography brief",
+            "category": "Photography",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-05-20",
+            "due_date": "2027-04-29",
+            "lead_time_days": 21,
+            "budget_category": "Photography",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 7,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:makeup_plan",
+            "title": "Confirm makeup schedule and needs",
+            "category": "Makeup",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-05-20",
+            "due_date": "2027-04-20",
+            "lead_time_days": 30,
+            "budget_category": "Makeup",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 7,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          },
+          {
+            "id": "event-three_day_celebration-3-1:transport_plan",
+            "title": "Confirm event transport plan",
+            "category": "Transport",
+            "sub_event": null,
+            "event_id": "event-three_day_celebration-3-1",
+            "event_name": "Pheras",
+            "event_date": "2027-05-20",
+            "due_date": "2027-04-29",
+            "lead_time_days": 21,
+            "budget_category": "Transport",
+            "duration_days": 1,
+            "dependencies": [
+              "event-three_day_celebration-3-1:venue_booking"
+            ],
+            "status": "PENDING",
+            "earliest_start": 4,
+            "latest_start": 7,
+            "slack_days": 3,
+            "is_critical": false,
+            "hop_level": 0
+          }
+        ],
+        "city": "Pune",
+        "first_event_date": "2027-05-18",
+        "days": [
+          {
+            "day_number": 1,
+            "date": "2027-05-18",
+            "events": [
+              {
+                "id": "event-three_day_celebration-1-1",
+                "catalog_id": "mehendi",
+                "custom_name": null,
+                "time_slot": "afternoon",
+                "guest_count": 120,
+                "venue_type": "outdoor",
+                "vendor_categories": []
+              }
+            ]
+          },
+          {
+            "day_number": 2,
+            "date": "2027-05-19",
+            "events": [
+              {
+                "id": "event-three_day_celebration-2-1",
+                "catalog_id": "sangeet",
+                "custom_name": null,
+                "time_slot": "evening",
+                "guest_count": 120,
+                "venue_type": null,
+                "vendor_categories": []
+              }
+            ]
+          },
+          {
+            "day_number": 3,
+            "date": "2027-05-20",
+            "events": [
+              {
+                "id": "event-three_day_celebration-3-1",
+                "catalog_id": "pheras",
+                "custom_name": null,
+                "time_slot": "evening",
+                "guest_count": 120,
+                "venue_type": null,
+                "vendor_categories": []
+              }
+            ]
+          }
+        ],
+        "special_diets": {},
+        "accessibility_needs": [],
+        "elder_members": 0,
+        "vendor_assignments": [],
+        "profile_hints": {
+          "food_defaults": [
+            "Ask the host to confirm meal preferences and counts; do not infer diet counts."
+          ],
+          "wording": [
+            "Use the event names and wording selected by the host."
+          ],
+          "vendor_search_terms": [
+            "Catering Mehendi Pune",
+            "Catering Sangeet Pune",
+            "Catering Pheras Pune",
+            "Decor Mehendi Pune",
+            "Decor Sangeet Pune",
+            "Decor Pheras Pune",
+            "Makeup Mehendi Pune",
+            "Makeup Sangeet Pune",
+            "Makeup Pheras Pune",
+            "Music Mehendi Pune",
+            "Music Sangeet Pune",
+            "Music Pheras Pune",
+            "Photography Mehendi Pune",
+            "Photography Sangeet Pune",
+            "Photography Pheras Pune",
+            "Transport Mehendi Pune",
+            "Transport Sangeet Pune",
+            "Transport Pheras Pune",
+            "Venue Mehendi Pune",
+            "Venue Sangeet Pune",
+            "Venue Pheras Pune"
+          ]
+        },
+        "notes": []
+      },
+      "diff": {
+        "mutated_attribute": "first_event_date",
+        "affected_task_ids": [
+          "event-three_day_celebration-1-1:catering_menu_lock",
+          "event-three_day_celebration-1-1:decor_plan",
+          "event-three_day_celebration-1-1:makeup_plan",
+          "event-three_day_celebration-1-1:music_plan",
+          "event-three_day_celebration-1-1:photo_brief",
+          "event-three_day_celebration-1-1:transport_plan",
+          "event-three_day_celebration-1-1:vendor_brief",
+          "event-three_day_celebration-1-1:venue_booking",
+          "event-three_day_celebration-2-1:catering_menu_lock",
+          "event-three_day_celebration-2-1:decor_plan",
+          "event-three_day_celebration-2-1:music_plan",
+          "event-three_day_celebration-2-1:photo_brief",
+          "event-three_day_celebration-2-1:transport_plan",
+          "event-three_day_celebration-2-1:venue_booking",
+          "event-three_day_celebration-3-1:catering_menu_lock",
+          "event-three_day_celebration-3-1:decor_plan",
+          "event-three_day_celebration-3-1:makeup_plan",
+          "event-three_day_celebration-3-1:photo_brief",
+          "event-three_day_celebration-3-1:transport_plan",
+          "event-three_day_celebration-3-1:venue_booking"
+        ],
+        "affected_budget_categories": [],
+        "node_hops": {
+          "event-three_day_celebration-1-1:transport_plan": 0,
+          "event-three_day_celebration-1-1:makeup_plan": 0,
+          "event-three_day_celebration-2-1:catering_menu_lock": 0,
+          "event-three_day_celebration-2-1:venue_booking": 0,
+          "event-three_day_celebration-2-1:transport_plan": 0,
+          "event-three_day_celebration-3-1:decor_plan": 0,
+          "event-three_day_celebration-1-1:vendor_brief": 0,
+          "event-three_day_celebration-2-1:music_plan": 0,
+          "event-three_day_celebration-1-1:music_plan": 0,
+          "event-three_day_celebration-2-1:decor_plan": 0,
+          "event-three_day_celebration-1-1:photo_brief": 0,
+          "event-three_day_celebration-1-1:decor_plan": 0,
+          "event-three_day_celebration-3-1:makeup_plan": 0,
+          "event-three_day_celebration-3-1:catering_menu_lock": 0,
+          "event-three_day_celebration-1-1:venue_booking": 0,
+          "event-three_day_celebration-1-1:catering_menu_lock": 0,
+          "event-three_day_celebration-3-1:transport_plan": 0,
+          "event-three_day_celebration-3-1:venue_booking": 0,
+          "event-three_day_celebration-2-1:photo_brief": 0,
+          "event-three_day_celebration-3-1:photo_brief": 0
+        },
+        "violations": [],
+        "summary": "Shifted the first event date and rebuilt all event-relative task dates."
+      },
+      "is_saved_fixture": true
+    }
+  ]
+}

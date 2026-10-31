@@ -1,0 +1,9 @@
+{
+  "_header": "Saved exact-match fallback examples for optional custom-event catalog mapping. Extend only with reviewed aliases.",
+  "mappings": [
+    {"phrase": "henna gathering", "catalog_id": "mehendi"},
+    {"phrase": "music and dance evening", "catalog_id": "sangeet"},
+    {"phrase": "church service", "catalog_id": "church_ceremony"},
+    {"phrase": "wedding reception", "catalog_id": "reception"}
+  ]
+}

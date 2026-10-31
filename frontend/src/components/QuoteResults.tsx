@@ -1,0 +1,20 @@
+import React from "react";
+import { AlertTriangle, Check, Copy, FileText, HelpCircle } from "lucide-react";
+import type { QuoteComparison } from "../api/types";
+import { formatMoney } from "../lib/format";
+import { Button, Chip } from "./ui";
+
+interface Props { result: QuoteComparison; guestCount: number; copied: boolean; onCopy: () => void; onReset: () => void }
+
+export const QuoteResults: React.FC<Props> = ({ result, guestCount, copied, onCopy, onReset }) => <div className="space-y-5">
+  <div className="grid gap-3 text-sm md:grid-cols-3">
+    <div className="rounded-xl border border-line bg-white/60 p-4"><span className="text-muted">Quote total</span><p className="mt-1 text-lg font-bold">{formatMoney(result.normalized_quote.raw_total_inr)}</p><span className="text-xs text-muted">{formatMoney(result.normalized_quote.normalized_per_head_inr)} per attendee</span></div>
+    <div className="rounded-xl border border-line bg-white/60 p-4"><span className="text-muted">Catering allowance</span><p className="mt-1 text-lg font-bold">{formatMoney(result.budget_allocated_max_inr)}</p><span className="text-xs text-muted">Current plan amount</span></div>
+    <div className="rounded-xl border border-line bg-white/60 p-4"><span className="text-muted">Budget-aligned amount</span><p className="mt-1 text-lg font-bold text-success">{formatMoney(result.target_counter_offer_inr)}</p><Chip tone={result.is_within_budget ? "success" : "warning"}>{result.is_within_budget ? "Within budget" : "Host-entered budget cap"}</Chip></div>
+  </div>
+  <div className="overflow-x-auto rounded-xl border border-line bg-white/45"><table className="w-full border-collapse text-left text-sm"><caption className="p-3 text-left font-semibold">Quote comparison</caption><thead><tr className="border-y border-line text-muted"><th scope="col" className="p-3">Measure</th><th scope="col" className="p-3 text-right">Quote</th><th scope="col" className="p-3 text-right">Plan</th></tr></thead><tbody><tr className="border-b border-line/70"><th scope="row" className="p-3 font-medium">Total</th><td className="p-3 text-right">{formatMoney(result.normalized_quote.raw_total_inr)}</td><td className="p-3 text-right">{formatMoney(result.budget_allocated_max_inr)}</td></tr><tr><th scope="row" className="p-3 font-medium">Per attendee</th><td className="p-3 text-right">{formatMoney(result.normalized_quote.normalized_per_head_inr)}</td><td className="p-3 text-right">{formatMoney(result.budget_allocated_max_inr / Math.max(guestCount, 1))}</td></tr></tbody></table></div>
+  {result.hidden_cost_flags?.length ? <section><h3 className="mb-2 flex items-center gap-2 font-semibold text-danger"><AlertTriangle size={16} />Items to confirm</h3><ul className="grid gap-2 md:grid-cols-2">{result.hidden_cost_flags.map((flag, index) => <li key={`${flag.name}-${index}`} className="rounded-xl border border-danger/25 bg-danger-soft p-3 text-sm"><div className="flex justify-between gap-2 font-semibold"><span>{flag.name}</span><span>{flag.estimated_impact_inr == null ? "Amount not provided" : formatMoney(flag.estimated_impact_inr)}</span></div><p className="mt-1 text-xs">{flag.description}</p></li>)}</ul></section> : null}
+  <section className="space-y-2"><div className="flex flex-wrap items-center justify-between gap-2"><h3 className="flex items-center gap-2 font-semibold"><FileText size={16} />Suggested message to the vendor</h3><Button variant="quiet" onClick={onCopy}>{copied ? <Check size={15} /> : <Copy size={15} />}{copied ? "Copied" : "Copy"}</Button></div><pre className="whitespace-pre-wrap rounded-xl border border-line bg-white/60 p-4 text-sm font-sans">{result.negotiation_script}</pre></section>
+  {!!result.vendor_interview_questions?.length && <section><h3 className="mb-2 flex items-center gap-2 font-semibold"><HelpCircle size={16} />Questions to ask</h3><ol className="list-inside list-decimal space-y-2">{result.vendor_interview_questions.map((question, index) => <li key={index} className="rounded-lg border border-line/70 bg-white/40 p-3 text-sm">{question}</li>)}</ol></section>}
+  <Button onClick={onReset}>Compare another quote</Button>
+</div>;

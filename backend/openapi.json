@@ -1,0 +1,2421 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Celebration & Event Planner API",
+    "description": "Data-driven event planning and vendor coordination API",
+    "version": "2.0.0"
+  },
+  "paths": {
+    "/api/plan/catalog": {
+      "get": {
+        "tags": [
+          "Event Planning"
+        ],
+        "summary": "Get Event Catalog",
+        "operationId": "get_event_catalog_api_plan_catalog_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Event Catalog Api Plan Catalog Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan/examples": {
+      "get": {
+        "tags": [
+          "Event Planning"
+        ],
+        "summary": "Get Example Selections",
+        "description": "Return event selections that have passed through the same builder used for final plans.",
+        "operationId": "get_example_selections_api_plan_examples_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Get Example Selections Api Plan Examples Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan/map-custom-event": {
+      "post": {
+        "tags": [
+          "Event Planning"
+        ],
+        "summary": "Map Custom Event",
+        "operationId": "map_custom_event_api_plan_map_custom_event_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomEventMapRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Map Custom Event Api Plan Map Custom Event Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan/build": {
+      "post": {
+        "tags": [
+          "Event Planning"
+        ],
+        "summary": "Build Plan",
+        "operationId": "build_plan_api_plan_build_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventPlan-Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventPlan-Output"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan/scenarios": {
+      "post": {
+        "tags": [
+          "Event Planning"
+        ],
+        "summary": "Get Plan Scenario Fixtures",
+        "operationId": "get_plan_scenario_fixtures_api_plan_scenarios_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioFixtureRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Get Plan Scenario Fixtures Api Plan Scenarios Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan/events/edit": {
+      "post": {
+        "tags": [
+          "Event Planning"
+        ],
+        "summary": "Edit Plan Events",
+        "operationId": "edit_plan_events_api_plan_events_edit_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventEditRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Edit Plan Events Api Plan Events Edit Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan/vendors/assign": {
+      "post": {
+        "tags": [
+          "Event Planning"
+        ],
+        "summary": "Assign Plan Vendor",
+        "operationId": "assign_plan_vendor_api_plan_vendors_assign_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VendorAssignmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Assign Plan Vendor Api Plan Vendors Assign Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan/replan": {
+      "post": {
+        "tags": [
+          "Replanning"
+        ],
+        "summary": "Replan Event",
+        "description": "Pure deterministic replanning endpoint complying with LAW-01 & Free-Tier guidelines.",
+        "operationId": "replan_event_api_plan_replan_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReplanResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan/replan/stream": {
+      "post": {
+        "tags": [
+          "Replanning"
+        ],
+        "summary": "Replan Stream",
+        "description": "3-stage SSE streaming endpoint for natural language replanning.\n\nStream sequence:\n  event: delta       \u2192 validated PlanDelta JSON\n  event: engine_diff \u2192 CascadeDiff + updated plan + trade-off options (immediate)\n  event: rationale   \u2192 human explanation (templated, with optional LLM enhancement)",
+        "operationId": "replan_stream_api_plan_replan_stream_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NaturalLanguageReplanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/plan/quota": {
+      "get": {
+        "tags": [
+          "Replanning"
+        ],
+        "summary": "Get Quota Status",
+        "description": "Returns current Gemini quota availability for frontend status badges.",
+        "operationId": "get_quota_status_api_plan_quota_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Quota Status Api Plan Quota Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vendor/compare": {
+      "post": {
+        "tags": [
+          "Vendor Coordination"
+        ],
+        "summary": "Compare Quote",
+        "description": "Compare the host-entered quote with the host-entered budget without estimating market fees.",
+        "operationId": "compare_quote_api_vendor_compare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompareRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteComparison"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vendor/upload": {
+      "post": {
+        "tags": [
+          "Vendor Coordination"
+        ],
+        "summary": "Upload Quote Document",
+        "description": "Validates quote document purely in memory via magic bytes and page caps complying with LAW-06.",
+        "operationId": "upload_quote_document_api_vendor_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_quote_document_api_vendor_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "501": {
+            "description": "Automatic quote extraction is unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vendors/search": {
+      "post": {
+        "tags": [
+          "Vendor Search"
+        ],
+        "summary": "Search Vendors",
+        "operationId": "search_vendors_api_vendors_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VendorSearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Search Vendors Api Vendors Search Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vendors/{place_id}": {
+      "get": {
+        "tags": [
+          "Vendor Search"
+        ],
+        "summary": "Get Vendor Details",
+        "operationId": "get_vendor_details_api_vendors__place_id__get",
+        "parameters": [
+          {
+            "name": "place_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "title": "Place Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Vendor Details Api Vendors  Place Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health Check",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Check Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccessibilityNeeds": {
+        "properties": {
+          "elderly_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Elderly Count",
+            "description": "Number of elderly guests requiring assistance",
+            "default": 0
+          },
+          "wheelchair_access_required": {
+            "type": "boolean",
+            "title": "Wheelchair Access Required",
+            "description": "Whether venue must be ramp-accessible",
+            "default": false
+          },
+          "ground_floor_dining": {
+            "type": "boolean",
+            "title": "Ground Floor Dining",
+            "description": "Whether elderly dining must be on ground level",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "AccessibilityNeeds"
+      },
+      "Body_upload_quote_document_api_vendor_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_quote_document_api_vendor_upload_post"
+      },
+      "BudgetBucket": {
+        "properties": {
+          "category": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Category",
+            "description": "Budget category, e.g., Catering, Decor, Venue"
+          },
+          "allocated_min_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Allocated Min Inr",
+            "description": "Minimum projected cost in INR"
+          },
+          "allocated_max_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Allocated Max Inr",
+            "description": "Maximum projected cost in INR"
+          },
+          "contingency_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Contingency Inr",
+            "description": "Dedicated 10% contingency buffer in INR"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Assumptions",
+            "description": "Planning heuristic assumptions"
+          },
+          "is_violated": {
+            "type": "boolean",
+            "title": "Is Violated",
+            "description": "True if allocated_max exceeds budget limit",
+            "default": false
+          },
+          "category_budget_cap_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Budget Cap Inr"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "category",
+          "allocated_min_inr",
+          "allocated_max_inr",
+          "contingency_inr"
+        ],
+        "title": "BudgetBucket"
+      },
+      "CascadeDiff": {
+        "properties": {
+          "mutated_attribute": {
+            "type": "string",
+            "title": "Mutated Attribute",
+            "description": "Primary field changed, e.g., guest_count, date, per_plate"
+          },
+          "affected_task_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Affected Task Ids",
+            "description": "Tasks whose dates, status, or scope were touched"
+          },
+          "affected_budget_categories": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Affected Budget Categories",
+            "description": "Budget buckets whose costs were altered"
+          },
+          "node_hops": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Node Hops",
+            "description": "Map from task_id to its hop distance from the mutation root"
+          },
+          "violations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Violations",
+            "description": "Any hard constraint or budget breaches"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary",
+            "description": "Deterministic human-readable explanation of cascade impact"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "mutated_attribute",
+          "affected_task_ids",
+          "affected_budget_categories",
+          "node_hops",
+          "summary"
+        ],
+        "title": "CascadeDiff"
+      },
+      "CompareRequest": {
+        "properties": {
+          "quote": {
+            "$ref": "#/components/schemas/NormalizedQuote"
+          },
+          "allocated_budget_max_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Allocated Budget Max Inr"
+          },
+          "guest_count": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Guest Count"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "quote",
+          "allocated_budget_max_inr",
+          "guest_count"
+        ],
+        "title": "CompareRequest"
+      },
+      "CustomEventMapRequest": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "CustomEventMapRequest"
+      },
+      "DietarySplit": {
+        "properties": {
+          "regular": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Regular",
+            "description": "Count of regular dietary guests",
+            "default": 0
+          },
+          "jain": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Jain",
+            "description": "Count of strictly Jain vegetarian guests",
+            "default": 0
+          },
+          "vegan": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Vegan",
+            "description": "Count of vegan guests",
+            "default": 0
+          },
+          "kids": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Kids",
+            "description": "Count of children under 10",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "DietarySplit"
+      },
+      "EventDay-Input": {
+        "properties": {
+          "day_number": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Day Number"
+          },
+          "date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/PlanEvent"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Events"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "day_number"
+        ],
+        "title": "EventDay"
+      },
+      "EventDay-Output": {
+        "properties": {
+          "day_number": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Day Number"
+          },
+          "date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Date"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/PlanEvent"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Events"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "day_number"
+        ],
+        "title": "EventDay"
+      },
+      "EventEditRequest": {
+        "properties": {
+          "plan": {
+            "$ref": "#/components/schemas/EventPlan-Input"
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "add_day",
+              "remove_day",
+              "add_event",
+              "remove_event",
+              "set_guest_count",
+              "move_event",
+              "reorder_days",
+              "update_event"
+            ],
+            "title": "Operation"
+          },
+          "event_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Id"
+          },
+          "day_number": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 5.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Day Number"
+          },
+          "target_day_number": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 5.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Day Number"
+          },
+          "event": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PlanEvent"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "guest_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100000.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guest Count"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "plan",
+          "operation"
+        ],
+        "title": "EventEditRequest"
+      },
+      "EventPlan-Input": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Id",
+            "description": "Plan unique identifier"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Title",
+            "description": "Event celebration title"
+          },
+          "template": {
+            "type": "string",
+            "maxLength": 80,
+            "title": "Template",
+            "description": "Selected event plan template",
+            "default": "celebration"
+          },
+          "guest_count": {
+            "type": "integer",
+            "maximum": 100000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Guest Count",
+            "description": "Total guests; each event defaults to this count",
+            "default": 1
+          },
+          "total_budget_cap_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Total Budget Cap Inr",
+            "description": "User-entered total budget ceiling",
+            "default": 0.0
+          },
+          "budget_range_min_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Budget Range Min Inr",
+            "default": 0.0
+          },
+          "budget_range_max_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Budget Range Max Inr",
+            "default": 0.0
+          },
+          "per_plate_min_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Per Plate Min Inr",
+            "description": "User-entered minimum per-plate budget",
+            "default": 0.0
+          },
+          "per_plate_max_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Per Plate Max Inr",
+            "description": "User-entered maximum per-plate budget",
+            "default": 0.0
+          },
+          "venue_capacity": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Venue Capacity",
+            "description": "Deprecated plan-wide capacity compatibility field"
+          },
+          "days_until_event": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Days Until Event",
+            "description": "Days to the first event; compatibility summary",
+            "default": 0
+          },
+          "dietary_split": {
+            "$ref": "#/components/schemas/DietarySplit",
+            "description": "Deprecated dietary compatibility summary"
+          },
+          "accessibility": {
+            "$ref": "#/components/schemas/AccessibilityNeeds",
+            "description": "Accessibility requirements"
+          },
+          "sub_events": {
+            "items": {
+              "$ref": "#/components/schemas/SubEventType"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Sub Events",
+            "description": "Deprecated Phase 1 compatibility field"
+          },
+          "budget_buckets": {
+            "items": {
+              "$ref": "#/components/schemas/BudgetBucket"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "title": "Budget Buckets",
+            "description": "Budget amounts from user inputs or quotes"
+          },
+          "tasks": {
+            "items": {
+              "$ref": "#/components/schemas/TaskNode"
+            },
+            "type": "array",
+            "maxItems": 1000,
+            "title": "Tasks",
+            "description": "DAG nodes generated from selected events"
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 120,
+            "title": "City",
+            "default": ""
+          },
+          "first_event_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Event Date"
+          },
+          "days": {
+            "items": {
+              "$ref": "#/components/schemas/EventDay-Input"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Days"
+          },
+          "special_diets": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "maxLength": 60,
+              "minLength": 1
+            },
+            "type": "object",
+            "maxProperties": 20,
+            "title": "Special Diets",
+            "description": "User-entered dietary counts"
+          },
+          "accessibility_needs": {
+            "items": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Accessibility Needs",
+            "description": "User-entered accessibility needs"
+          },
+          "elder_members": {
+            "type": "integer",
+            "maximum": 100000.0,
+            "minimum": 0.0,
+            "title": "Elder Members",
+            "default": 0
+          },
+          "vendor_assignments": {
+            "items": {
+              "$ref": "#/components/schemas/VendorAssignment"
+            },
+            "type": "array",
+            "maxItems": 700,
+            "title": "Vendor Assignments"
+          },
+          "profile_hints": {
+            "additionalProperties": {
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "type": "array",
+              "maxItems": 40
+            },
+            "propertyNames": {
+              "maxLength": 80
+            },
+            "type": "object",
+            "maxProperties": 10,
+            "title": "Profile Hints",
+            "description": "Derived from selected events; contains no religion field"
+          },
+          "notes": {
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Notes",
+            "description": "Event planning notes and constraint warnings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "title"
+        ],
+        "title": "EventPlan"
+      },
+      "EventPlan-Output": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Id",
+            "description": "Plan unique identifier"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Title",
+            "description": "Event celebration title"
+          },
+          "template": {
+            "type": "string",
+            "maxLength": 80,
+            "title": "Template",
+            "description": "Selected event plan template",
+            "default": "celebration"
+          },
+          "guest_count": {
+            "type": "integer",
+            "maximum": 100000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Guest Count",
+            "description": "Total guests; each event defaults to this count",
+            "default": 1
+          },
+          "total_budget_cap_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Total Budget Cap Inr",
+            "description": "User-entered total budget ceiling",
+            "default": 0.0
+          },
+          "budget_range_min_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Budget Range Min Inr",
+            "default": 0.0
+          },
+          "budget_range_max_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Budget Range Max Inr",
+            "default": 0.0
+          },
+          "per_plate_min_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Per Plate Min Inr",
+            "description": "User-entered minimum per-plate budget",
+            "default": 0.0
+          },
+          "per_plate_max_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Per Plate Max Inr",
+            "description": "User-entered maximum per-plate budget",
+            "default": 0.0
+          },
+          "venue_capacity": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Venue Capacity",
+            "description": "Deprecated plan-wide capacity compatibility field"
+          },
+          "days_until_event": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Days Until Event",
+            "description": "Days to the first event; compatibility summary",
+            "default": 0
+          },
+          "dietary_split": {
+            "$ref": "#/components/schemas/DietarySplit",
+            "description": "Deprecated dietary compatibility summary"
+          },
+          "accessibility": {
+            "$ref": "#/components/schemas/AccessibilityNeeds",
+            "description": "Accessibility requirements"
+          },
+          "sub_events": {
+            "items": {
+              "$ref": "#/components/schemas/SubEventType"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Sub Events",
+            "description": "Deprecated Phase 1 compatibility field"
+          },
+          "budget_buckets": {
+            "items": {
+              "$ref": "#/components/schemas/BudgetBucket"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "title": "Budget Buckets",
+            "description": "Budget amounts from user inputs or quotes"
+          },
+          "tasks": {
+            "items": {
+              "$ref": "#/components/schemas/TaskNode"
+            },
+            "type": "array",
+            "maxItems": 1000,
+            "title": "Tasks",
+            "description": "DAG nodes generated from selected events"
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 120,
+            "title": "City",
+            "default": ""
+          },
+          "first_event_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Event Date"
+          },
+          "days": {
+            "items": {
+              "$ref": "#/components/schemas/EventDay-Output"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Days"
+          },
+          "special_diets": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "maxLength": 60,
+              "minLength": 1
+            },
+            "type": "object",
+            "maxProperties": 20,
+            "title": "Special Diets",
+            "description": "User-entered dietary counts"
+          },
+          "accessibility_needs": {
+            "items": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Accessibility Needs",
+            "description": "User-entered accessibility needs"
+          },
+          "elder_members": {
+            "type": "integer",
+            "maximum": 100000.0,
+            "minimum": 0.0,
+            "title": "Elder Members",
+            "default": 0
+          },
+          "vendor_assignments": {
+            "items": {
+              "$ref": "#/components/schemas/VendorAssignment"
+            },
+            "type": "array",
+            "maxItems": 700,
+            "title": "Vendor Assignments"
+          },
+          "profile_hints": {
+            "additionalProperties": {
+              "items": {
+                "type": "string",
+                "maxLength": 500
+              },
+              "type": "array",
+              "maxItems": 40
+            },
+            "propertyNames": {
+              "maxLength": 80
+            },
+            "type": "object",
+            "maxProperties": 10,
+            "title": "Profile Hints",
+            "description": "Derived from selected events; contains no religion field"
+          },
+          "notes": {
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Notes",
+            "description": "Event planning notes and constraint warnings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "title"
+        ],
+        "title": "EventPlan"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HiddenCostFlag": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Name of the missing or hidden item"
+          },
+          "estimated_impact_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated Impact Inr",
+            "description": "Vendor-entered or confirmed impact; null when no amount is known"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "description": "Explanation of why this is a risk for the event plan"
+          },
+          "severity": {
+            "type": "string",
+            "title": "Severity",
+            "description": "Severity: LOW, MEDIUM, or HIGH"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "severity"
+        ],
+        "title": "HiddenCostFlag"
+      },
+      "NaturalLanguageReplanRequest": {
+        "properties": {
+          "plan": {
+            "$ref": "#/components/schemas/EventPlan-Input",
+            "description": "Current client-persisted plan state"
+          },
+          "user_prompt": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "User Prompt",
+            "description": "Free-text user instruction (capped at 500 chars)"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "plan",
+          "user_prompt"
+        ],
+        "title": "NaturalLanguageReplanRequest"
+      },
+      "NormalizedQuote": {
+        "properties": {
+          "vendor_name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Vendor Name",
+            "description": "Vendor or agency name"
+          },
+          "category": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Category",
+            "description": "Vendor service category (Catering, Decor, Venue, Photography)"
+          },
+          "raw_total_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Raw Total Inr",
+            "description": "Total quote amount as quoted"
+          },
+          "normalized_per_head_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Normalized Per Head Inr",
+            "description": "Effective cost per guest"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/NormalizedQuoteItem"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Items",
+            "description": "Extracted line items"
+          },
+          "includes_gst": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includes Gst",
+            "description": "Whether the vendor marked applicable taxes as included"
+          },
+          "includes_generator_backup": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includes Generator Backup",
+            "description": "Whether power backup is marked as included"
+          },
+          "includes_jain_counter": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includes Jain Counter",
+            "description": "Whether separate Jain meal preparation is marked as included"
+          },
+          "includes_corkage": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Includes Corkage",
+            "description": "Whether any relevant corkage or glassware fee is marked as included"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "vendor_name",
+          "category",
+          "raw_total_inr",
+          "normalized_per_head_inr"
+        ],
+        "title": "NormalizedQuote"
+      },
+      "NormalizedQuoteItem": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Line item description"
+          },
+          "category": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Category",
+            "description": "Item category, e.g., Buffet, Live Counter, Beverages"
+          },
+          "unit_rate_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Unit Rate Inr",
+            "description": "Unit cost in INR"
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Quantity",
+            "description": "Quantity or guest count multiplier"
+          },
+          "total_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Total Inr",
+            "description": "Extended line item total in INR"
+          },
+          "is_optional": {
+            "type": "boolean",
+            "title": "Is Optional",
+            "description": "True if this item can be omitted to save costs",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "category",
+          "unit_rate_inr",
+          "quantity",
+          "total_inr"
+        ],
+        "title": "NormalizedQuoteItem"
+      },
+      "PlanDelta": {
+        "properties": {
+          "guest_count_delta": {
+            "type": "integer",
+            "title": "Guest Count Delta",
+            "description": "Change in total guest headcount",
+            "default": 0
+          },
+          "sub_event_filter": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/SubEventType"
+                },
+                "type": "array",
+                "maxItems": 4
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sub Event Filter",
+            "description": "Subset of active sub-events"
+          },
+          "budget_cap_inr_delta": {
+            "type": "number",
+            "title": "Budget Cap Inr Delta",
+            "description": "Shift in overall budget limit in INR",
+            "default": 0.0
+          },
+          "per_plate_delta_inr": {
+            "type": "number",
+            "title": "Per Plate Delta Inr",
+            "description": "Shift in catering per-plate rate in INR",
+            "default": 0.0
+          },
+          "days_until_event_delta": {
+            "type": "integer",
+            "title": "Days Until Event Delta",
+            "description": "Shift in timeline days (negative = sooner)",
+            "default": 0
+          },
+          "venue_capacity_override": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Venue Capacity Override",
+            "description": "New venue capacity limit"
+          },
+          "indoor_relocation": {
+            "type": "boolean",
+            "title": "Indoor Relocation",
+            "description": "True if weather forces outdoor events indoors",
+            "default": false
+          },
+          "dietary_jain_delta": {
+            "type": "integer",
+            "title": "Dietary Jain Delta",
+            "description": "Change in Jain dietary headcount",
+            "default": 0
+          },
+          "new_constraints": {
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "New Constraints",
+            "description": "Ad-hoc constraints extracted or passed"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "PlanDelta"
+      },
+      "PlanEvent": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "catalog_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalog Id"
+          },
+          "custom_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Custom Name"
+          },
+          "time_slot": {
+            "$ref": "#/components/schemas/TimeSlot",
+            "default": "evening"
+          },
+          "guest_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100000.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guest Count"
+          },
+          "venue_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Venue Type"
+          },
+          "vendor_categories": {
+            "items": {
+              "$ref": "#/components/schemas/VendorCategory"
+            },
+            "type": "array",
+            "maxItems": 7,
+            "title": "Vendor Categories"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "PlanEvent"
+      },
+      "QuoteComparison": {
+        "properties": {
+          "normalized_quote": {
+            "$ref": "#/components/schemas/NormalizedQuote",
+            "description": "Parsed and normalized vendor quote"
+          },
+          "budget_allocated_max_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Budget Allocated Max Inr",
+            "description": "Budget cap allocated for this category"
+          },
+          "variance_inr": {
+            "type": "number",
+            "title": "Variance Inr",
+            "description": "Quote total minus allocated max (positive = over budget)"
+          },
+          "is_within_budget": {
+            "type": "boolean",
+            "title": "Is Within Budget",
+            "description": "True if variance_inr <= 0"
+          },
+          "hidden_cost_flags": {
+            "items": {
+              "$ref": "#/components/schemas/HiddenCostFlag"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Hidden Cost Flags",
+            "description": "Identified missing inclusions"
+          },
+          "target_counter_offer_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Target Counter Offer Inr",
+            "description": "Deterministic target counter-offer to fit budget"
+          },
+          "negotiation_script": {
+            "type": "string",
+            "title": "Negotiation Script",
+            "description": "Grounded negotiation message for WhatsApp or Email"
+          },
+          "vendor_interview_questions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Vendor Interview Questions",
+            "description": "5 sharp questions to ask the vendor"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "normalized_quote",
+          "budget_allocated_max_inr",
+          "variance_inr",
+          "is_within_budget",
+          "target_counter_offer_inr",
+          "negotiation_script"
+        ],
+        "title": "QuoteComparison"
+      },
+      "ReplanRequest": {
+        "properties": {
+          "plan": {
+            "$ref": "#/components/schemas/EventPlan-Input",
+            "description": "Current client-persisted plan state"
+          },
+          "delta": {
+            "$ref": "#/components/schemas/PlanDelta",
+            "description": "Structured delta to apply"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "plan",
+          "delta"
+        ],
+        "title": "ReplanRequest"
+      },
+      "ReplanResponse": {
+        "properties": {
+          "updated_plan": {
+            "$ref": "#/components/schemas/EventPlan-Output",
+            "description": "Healed and rescheduled plan state"
+          },
+          "diff": {
+            "$ref": "#/components/schemas/CascadeDiff",
+            "description": "Exact impact diff with hop levels and violations"
+          },
+          "tradeoff_options": {
+            "items": {
+              "$ref": "#/components/schemas/TradeOffOption"
+            },
+            "type": "array",
+            "title": "Tradeoff Options",
+            "description": "Deterministic recovery options if budget is breached"
+          },
+          "is_cached_fixture": {
+            "type": "boolean",
+            "title": "Is Cached Fixture",
+            "description": "True if served from pre-computed zero-quota fixture",
+            "default": false
+          },
+          "degraded_mode": {
+            "type": "boolean",
+            "title": "Degraded Mode",
+            "description": "True if Gemini was unavailable and fallback was used",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "updated_plan",
+          "diff"
+        ],
+        "title": "ReplanResponse"
+      },
+      "ScenarioFixtureRequest": {
+        "properties": {
+          "plan": {
+            "$ref": "#/components/schemas/EventPlan-Input"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "plan"
+        ],
+        "title": "ScenarioFixtureRequest"
+      },
+      "SubEventType": {
+        "type": "string",
+        "enum": [
+          "HALDI",
+          "SANGEET",
+          "WEDDING",
+          "RECEPTION"
+        ],
+        "title": "SubEventType",
+        "description": "Deprecated compatibility enum for Phase 1 saved plans."
+      },
+      "TaskNode": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Id",
+            "description": "Unique task identifier, e.g., task_venue_booking"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 250,
+            "minLength": 1,
+            "title": "Title",
+            "description": "Human readable task title"
+          },
+          "category": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Category",
+            "description": "Category corresponding to budget or workflow"
+          },
+          "sub_event": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SubEventType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Deprecated Phase 1 field"
+          },
+          "event_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Id",
+            "description": "Event instance that owns this task"
+          },
+          "event_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Name"
+          },
+          "event_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Date",
+            "description": "Date of the event this task supports"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date",
+            "description": "Task date computed from event date and lead time"
+          },
+          "lead_time_days": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lead Time Days",
+            "description": "Days before the associated event"
+          },
+          "budget_category": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Category"
+          },
+          "duration_days": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Duration Days",
+            "description": "Estimated work duration in days"
+          },
+          "dependencies": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Dependencies",
+            "description": "IDs of upstream prerequisite tasks"
+          },
+          "status": {
+            "type": "string",
+            "maxLength": 20,
+            "title": "Status",
+            "description": "Task lifecycle status: PENDING, IN_PROGRESS, COMPLETED, BLOCKED",
+            "default": "PENDING"
+          },
+          "earliest_start": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Earliest Start",
+            "description": "CPM earliest start day from project inception",
+            "default": 0
+          },
+          "latest_start": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Latest Start",
+            "description": "CPM latest start day without delaying the event date",
+            "default": 0
+          },
+          "slack_days": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Slack Days",
+            "description": "Total float/slack days",
+            "default": 0
+          },
+          "is_critical": {
+            "type": "boolean",
+            "title": "Is Critical",
+            "description": "True if slack_days == 0 (Critical Path)",
+            "default": false
+          },
+          "hop_level": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Hop Level",
+            "description": "Dependency hop distance from mutated root node",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "category",
+          "duration_days"
+        ],
+        "title": "TaskNode"
+      },
+      "TimeSlot": {
+        "type": "string",
+        "enum": [
+          "morning",
+          "afternoon",
+          "evening",
+          "night"
+        ],
+        "title": "TimeSlot"
+      },
+      "TradeOffOption": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Identifier for trade-off option, e.g. opt_trim_reception"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "description": "Brief title of the trade-off"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "description": "Actionable description of the adjustment"
+          },
+          "savings_min_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Savings Min Inr",
+            "description": "Lower bound estimated recovery in INR"
+          },
+          "savings_max_inr": {
+            "type": "number",
+            "minimum": 0.0,
+            "title": "Savings Max Inr",
+            "description": "Upper bound estimated recovery in INR"
+          },
+          "bucket_adjustments": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Bucket Adjustments",
+            "description": "Keyed by category with delta in INR (e.g., {'Decor & Floral': -150000.0})"
+          },
+          "guest_count_adjustment": {
+            "type": "integer",
+            "title": "Guest Count Adjustment",
+            "description": "Reduction in guest count if applicable",
+            "default": 0
+          },
+          "impact_level": {
+            "type": "string",
+            "title": "Impact Level",
+            "description": "Severity impact: LOW, MEDIUM, or HIGH"
+          },
+          "tradeoff_rationale": {
+            "type": "string",
+            "title": "Tradeoff Rationale",
+            "description": "Deterministic explanation of why this trade-off heals the plan"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "description",
+          "savings_min_inr",
+          "savings_max_inr",
+          "bucket_adjustments",
+          "impact_level",
+          "tradeoff_rationale"
+        ],
+        "title": "TradeOffOption"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VendorAssignment": {
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Event Id"
+          },
+          "category": {
+            "$ref": "#/components/schemas/VendorCategory"
+          },
+          "place_id": {
+            "type": "string",
+            "maxLength": 512,
+            "minLength": 1,
+            "title": "Place Id"
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Notes",
+            "default": ""
+          },
+          "quoted_total_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quoted Total Inr"
+          },
+          "category_budget_cap_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category Budget Cap Inr"
+          },
+          "capacity": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100000.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Capacity"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "event_id",
+          "category",
+          "place_id"
+        ],
+        "title": "VendorAssignment"
+      },
+      "VendorAssignmentRequest": {
+        "properties": {
+          "plan": {
+            "$ref": "#/components/schemas/EventPlan-Input"
+          },
+          "assignment": {
+            "$ref": "#/components/schemas/VendorAssignment"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "plan",
+          "assignment"
+        ],
+        "title": "VendorAssignmentRequest"
+      },
+      "VendorCategory": {
+        "type": "string",
+        "enum": [
+          "venue",
+          "caterer",
+          "decorator",
+          "photographer",
+          "makeup",
+          "music",
+          "transport"
+        ],
+        "title": "VendorCategory"
+      },
+      "VendorSearchRequest": {
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "venue",
+              "caterer",
+              "decorator",
+              "photographer",
+              "makeup",
+              "music",
+              "transport"
+            ],
+            "title": "Category"
+          },
+          "city": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 120,
+                "minLength": 2
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 90.0,
+                "minimum": -90.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lng": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 180.0,
+                "minimum": -180.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lng"
+          },
+          "radius_m": {
+            "type": "integer",
+            "maximum": 50000.0,
+            "minimum": 100.0,
+            "title": "Radius M",
+            "default": 25000
+          },
+          "keyword": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Keyword"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "category"
+        ],
+        "title": "VendorSearchRequest"
+      }
+    }
+  }
+}

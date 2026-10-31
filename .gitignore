@@ -1,0 +1,45 @@
+# Specification and review documents
+coding_agent_implementation_plan.md
+Event Planner Free-Tier Review of the Implementation Plan.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+dist-profile/
+*.local
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.pem
+.tools/
+.coverage
+coverage/
+playwright-report/
+test-results/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+

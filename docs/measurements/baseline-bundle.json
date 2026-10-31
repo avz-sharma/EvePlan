@@ -1,0 +1,52 @@
+[
+  {
+    "file": "BudgetTab-cSsjNBk1.js",
+    "bytes": 7849,
+    "gzip_bytes": 2827
+  },
+  {
+    "file": "EventsTab-C4ZmcXVX.js",
+    "bytes": 8745,
+    "gzip_bytes": 2901
+  },
+  {
+    "file": "HowItWorksTab-C45UOMqH.js",
+    "bytes": 4554,
+    "gzip_bytes": 1542
+  },
+  {
+    "file": "index-Btcp8NEU.js",
+    "bytes": 303929,
+    "gzip_bytes": 96788
+  },
+  {
+    "file": "OverviewTab-Bl_qLRN6.js",
+    "bytes": 5755,
+    "gzip_bytes": 2239
+  },
+  {
+    "file": "QuotesTab-DNcmBE0s.js",
+    "bytes": 1743,
+    "gzip_bytes": 829
+  },
+  {
+    "file": "ScenariosTab-BSrEEzYK.js",
+    "bytes": 4119,
+    "gzip_bytes": 1654
+  },
+  {
+    "file": "sparkles-DDv4g4sT.js",
+    "bytes": 677,
+    "gzip_bytes": 401
+  },
+  {
+    "file": "TimelineTab-D9l_L7G-.js",
+    "bytes": 8117,
+    "gzip_bytes": 2893
+  },
+  {
+    "file": "VendorsTab-CwJnOI4p.js",
+    "bytes": 20084,
+    "gzip_bytes": 6420
+  }
+]

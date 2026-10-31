@@ -1,0 +1,158 @@
+{
+  "_header": "Starter catalog only. People from each represented community must review names, wording, durations, venue hints, vendor needs, sensitivities, and tasks before production use. These are planning defaults, not cultural rules.",
+  "events": [
+    {
+      "id": "mehendi",
+      "display_name": "Mehendi",
+      "typical_duration_minutes": 180,
+      "time_of_day": "afternoon",
+      "venue_type_hints": ["indoor", "garden"],
+      "vendor_categories_needed": ["venue", "caterer", "decorator", "photographer", "makeup", "music", "transport"],
+      "guest_count_sensitivity": "medium",
+      "tradition_tags": ["henna_gathering", "south_asian_celebration"],
+      "task_templates": [
+        {"id": "venue_booking", "name": "Confirm event venue", "lead_time_days": 150, "duration_days": 3, "dependencies": [], "budget_category": "Venue"},
+        {"id": "catering_menu_lock", "name": "Confirm food plan and per-plate range", "lead_time_days": 45, "duration_days": 3, "dependencies": ["all:venue_booking"], "budget_category": "Catering"},
+        {"id": "decor_plan", "name": "Confirm decor requirements", "lead_time_days": 30, "duration_days": 2, "dependencies": ["venue_booking"], "budget_category": "Decor"},
+        {"id": "vendor_brief", "name": "Share event brief with vendors", "lead_time_days": 14, "duration_days": 1, "dependencies": ["catering_menu_lock"], "budget_category": "Coordination"},
+        {"id": "photo_brief", "name": "Share photography brief", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Photography"},
+        {"id": "makeup_plan", "name": "Confirm makeup schedule and needs", "lead_time_days": 30, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Makeup"},
+        {"id": "music_plan", "name": "Confirm music and sound requirements", "lead_time_days": 30, "duration_days": 2, "dependencies": ["venue_booking"], "budget_category": "Music"},
+        {"id": "transport_plan", "name": "Confirm event transport plan", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Transport"}
+      ]
+    },
+    {
+      "id": "sangeet",
+      "display_name": "Sangeet",
+      "typical_duration_minutes": 240,
+      "time_of_day": "evening",
+      "venue_type_hints": ["indoor", "hall", "garden"],
+      "vendor_categories_needed": ["venue", "caterer", "decorator", "photographer", "music", "transport"],
+      "guest_count_sensitivity": "high",
+      "tradition_tags": ["music_and_dance_gathering", "south_asian_celebration"],
+      "task_templates": [
+        {"id": "venue_booking", "name": "Confirm event venue", "lead_time_days": 150, "duration_days": 3, "dependencies": [], "budget_category": "Venue"},
+        {"id": "catering_menu_lock", "name": "Confirm food plan and per-plate range", "lead_time_days": 45, "duration_days": 3, "dependencies": ["all:venue_booking"], "budget_category": "Catering"},
+        {"id": "decor_plan", "name": "Confirm stage and decor requirements", "lead_time_days": 45, "duration_days": 3, "dependencies": ["venue_booking"], "budget_category": "Decor"},
+        {"id": "music_plan", "name": "Confirm music and sound requirements", "lead_time_days": 30, "duration_days": 2, "dependencies": ["venue_booking"], "budget_category": "Music"},
+        {"id": "photo_brief", "name": "Share photography brief", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Photography"},
+        {"id": "transport_plan", "name": "Confirm event transport plan", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Transport"}
+      ]
+    },
+    {
+      "id": "pheras",
+      "display_name": "Pheras",
+      "typical_duration_minutes": 180,
+      "time_of_day": "evening",
+      "venue_type_hints": ["indoor", "outdoor", "hall"],
+      "vendor_categories_needed": ["venue", "caterer", "decorator", "photographer", "makeup", "transport"],
+      "guest_count_sensitivity": "high",
+      "tradition_tags": ["south_asian_ceremony"],
+      "task_templates": [
+        {"id": "venue_booking", "name": "Confirm ceremony venue", "lead_time_days": 180, "duration_days": 4, "dependencies": [], "budget_category": "Venue"},
+        {"id": "catering_menu_lock", "name": "Confirm food plan and per-plate range", "lead_time_days": 45, "duration_days": 3, "dependencies": ["all:venue_booking"], "budget_category": "Catering"},
+        {"id": "decor_plan", "name": "Confirm ceremony decor requirements", "lead_time_days": 60, "duration_days": 3, "dependencies": ["venue_booking"], "budget_category": "Decor"},
+        {"id": "photo_brief", "name": "Share photography brief", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Photography"},
+        {"id": "makeup_plan", "name": "Confirm makeup schedule and needs", "lead_time_days": 30, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Makeup"},
+        {"id": "transport_plan", "name": "Confirm event transport plan", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Transport"}
+      ]
+    },
+    {
+      "id": "nikah",
+      "display_name": "Nikah",
+      "typical_duration_minutes": 120,
+      "time_of_day": "morning",
+      "venue_type_hints": ["indoor", "hall", "outdoor"],
+      "vendor_categories_needed": ["venue", "caterer", "decorator", "photographer", "transport"],
+      "guest_count_sensitivity": "high",
+      "tradition_tags": ["nikah_context", "confirm_food_preferences"],
+      "task_templates": [
+        {"id": "venue_booking", "name": "Confirm ceremony venue", "lead_time_days": 150, "duration_days": 3, "dependencies": [], "budget_category": "Venue"},
+        {"id": "catering_menu_lock", "name": "Confirm food preferences and per-plate range", "lead_time_days": 45, "duration_days": 3, "dependencies": ["all:venue_booking"], "budget_category": "Catering"},
+        {"id": "decor_plan", "name": "Confirm decor requirements", "lead_time_days": 30, "duration_days": 2, "dependencies": ["venue_booking"], "budget_category": "Decor"},
+        {"id": "photo_brief", "name": "Share photography brief", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Photography"},
+        {"id": "transport_plan", "name": "Confirm event transport plan", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Transport"}
+      ]
+    },
+    {
+      "id": "walima",
+      "display_name": "Walima",
+      "typical_duration_minutes": 240,
+      "time_of_day": "evening",
+      "venue_type_hints": ["hall", "indoor", "outdoor"],
+      "vendor_categories_needed": ["venue", "caterer", "decorator", "photographer", "music", "transport"],
+      "guest_count_sensitivity": "high",
+      "tradition_tags": ["walima_context", "confirm_food_preferences"],
+      "task_templates": [
+        {"id": "venue_booking", "name": "Confirm event venue", "lead_time_days": 150, "duration_days": 3, "dependencies": [], "budget_category": "Venue"},
+        {"id": "catering_menu_lock", "name": "Confirm food preferences and per-plate range", "lead_time_days": 45, "duration_days": 3, "dependencies": ["all:venue_booking"], "budget_category": "Catering"},
+        {"id": "decor_plan", "name": "Confirm decor requirements", "lead_time_days": 30, "duration_days": 2, "dependencies": ["venue_booking"], "budget_category": "Decor"},
+        {"id": "photo_brief", "name": "Share photography brief", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Photography"},
+        {"id": "music_plan", "name": "Confirm music and sound requirements", "lead_time_days": 30, "duration_days": 2, "dependencies": ["venue_booking"], "budget_category": "Music"},
+        {"id": "transport_plan", "name": "Confirm event transport plan", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Transport"}
+      ]
+    },
+    {
+      "id": "church_ceremony",
+      "display_name": "Church ceremony",
+      "typical_duration_minutes": 120,
+      "time_of_day": "morning",
+      "venue_type_hints": ["church", "indoor"],
+      "vendor_categories_needed": ["venue", "photographer", "transport"],
+      "guest_count_sensitivity": "medium",
+      "tradition_tags": ["church_ceremony_context", "confirm_host_wording"],
+      "task_templates": [
+        {"id": "venue_booking", "name": "Confirm ceremony location", "lead_time_days": 150, "duration_days": 3, "dependencies": [], "budget_category": "Venue"},
+        {"id": "photo_brief", "name": "Share photography brief", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Photography"},
+        {"id": "transport_plan", "name": "Confirm event transport plan", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Transport"}
+      ]
+    },
+    {
+      "id": "reception",
+      "display_name": "Reception",
+      "typical_duration_minutes": 240,
+      "time_of_day": "evening",
+      "venue_type_hints": ["hall", "indoor", "outdoor"],
+      "vendor_categories_needed": ["venue", "caterer", "decorator", "photographer", "makeup", "music", "transport"],
+      "guest_count_sensitivity": "high",
+      "tradition_tags": ["celebration_reception", "confirm_food_preferences"],
+      "task_templates": [
+        {"id": "venue_booking", "name": "Confirm event venue", "lead_time_days": 150, "duration_days": 3, "dependencies": [], "budget_category": "Venue"},
+        {"id": "catering_menu_lock", "name": "Confirm food plan and per-plate range", "lead_time_days": 45, "duration_days": 3, "dependencies": ["all:venue_booking"], "budget_category": "Catering"},
+        {"id": "decor_plan", "name": "Confirm decor requirements", "lead_time_days": 45, "duration_days": 3, "dependencies": ["venue_booking"], "budget_category": "Decor"},
+        {"id": "music_plan", "name": "Confirm music and sound requirements", "lead_time_days": 30, "duration_days": 2, "dependencies": ["venue_booking"], "budget_category": "Music"},
+        {"id": "photo_brief", "name": "Share photography brief", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Photography"},
+        {"id": "makeup_plan", "name": "Confirm makeup schedule and needs", "lead_time_days": 30, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Makeup"},
+        {"id": "transport_plan", "name": "Confirm event transport plan", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Transport"}
+      ]
+    },
+    {
+      "id": "pooja",
+      "display_name": "Pooja",
+      "typical_duration_minutes": 120,
+      "time_of_day": "morning",
+      "venue_type_hints": ["indoor", "home", "outdoor"],
+      "vendor_categories_needed": ["venue", "caterer", "decorator", "photographer"],
+      "guest_count_sensitivity": "medium",
+      "tradition_tags": ["host_defined_ceremony", "confirm_food_preferences"],
+      "task_templates": [
+        {"id": "venue_booking", "name": "Confirm ceremony location", "lead_time_days": 60, "duration_days": 2, "dependencies": [], "budget_category": "Venue"},
+        {"id": "catering_menu_lock", "name": "Confirm food preferences and per-plate range", "lead_time_days": 21, "duration_days": 2, "dependencies": ["all:venue_booking"], "budget_category": "Catering"},
+        {"id": "decor_plan", "name": "Confirm decor requirements", "lead_time_days": 14, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Decor"},
+        {"id": "photo_brief", "name": "Share photography brief", "lead_time_days": 14, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Photography"}
+      ]
+    }
+  ],
+  "custom_event_defaults": {
+    "_note": "Custom events do not infer tradition or vendor needs. The host may select vendor categories explicitly.",
+    "task_templates": [
+      {"id": "venue_booking", "name": "Confirm event location", "lead_time_days": 60, "duration_days": 2, "dependencies": [], "budget_category": "Venue", "vendor_category": "venue"},
+      {"id": "catering_menu_lock", "name": "Confirm food preferences and per-plate range", "lead_time_days": 21, "duration_days": 2, "dependencies": ["all:venue_booking"], "budget_category": "Catering", "vendor_category": "caterer"},
+      {"id": "decor_plan", "name": "Confirm decor requirements", "lead_time_days": 30, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Decor", "vendor_category": "decorator"},
+      {"id": "photo_brief", "name": "Share photography brief", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Photography", "vendor_category": "photographer"},
+      {"id": "makeup_plan", "name": "Confirm makeup schedule and needs", "lead_time_days": 30, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Makeup", "vendor_category": "makeup"},
+      {"id": "music_plan", "name": "Confirm music and sound requirements", "lead_time_days": 30, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Music", "vendor_category": "music"},
+      {"id": "transport_plan", "name": "Confirm event transport plan", "lead_time_days": 21, "duration_days": 1, "dependencies": ["venue_booking"], "budget_category": "Transport", "vendor_category": "transport"}
+    ]
+  }
+}

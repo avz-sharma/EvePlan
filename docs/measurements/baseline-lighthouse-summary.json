@@ -1,0 +1,16 @@
+[
+  {
+    "tab": "overview",
+    "performance": 100,
+    "accessibility": 100,
+    "lcp_ms": 1749.813,
+    "tbt_ms": 48
+  },
+  {
+    "tab": "vendors",
+    "performance": 86,
+    "accessibility": 100,
+    "lcp_ms": 1324.2498,
+    "tbt_ms": 12.000000000000227
+  }
+]
