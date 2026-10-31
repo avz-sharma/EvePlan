@@ -4,10 +4,10 @@ export function securityHeaders(mode: string): Plugin {
   const api = loadEnv(mode, "..", "VITE_").VITE_API_BASE_URL;
   const apiOrigin = api && !api.startsWith("/") ? ` ${new URL(api).origin}` : "";
   const headers = {
-    "Content-Security-Policy": "default-src 'self'; script-src 'self' https://maps.googleapis.com https://maps.gstatic.com; "
-      + "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https://*.googleapis.com https://*.gstatic.com https://*.google.com; "
-      + `connect-src 'self' https://*.googleapis.com https://maps.gstatic.com${apiOrigin}; `
-      + "font-src 'self' https://fonts.gstatic.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; "
+      + "style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; "
+      + `connect-src 'self'${apiOrigin}; `
+      + "font-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "Referrer-Policy": "strict-origin-when-cross-origin",

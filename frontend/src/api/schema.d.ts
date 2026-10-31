@@ -1035,24 +1035,14 @@ export interface components {
         VendorCategory: "venue" | "caterer" | "decorator" | "photographer" | "makeup" | "music" | "transport";
         /** VendorSearchRequest */
         VendorSearchRequest: {
-            /**
-             * Category
-             * @enum {string}
-             */
-            category: "venue" | "caterer" | "decorator" | "photographer" | "makeup" | "music" | "transport";
+            category: components["schemas"]["VendorCategory"];
             /** City */
-            city?: string | null;
-            /** Lat */
-            lat?: number | null;
-            /** Lng */
-            lng?: number | null;
+            city: string;
             /**
-             * Radius M
-             * @default 25000
+             * Keyword
+             * @default
              */
-            radius_m: number;
-            /** Keyword */
-            keyword?: string | null;
+            keyword: string;
         };
     };
     responses: never;
@@ -1486,9 +1476,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

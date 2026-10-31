@@ -14,9 +14,6 @@ class Settings(BaseSettings):
 
     GEMINI_API_KEY: SecretStr | None = None
     GEMINI_MODEL: str = "gemini-2.5-flash-lite"
-    GOOGLE_PLACES_API_KEY: SecretStr | None = None
-    GOOGLE_PLACES_RPM_LIMIT: int = 5
-    GOOGLE_PLACES_DAILY_LIMIT: int = 100
     ALLOWED_ORIGINS: list[str] = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",

@@ -517,8 +517,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "minLength": 1,
-              "maxLength": 512,
               "title": "Place Id"
             }
           }
@@ -528,11 +526,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "object",
-                  "additionalProperties": true,
-                  "title": "Response Get Vendor Details Api Vendors  Place Id  Get"
-                }
+                "schema": {}
               }
             }
           },
@@ -2082,81 +2076,26 @@
       "VendorSearchRequest": {
         "properties": {
           "category": {
-            "type": "string",
-            "enum": [
-              "venue",
-              "caterer",
-              "decorator",
-              "photographer",
-              "makeup",
-              "music",
-              "transport"
-            ],
-            "title": "Category"
+            "$ref": "#/components/schemas/VendorCategory"
           },
           "city": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 120,
-                "minLength": 2
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
             "title": "City"
           },
-          "lat": {
-            "anyOf": [
-              {
-                "type": "number",
-                "maximum": 90.0,
-                "minimum": -90.0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Lat"
-          },
-          "lng": {
-            "anyOf": [
-              {
-                "type": "number",
-                "maximum": 180.0,
-                "minimum": -180.0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Lng"
-          },
-          "radius_m": {
-            "type": "integer",
-            "maximum": 50000.0,
-            "minimum": 100.0,
-            "title": "Radius M",
-            "default": 25000
-          },
           "keyword": {
-            "anyOf": [
-              {
-                "type": "string",
-                "maxLength": 80
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Keyword"
+            "type": "string",
+            "maxLength": 80,
+            "title": "Keyword",
+            "default": ""
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "category"
+          "category",
+          "city"
         ],
         "title": "VendorSearchRequest"
       }

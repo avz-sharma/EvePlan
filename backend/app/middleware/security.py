@@ -8,11 +8,11 @@ from starlette.responses import JSONResponse
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 CSP = (
-    "default-src 'self'; script-src 'self' https://maps.googleapis.com https://maps.gstatic.com; "
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-    "img-src 'self' data: blob: https://*.googleapis.com https://*.gstatic.com https://*.google.com; "
-    "connect-src 'self' https://*.googleapis.com https://maps.gstatic.com; "
-    "font-src 'self' https://fonts.gstatic.com; worker-src 'self' blob:; "
+    "default-src 'self'; script-src 'self'; "
+    "style-src 'self' 'unsafe-inline'; "
+    "img-src 'self' data: blob:; "
+    "connect-src 'self'; "
+    "font-src 'self'; worker-src 'self' blob:; "
     "object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
 )
 SECURITY_HEADERS = {

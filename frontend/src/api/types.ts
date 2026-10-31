@@ -103,15 +103,6 @@ export interface CatalogEvent {
   task_templates: Array<{ id: string; name: string; lead_time_days: number; dependencies: string[]; budget_category: string }>;
 }
 
-export interface VendorSearchResult {
-  place_id: string;
-  display_name: string;
-  formatted_address: string;
-  location: { lat: number | null; lng: number | null };
-  types: string[];
-  maps_url: string;
-}
-
 export type PlanDelta = Partial<components["schemas"]["PlanDelta"]>;
 export type CascadeDiff = components["schemas"]["CascadeDiff"];
 export type TradeOffOption = components["schemas"]["TradeOffOption"];

@@ -16,7 +16,6 @@ beforeEach(() => {
   vi.stubGlobal("localStorage", { getItem: (key: string) => stored.get(key) ?? null,
     setItem: (key: string, value: string) => stored.set(key, value), removeItem: (key: string) => stored.delete(key) });
   vi.stubGlobal("matchMedia", vi.fn(() => ({ matches: true, addListener() {}, removeListener() {} })));
-  vi.stubEnv("VITE_GOOGLE_MAPS_BROWSER_KEY", "");
   window.history.replaceState(null, "", "/#/overview");
   planActions.patch({ plan: null, forkedPlan: null, history: [], historyIndex: -1,
     lastDiff: null, lastDelta: null, tradeoffOptions: [], isLoading: false, quotesOpen: false });

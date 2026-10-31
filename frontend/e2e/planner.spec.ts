@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
 test("wizard, plan, streamed replan and degraded vendor assignment", async ({ page }) => {
@@ -46,4 +47,42 @@ test("wizard, plan, streamed replan and degraded vendor assignment", async ({ pa
   await quote.getByRole("button", { name: "Close quote comparison" }).click();
   await page.getByRole("button", { name: "Snap a quote" }).click();
   await expect(quote.getByLabel("Vendor name", { exact: true })).toHaveValue("Preserved quote draft");
+});
+
+for (const width of [390, 1280]) test(`keyless discovery at ${width}px`, async ({ page }) => {
+  const plan = JSON.parse(readFileSync("../backend/app/fixtures/scenario_outputs.json", "utf8")).fixtures[0].updated_plan;
+  await page.setViewportSize({ width, height: 844 });
+  const forbidden: string[] = [];
+  page.on("request", request => {
+    if (/maps\.googleapis|places\.googleapis|maps\.gstatic|\/api\/vendors\/(search|[^/]+$)/.test(request.url())) forbidden.push(request.url());
+  });
+  await page.addInitScript(value => localStorage.setItem("eveplan_active_plan", JSON.stringify(value)), plan);
+  await page.goto("/#/vendors");
+  await expect(page.getByRole("heading", { name: "Discover vendors" })).toBeVisible();
+  await page.getByLabel("Event type", { exact: true }).fill("Wedding");
+  await page.getByLabel("City", { exact: true }).fill("");
+  await page.getByRole("button", { name: /^Find / }).click();
+  await expect(page.getByRole("alert")).toContainText("enter a city");
+  await page.getByLabel("City", { exact: true }).fill("Amritsar, Punjab");
+  const chips = page.getByRole("group", { name: "Vendor category", exact: true }).getByRole("button");
+  for (const chip of await chips.all()) {
+    await chip.click();
+    await page.getByRole("button", { name: /^Find / }).click();
+    const link = page.getByRole("link", { name: "Search on Google Maps", exact: true });
+    const href = await link.getAttribute("href");
+    expect(new URL(href!).searchParams.get("query")).toContain("in Amritsar, Punjab");
+    await expect(link).toHaveAttribute("target", "_blank");
+    await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    // Intercept the external page so this test neither scrapes nor depends on Google.
+    await page.context().route("https://www.google.com/maps/**", route => route.fulfill({ body: "External Maps navigation verified" }));
+    const popup = page.waitForEvent("popup");
+    await link.click();
+    const external = await popup; await external.waitForLoadState();
+    expect(external.url()).toBe(href); await external.close();
+    await page.getByRole("button", { name: "Search More Vendors", exact: true }).click();
+    await expect(page.getByLabel("Event type", { exact: true })).toBeFocused();
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  expect(forbidden).toEqual([]);
+  await expect(page.getByText(/API key|billing account/i)).toHaveCount(0);
 });
