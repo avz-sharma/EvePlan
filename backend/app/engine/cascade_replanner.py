@@ -8,6 +8,7 @@ from .budget_tradeoffs import evaluate_budget_tradeoffs
 from .conflict_rules import evaluate_conflicts
 from .dependency_scheduler import compute_cpm_schedule
 from .plan_builder import build_event_plan
+from .plan_diff import changed_budget_categories, vendor_capacity_violations
 
 
 def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDiff]:
@@ -126,7 +127,8 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
 
     # BFS from affected tasks to propagate cascade ripple hop levels
     node_hops: dict[str, int] = {}
-    queue: deque[tuple[str, int]] = deque([(t_id, 0) for t_id in affected_tasks if any(t.id == t_id for t in updated_plan.tasks)])
+    task_ids = {task.id for task in updated_plan.tasks}
+    queue: deque[tuple[str, int]] = deque([(t_id, 0) for t_id in affected_tasks if t_id in task_ids])
     if not queue and updated_plan.tasks:
         queue.append((updated_plan.tasks[0].id, 0))
 
@@ -287,18 +289,8 @@ def apply_event_plan_delta(
     if mutated == "timeline_days":
         node_hops = {task.id: 0 for task in rebuilt.tasks}
 
-    changed_categories = {
-        before.category for before in plan.budget_buckets
-        if next((after for after in rebuilt.budget_buckets if after.category == before.category), None) != before
-    } | {
-        after.category for after in rebuilt.budget_buckets
-        if next((before for before in plan.budget_buckets if before.category == after.category), None) != after
-    }
-    violations = [
-        f"{assignment.category.value} vendor capacity ({assignment.capacity}) is below event attendance ({next(((event.guest_count or 0) for day in rebuilt.days for event in day.events if event.id == assignment.event_id), 0)})."
-        for assignment in rebuilt.vendor_assignments
-        if assignment.capacity is not None and assignment.capacity < next(((event.guest_count or 0) for day in rebuilt.days for event in day.events if event.id == assignment.event_id), 0)
-    ]
+    changed_categories = changed_budget_categories(plan.budget_buckets, rebuilt.budget_buckets)
+    violations = vendor_capacity_violations(rebuilt)
     violations.extend(note for note in rebuilt.notes if "Venue capacity" in note)
     diff = CascadeDiff(
         mutated_attribute=mutated,

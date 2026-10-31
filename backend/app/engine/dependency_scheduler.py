@@ -37,7 +37,8 @@ def topological_sort_tasks(tasks: Sequence[TaskNode]) -> list[TaskNode]:
                 queue.append(neighbor)
 
     if len(sorted_order) != len(tasks):
-        unvisited = [t.id for t in tasks if t not in sorted_order]
+        visited_ids = {task.id for task in sorted_order}
+        unvisited = [task.id for task in tasks if task.id not in visited_ids]
         raise CyclicDependencyError(f"Dependency cycle detected involving tasks: {unvisited}")
 
     return sorted_order

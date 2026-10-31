@@ -20,6 +20,7 @@ from ..schemas.plan_state import (
     VendorAssignment,
 )
 from .dependency_scheduler import compute_cpm_schedule
+from .plan_diff import changed_budget_categories, event_guest_counts, vendor_capacity_violations
 from .planning_heuristics import CONTINGENCY_RATE, GUEST_SURGE_SCENARIO_SHARE
 
 VENDOR_CATEGORY_LABELS = {
@@ -438,24 +439,14 @@ def edit_event_plan(
         for task_id, hop in old_hops.items():
             hops.setdefault(task_id, hop)
     affected = set(hops)
-    changed_budgets = {
-        before.category for before in plan.budget_buckets
-        if next((after for after in rebuilt.budget_buckets if after.category == before.category), None) != before
-    } | {
-        after.category for after in rebuilt.budget_buckets
-        if next((before for before in plan.budget_buckets if before.category == after.category), None) != after
-    }
+    changed_budgets = changed_budget_categories(plan.budget_buckets, rebuilt.budget_buckets)
     summary = f"{operation.replace('_', ' ').capitalize()} updated {len(affected)} dependent task(s) across {len(rebuilt.days)} day(s)."
     diff = CascadeDiff(
         mutated_attribute=mutated,
         affected_task_ids=sorted(affected),
         affected_budget_categories=sorted(affected_categories | changed_budgets),
         node_hops=hops,
-        violations=[
-            f"{assignment.category.value} vendor capacity ({assignment.capacity}) is below event attendance ({next(((item.guest_count or 0) for day in rebuilt.days for item in day.events if item.id == assignment.event_id), 0)})."
-            for assignment in rebuilt.vendor_assignments
-            if assignment.capacity is not None and assignment.capacity < next(((item.guest_count or 0) for day in rebuilt.days for item in day.events if item.id == assignment.event_id), 0)
-        ],
+        violations=vendor_capacity_violations(rebuilt),
         summary=summary,
     )
     return rebuilt, diff
@@ -487,7 +478,7 @@ def assign_vendor(
         if task.event_id == assignment.event_id and task.budget_category == task_category
     }
     hops = _dependent_hops(updated.tasks, roots)
-    event_guests = next((event.guest_count or 0) for day in updated.days for event in day.events if event.id == assignment.event_id)
+    event_guests = event_guest_counts(updated)[assignment.event_id]
     violations = []
     if assignment.capacity is not None and assignment.capacity < event_guests:
         violations.append(f"{assignment.category.value} vendor capacity ({assignment.capacity}) is below event attendance ({event_guests}).")

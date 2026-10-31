@@ -65,6 +65,15 @@ def test_cyclic_dependency_raises_error() -> None:
         topological_sort_tasks(cyclic_tasks)
 
 
+def test_partial_cycle_error_preserves_input_order_and_missing_dependency_behavior() -> None:
+    tasks = [TaskNode(id=name, title=name, category="General", duration_days=1, dependencies=deps)
+             for name, deps in [("ready", ["missing"]), ("b", ["c"]), ("c", ["b"]), ("tail", ["b"])]]
+    assert topological_sort_tasks(tasks[:1]) == tasks[:1]
+    with pytest.raises(CyclicDependencyError) as error:
+        topological_sort_tasks(tasks)
+    assert str(error.value) == "Dependency cycle detected involving tasks: ['b', 'c', 'tail']"
+
+
 def test_cpm_critical_path_and_slack_calculation() -> None:
     # Diamond graph:
     # A (duration 5) -> B (duration 3) -> D (duration 2)
