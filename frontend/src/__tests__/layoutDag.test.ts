@@ -8,6 +8,19 @@ const task = (id: string, dependencies: string[] = []): TaskNode => ({
 });
 
 describe("layoutDag", () => {
+  it("reuses layouts for equivalent restored plans", () => {
+    const original = [task("cached-a"), task("cached-b", ["cached-a"])];
+    const restored = JSON.parse(JSON.stringify(original)) as TaskNode[];
+    expect(layoutDag(restored)).toBe(layoutDag(original));
+  });
+
+  it("keeps changed task labels current and protects cached snapshots", () => {
+    const original = [task("label-change")];
+    layoutDag(original);
+    original[0].title = "Changed title";
+    expect(layoutDag(original).nodes[0].task.title).toBe("Changed title");
+    expect(layoutDag([task("label-change")]).nodes[0].task.title).toBe("label-change");
+  });
   it("places dependencies in earlier columns and packs each level", () => {
     const layout = layoutDag([task("a"), task("b", ["a"]), task("c", ["a"]), task("d", ["b", "c"])]);
     const byId = new Map(layout.nodes.map((node) => [node.task.id, node]));

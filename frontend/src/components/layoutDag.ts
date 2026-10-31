@@ -7,9 +7,26 @@ const NODE_WIDTH = 214;
 const NODE_HEIGHT = 112;
 const COLUMN_GAP = 82;
 const ROW_GAP = 28;
+const layouts = new Map<string, DagLayout>();
+
+/** Hash-map keys retain exact task content, including labels, to avoid stale data. */
+export function layoutDag(tasks: TaskNode[]): DagLayout {
+  const planHash = JSON.stringify(tasks);
+  const cached = layouts.get(planHash);
+  if (cached) {
+    layouts.delete(planHash);
+    layouts.set(planHash, cached);
+    return cached;
+  }
+  // Snapshot the input so later caller mutations cannot corrupt a saved layout.
+  const result = computeLayout(JSON.parse(planHash) as TaskNode[]);
+  layouts.set(planHash, result);
+  if (layouts.size > 8) layouts.delete(layouts.keys().next().value!);
+  return result;
+}
 
 /** Places tasks in topological columns and packs each column without fixed row waste. */
-export function layoutDag(tasks: TaskNode[]): DagLayout {
+function computeLayout(tasks: TaskNode[]): DagLayout {
   const byId = new Map(tasks.map((task) => [task.id, task]));
   const levels = new Map<string, number>();
   const visiting = new Set<string>();
