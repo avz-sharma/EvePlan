@@ -23,12 +23,15 @@ let state = initialState;
 const listeners = new Set<() => void>();
 let toastTimer: number | undefined;
 
+let owner: string | null = null;
+const storageKey = (key: string) => owner ? `eveplan:${encodeURIComponent(owner)}:${key}` : key;
+
 function persist(key: string, plan: EventPlan | null) {
   try {
-    if (!plan) { localStorage.removeItem(key); return; }
+    if (!plan) { localStorage.removeItem(storageKey(key)); return; }
     const saved = { ...plan };
     delete saved.profile_hints;
-    localStorage.setItem(key, JSON.stringify(saved));
+    localStorage.setItem(storageKey(key), JSON.stringify(saved));
   } catch { /* A plan remains usable when browser storage is disabled. */ }
 }
 
@@ -72,23 +75,24 @@ function historyStep(direction: number) {
 
 export const planActions = {
   patch, notify,
+  setOwner: (id: string | null) => { owner = id; state = { ...initialState }; listeners.forEach(listener => listener()); },
   update: (plan: EventPlan, patch?: Partial<PlanState>) => dispatch({ type: "update", plan, patch }),
   updated: (plan: EventPlan, diff: CascadeDiff) => {
     dispatch({ type: "update", plan, patch: { lastDiff: diff } });
   },
   restore: () => {
-    const saved = localStorage.getItem("eveplan_active_plan");
+    const saved = localStorage.getItem(storageKey("eveplan_active_plan"));
     if (!saved) return false;
     try {
       const plan = JSON.parse(saved) as EventPlan;
       delete plan.profile_hints;
       if (!Array.isArray(plan.days) || !plan.days.length || !Array.isArray(plan.tasks)) throw new Error("Invalid plan");
-      const fork = localStorage.getItem("eveplan_forked_plan");
+      const fork = localStorage.getItem(storageKey("eveplan_forked_plan"));
       const forkedPlan = fork ? JSON.parse(fork) as EventPlan : null;
       if (forkedPlan) delete forkedPlan.profile_hints;
       patch({ plan, forkedPlan, history: [plan], historyIndex: 0 });
       return true;
-    } catch { localStorage.removeItem("eveplan_active_plan"); return false; }
+    } catch { localStorage.removeItem(storageKey("eveplan_active_plan")); return false; }
   },
   undo: () => historyStep(-1), redo: () => historyStep(1),
   fork: () => { if (state.plan) { patch({ forkedPlan: structuredClone(state.plan) }); notify("Plan fork created"); } },

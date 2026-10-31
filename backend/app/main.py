@@ -3,9 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .api_docs import configure_docs
 from .config import settings
+from .middleware.auth import AuthenticationGate
 from .middleware.compression import CompressionMiddleware
 from .middleware.security import SecurityMiddleware
 from .routers import onboarding_router, replan_router, vendor_router, vendor_search_router
+from .routers.auth_router import router as auth_router
 
 app = FastAPI(
     title="Celebration & Event Planner API",
@@ -14,6 +16,9 @@ app = FastAPI(
     docs_url=None,
     redoc_url=None,
 )
+
+app.add_middleware(AuthenticationGate)
+app.include_router(auth_router)
 
 # Locked-down CORS
 app.add_middleware(

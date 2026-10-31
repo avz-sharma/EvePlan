@@ -11,6 +11,7 @@ beforeEach(() => {
   vi.stubGlobal("localStorage", { getItem: (key: string) => stored.get(key) ?? null,
     setItem: (key: string, value: string) => stored.set(key, value),
     removeItem: (key: string) => stored.delete(key) });
+  planActions.setOwner(null);
   planActions.patch({ plan, forkedPlan: null, history: [plan], historyIndex: 0 });
 });
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
@@ -45,4 +46,13 @@ it("keeps vendor picks isolated to their branch", async () => {
   expect(result.current?.vendor_assignments).toEqual([assignment]);
   const active = renderHook(() => usePlanStore(state => state.plan));
   expect(active.result.current).toBe(plan);
+});
+
+it("keeps saved plans separate for each signed-in account", () => {
+  planActions.setOwner("host-a"); planActions.update(plan);
+  planActions.setOwner("host-b"); expect(planActions.restore()).toBe(false);
+  planActions.update({ ...plan, title: "Host B" });
+  planActions.setOwner("host-a"); expect(planActions.restore()).toBe(true);
+  expect(renderHook(() => usePlanStore(state => state.plan)).result.current?.title).toBe(plan.title);
+  planActions.setOwner(null);
 });

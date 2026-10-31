@@ -86,3 +86,22 @@ for (const width of [390, 1280]) test(`keyless discovery at ${width}px`, async (
   expect(forbidden).toEqual([]);
   await expect(page.getByText(/API key|billing account/i)).toHaveCount(0);
 });
+
+test("Google login precedes celebration setup and sign-out locks it", async ({ page }) => {
+  let authenticated = false;
+  await page.route("**/api/auth/session", route => route.fulfill({ json: {
+    required: true, configured: true, user: authenticated ? { id: "mock-google-subject", name: "Host" } : null,
+  } }));
+  await page.route("**/api/auth/google", route => { authenticated = true; return route.fulfill({ status: 302, headers: { location: "/" } }); });
+  await page.route("**/api/auth/logout", route => { authenticated = false; return route.fulfill({ json: { ok: true } }); });
+  await page.goto("/");
+  await expect(page.getByRole("link", { name: "Continue with Google" })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Build a celebration plan" })).toHaveCount(0);
+  await page.getByRole("link", { name: "Continue with Google" }).click();
+  await expect(page.getByRole("dialog", { name: "Build a celebration plan" })).toBeVisible();
+  // Close the modal before exercising the account action behind it.
+  await page.getByRole("button", { name: "Cancel", exact: true }).click();
+  await page.getByRole("button", { name: "Sign out", exact: true }).click();
+  await expect(page.getByRole("link", { name: "Continue with Google" })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Build a celebration plan" })).toHaveCount(0);
+});

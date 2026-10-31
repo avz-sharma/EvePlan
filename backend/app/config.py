@@ -12,6 +12,23 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    AUTH_REQUIRED: bool = True
+    VERCEL: str = ""
+    APP_ORIGIN: str = "http://localhost:5173"
+    GOOGLE_OAUTH_CLIENT_ID: str = ""
+    GOOGLE_OAUTH_CLIENT_SECRET: SecretStr | None = None
+    SESSION_SECRET: SecretStr | None = None
+
+    @field_validator("APP_ORIGIN")
+    @classmethod
+    def valid_app_origin(cls, value: str) -> str:
+        parsed = urlsplit(value)
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc or parsed.path or parsed.query or parsed.fragment or parsed.username:
+            raise ValueError("APP_ORIGIN must be an exact origin without a trailing slash")
+        if parsed.scheme == "http" and parsed.hostname not in {"localhost", "127.0.0.1"}:
+            raise ValueError("Public APP_ORIGIN must use HTTPS")
+        return value
+
     GEMINI_API_KEY: SecretStr | None = None
     GEMINI_MODEL: str = "gemini-2.5-flash-lite"
     ALLOWED_ORIGINS: list[str] = [
