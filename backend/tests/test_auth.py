@@ -100,3 +100,22 @@ def test_expired_session_is_rejected(auth, monkeypatch):
         expired = serializer("session").dumps({"id": "user-1"})
     auth.cookies.set(SESSION_COOKIE, expired)
     assert auth.get("/api/plan/catalog").status_code == 401
+
+
+def test_provider_credentials_failure_is_reported_without_secret_details(auth, monkeypatch, caplog):
+    start = auth.get("/api/auth/google", follow_redirects=False)
+    state = parse_qs(urlsplit(start.headers["location"]).query)["state"][0]
+    async def rejected(*args):
+        request = httpx.Request("POST", "https://oauth2.googleapis.com/token")
+        response = httpx.Response(401, request=request, json={"error": "invalid_client", "error_description": "private-provider-detail"})
+        raise httpx.HTTPStatusError("private-provider-detail", request=request, response=response)
+    monkeypatch.setattr(auth_router, "google_identity", rejected)
+    result = auth.get("/api/auth/callback", params={"state": state, "code": "mock-code"}, follow_redirects=False)
+    assert "auth_error=invalid_client" in result.headers["location"]
+    assert "private-provider-detail" not in caplog.text
+    assert "mock-code" not in caplog.text
+
+
+def test_missing_cookie_identifies_expired_browser_flow(auth):
+    result = auth.get("/api/auth/callback?code=mock-code&state=mock-state", follow_redirects=False)
+    assert "auth_error=session_expired" in result.headers["location"]

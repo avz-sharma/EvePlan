@@ -1,4 +1,5 @@
 import hashlib
+import logging
 import secrets
 from base64 import urlsafe_b64encode
 from typing import Any
@@ -68,14 +69,27 @@ async def google_identity(code: str, verifier: str) -> dict[str, Any]:
 @router.get("/callback")
 async def callback(request: Request, code: str = "", state: str = "", error: str = "") -> Response:
     flow = read_cookie(request.cookies.get(FLOW_COOKIE), "flow", 600)
-    response = RedirectResponse(settings.APP_ORIGIN + "/?auth_error=1", status_code=303)
+    reason = "cancelled" if error == "access_denied" else "session_expired" if not flow else "state_mismatch"
+    response = RedirectResponse(settings.APP_ORIGIN + "/?auth_error=" + reason, status_code=303)
     if configured() and not error and code and len(code) <= 4096 and flow and secrets.compare_digest(str(flow.get("state", "")), state) and state:
         try:
             user = await google_identity(code, flow["verifier"])
             response = RedirectResponse(settings.APP_ORIGIN + "/", status_code=303)
             cookie(response, SESSION_COOKIE, serializer("session").dumps(user), 28800)
-        except (httpx.HTTPError, ValueError, KeyError):
-            pass
+        except (httpx.HTTPError, ValueError, KeyError) as failure:
+            reason = "provider_unavailable"
+            if isinstance(failure, httpx.HTTPStatusError):
+                reason = "provider_rejected"
+                try:
+                    provider_error = failure.response.json().get("error")
+                    if provider_error in {"invalid_client", "invalid_grant", "unauthorized_client"}:
+                        reason = provider_error
+                except (ValueError, AttributeError, TypeError):
+                    pass
+            logging.getLogger(__name__).warning("OAuth callback failed: %s", reason)
+            response = RedirectResponse(settings.APP_ORIGIN + "/?auth_error=" + reason, status_code=303)
+    if "auth_error=" in response.headers["location"]:
+        logging.getLogger(__name__).warning("OAuth callback declined: %s", reason)
     response.delete_cookie(FLOW_COOKIE, path="/", secure=settings.APP_ORIGIN.startswith("https://"), httponly=True, samesite="lax")
     response.headers["Cache-Control"] = "no-store"
     return response

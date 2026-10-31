@@ -4,12 +4,24 @@ import { planActions } from "../state/planStore";
 import { App } from "../App";
 import { Button, GlassPanel } from "./ui";
 
+const loginErrors: Record<string, string> = {
+  session_expired: "Your sign-in session expired or cookies were blocked. Please try again in the same browser.",
+  state_mismatch: "This sign-in attempt is no longer current. Please start again in the same browser.",
+  invalid_client: "Google sign-in needs a configuration update from the site owner. Please try again later.",
+  unauthorized_client: "Google sign-in needs a configuration update from the site owner. Please try again later.",
+  invalid_grant: "This Google sign-in link expired or was already used. Please start again.",
+};
+const loginError = () => {
+  const reason = new URLSearchParams(window.location.search).get("auth_error");
+  return reason ? loginErrors[reason] ?? "Google sign-in was cancelled or could not be completed. Please try again." : "";
+};
+
 type Identity = { id: string; name: string };
 type Session = { required: boolean; configured: boolean; user: Identity | null };
 
 export function AuthGate() {
   const [session, setSession] = useState<Session | null>(null);
-  const [error, setError] = useState(new URLSearchParams(window.location.search).has("auth_error") ? "Google sign-in was cancelled or could not be completed. Please try again." : "");
+  const [error, setError] = useState(loginError);
   const [loading, setLoading] = useState(true);
   const load = useCallback(async (signal?: AbortSignal) => {
     setLoading(true);
