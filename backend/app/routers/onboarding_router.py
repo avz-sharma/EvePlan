@@ -124,7 +124,7 @@ async def get_example_selections() -> list[dict[str, object]]:
             "days": [
                 {
                     "day_number": day.day_number,
-                    "events": [event.model_dump(mode="json") for event in day.events],
+                    "events": [event.model_copy(update={"guest_count": None}).model_dump(mode="json") for event in day.events],
                 }
                 for day in built.days
             ],
