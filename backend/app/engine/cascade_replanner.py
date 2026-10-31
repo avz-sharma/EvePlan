@@ -183,7 +183,9 @@ def apply_event_plan_delta(
     roots: set[str] = set()
     categories: set[str] = set()
     mutated = "general"
-    candidate = plan.model_copy(deep=True)
+    # Days are copied above. Tasks and budget buckets are rebuilt by the builder;
+    # cloning those derived objects here dominated the measured cascade profile.
+    candidate = plan.model_copy(update={"notes": list(plan.notes)})
 
     if delta.guest_count_delta:
         mutated = "guest_count"
