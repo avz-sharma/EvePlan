@@ -1,3 +1,4 @@
+import { useRequestController } from "../lib/useRequestController";
 import React, { useEffect, useMemo, useState } from "react";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import type { CatalogEvent, CascadeDiff, EventPlan, PlanEvent, TimeSlot, VendorCategory } from "../api/types";
@@ -11,6 +12,7 @@ const makeId = () => globalThis.crypto?.randomUUID?.() ?? `event-${Date.now()}`;
 
 export const EventsTab: React.FC = () => {
   const plan = useCurrentPlan();
+  const { begin: beginRequest } = useRequestController();
   const onPlanUpdated = planActions.updated;
 
   const [catalog, setCatalog] = useState<CatalogEvent[]>([]);
@@ -23,7 +25,9 @@ export const EventsTab: React.FC = () => {
   const [countDrafts, setCountDrafts] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    void fetch(apiUrl("/api/plan/catalog")).then((response) => response.json()).then((payload) => setCatalog(payload.events ?? [])).catch(() => setError("Event catalog could not be loaded."));
+    const controller = new AbortController();
+    void fetch(apiUrl("/api/plan/catalog"), { signal: controller.signal }).then((response) => response.json()).then((payload) => setCatalog(payload.events ?? [])).catch(() => !controller.signal.aborted && setError("Event catalog could not be loaded."));
+    return () => controller.abort();
   }, []);
 
   const eventName = useMemo(() => (event: PlanEvent) => event.custom_name || catalog.find((item) => item.id === event.catalog_id)?.display_name || "Event", [catalog]);
@@ -31,12 +35,12 @@ export const EventsTab: React.FC = () => {
   const apply = async (operation: string, payload: Record<string, unknown>) => {
     setBusy(true); setError("");
     try {
-      const response = await fetch(apiUrl("/api/plan/events/edit"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, operation, ...payload }) });
+      const response = await fetch(apiUrl("/api/plan/events/edit"), { method: "POST", signal: beginRequest(), headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, operation, ...payload }) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.detail || "The event change could not be applied.");
       onPlanUpdated(result.updated_plan as EventPlan, result.diff as CascadeDiff);
       setCountDrafts({});
-    } catch (reason) { setError(reason instanceof Error ? reason.message : "The event change could not be applied."); }
+    } catch (reason) { if (reason instanceof DOMException && reason.name === "AbortError") return; setError(reason instanceof Error ? reason.message : "The event change could not be applied."); }
     finally { setBusy(false); }
   };
 

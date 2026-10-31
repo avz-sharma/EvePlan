@@ -1,3 +1,4 @@
+import { useRequestController } from "../lib/useRequestController";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Bookmark, MapPinned, Search, UserPlus } from "lucide-react";
 import type { CatalogEvent, PlanEvent, VendorAssignment, VendorCategory, VendorSearchResult } from "../api/types";
@@ -23,8 +24,9 @@ const interviewTemplates: Record<VendorCategory, string[]> = {
 
 export const VendorsTab: React.FC = () => {
   const plan = useCurrentPlan();
+  const { begin: beginRequest } = useRequestController();
   const forkedPlan = usePlanStore(state => state.forkedPlan);
-  const onAssignVendor = planActions.assignVendor;
+  const onAssignVendor = (assignment: VendorAssignment, branch: "A" | "B") => planActions.assignVendor(assignment, branch, beginRequest());
 
   const [branch, setBranch] = useState<"A" | "B">("A");
   const activePlan = branch === "B" && forkedPlan ? forkedPlan : plan;
@@ -55,7 +57,9 @@ export const VendorsTab: React.FC = () => {
   const searchViewport = searchMode === "viewport" ? viewport : null;
 
   useEffect(() => {
-    void fetch(apiUrl("/api/plan/catalog")).then((result) => result.json()).then((payload) => setCatalog(payload.events ?? [])).catch(() => setStatus("Catalog needs could not be loaded."));
+    const controller = new AbortController();
+    void fetch(apiUrl("/api/plan/catalog"), { signal: controller.signal }).then((result) => result.json()).then((payload) => setCatalog(payload.events ?? [])).catch(() => !controller.signal.aborted && setStatus("Catalog needs could not be loaded."));
+    return () => controller.abort();
   }, []);
   useEffect(() => {
     if (!events.some((item) => item.event.id === eventId)) setEventId(events[0]?.event.id ?? "");

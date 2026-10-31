@@ -25,12 +25,15 @@ export interface SSEReplanHandlers {
 export async function streamReplan(
   plan: EventPlan,
   userPrompt: string,
-  handlers: SSEReplanHandlers
+  handlers: SSEReplanHandlers,
+  signal?: AbortSignal,
 ): Promise<void> {
   const url = apiUrl("/api/plan/replan/stream");
+  let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
 
   try {
     const response = await fetch(url, {
+      signal,
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +53,7 @@ export async function streamReplan(
       throw new Error("No response body received from SSE stream");
     }
 
-    const reader = response.body.getReader();
+    reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
     let buffer = "";
 
@@ -95,8 +98,13 @@ export async function streamReplan(
       }
     }
 
-    handlers.onComplete?.();
+    if (!signal?.aborted) handlers.onComplete?.();
   } catch (err) {
-    handlers.onError?.(err instanceof Error ? err : new Error(String(err)));
+    if (!signal?.aborted) handlers.onError?.(err instanceof Error ? err : new Error(String(err)));
+  } finally {
+    if (reader) {
+      await reader.cancel().catch(() => {});
+      reader.releaseLock();
+    }
   }
 }

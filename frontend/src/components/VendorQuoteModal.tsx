@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useRequestController } from "../lib/useRequestController";
+import React, { useEffect, useState } from "react";
 import type { NormalizedQuote, QuoteComparison } from "../api/types";
 import { apiUrl } from "../api/client";
 import { Dialog, Button } from "./ui";
@@ -10,6 +11,7 @@ interface Props { isOpen: boolean; onClose: () => void; allocatedCateringBudgetM
 const inclusionValue = (value: Inclusion): boolean | null => value === "" ? null : value === "included";
 
 export const VendorQuoteModal: React.FC<Props> = ({ isOpen, onClose, allocatedCateringBudgetMaxInr, guestCount }) => {
+  const { begin: beginRequest, cancel: cancelRequest } = useRequestController();
   const [comparison, setComparison] = useState<QuoteComparison | null>(null);
   const [vendorName, setVendorName] = useState("");
   const [quoteTotal, setQuoteTotal] = useState("");
@@ -23,6 +25,7 @@ export const VendorQuoteModal: React.FC<Props> = ({ isOpen, onClose, allocatedCa
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const effectiveBudgetCap = allocatedCateringBudgetMaxInr ?? (manualBudgetCap.trim() ? Number(manualBudgetCap) : null);
+  useEffect(() => { if (!isOpen) cancelRequest(); }, [isOpen, cancelRequest]);
   if (!isOpen) return null;
 
   const compare = async (event: React.FormEvent) => {
@@ -45,14 +48,14 @@ export const VendorQuoteModal: React.FC<Props> = ({ isOpen, onClose, allocatedCa
     setError(null); setUploading(true);
     try {
       const response = await fetch(apiUrl("/api/vendor/compare"), {
-        method: "POST",
+        method: "POST", signal: beginRequest(),
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ quote, allocated_budget_max_inr: effectiveBudgetCap, guest_count: guestCount }),
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.detail || "We could not compare this quote. Please try again.");
       setComparison(payload as QuoteComparison);
-    } catch (cause) { setError(cause instanceof Error ? cause.message : "We could not compare this quote."); }
+    } catch (cause) { if (cause instanceof DOMException && cause.name === "AbortError") return; setError(cause instanceof Error ? cause.message : "We could not compare this quote."); }
     finally { setUploading(false); }
   };
   const copyMessage = async () => {

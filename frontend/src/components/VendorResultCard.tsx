@@ -1,3 +1,4 @@
+import { useRequestController } from "../lib/useRequestController";
 import React, { useState } from "react";
 import { BookmarkPlus, CircleDollarSign, MapPin, Phone, Star } from "lucide-react";
 import type { VendorAssignment, VendorCategory, VendorSearchResult } from "../api/types";
@@ -17,6 +18,7 @@ export const VendorResultCard: React.FC<Props> = ({ result, category, onShortlis
   const [categoryCap, setCategoryCap] = useState("");
   const [capacity, setCapacity] = useState("");
   const [notes, setNotes] = useState("");
+  const { begin: beginRequest } = useRequestController();
   const [details, setDetails] = useState<Details | null>(null);
   const [detailError, setDetailError] = useState("");
   const [loadingDetails, setLoadingDetails] = useState(false);
@@ -33,11 +35,11 @@ export const VendorResultCard: React.FC<Props> = ({ result, category, onShortlis
   const loadDetails = async () => {
     setLoadingDetails(true); setDetailError("");
     try {
-      const response = await fetch(apiUrl(`/api/vendors/${encodeURIComponent(result.place_id)}`));
+      const response = await fetch(apiUrl(`/api/vendors/${encodeURIComponent(result.place_id)}`), { signal: beginRequest() });
       const data = await response.json();
       if (!response.ok) throw new Error(data.detail || "Details could not be loaded.");
       setDetails(data);
-    } catch (error) { setDetailError(error instanceof Error ? error.message : "Details could not be loaded."); }
+    } catch (error) { if (error instanceof DOMException && error.name === "AbortError") return; setDetailError(error instanceof Error ? error.message : "Details could not be loaded."); }
     finally { setLoadingDetails(false); }
   };
 

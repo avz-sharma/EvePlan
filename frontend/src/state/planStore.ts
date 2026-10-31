@@ -109,10 +109,10 @@ export const planActions = {
     patch({ tradeoffOptions: state.tradeoffOptions.filter(item => item.id !== option.id), previewAdjustments: null });
     notify("Trade-off applied");
   },
-  assignVendor: async (assignment: VendorAssignment, branch: "A" | "B") => {
+  assignVendor: async (assignment: VendorAssignment, branch: "A" | "B", signal?: AbortSignal) => {
     const plan = branch === "B" ? state.forkedPlan : state.plan;
     if (!plan) return;
-    const response = await fetch(apiUrl("/api/plan/vendors/assign"), { method: "POST",
+    const response = await fetch(apiUrl("/api/plan/vendors/assign"), { method: "POST", signal,
       headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, assignment }) });
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.detail || "Vendor could not be assigned.");

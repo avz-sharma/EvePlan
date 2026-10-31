@@ -9,6 +9,7 @@ import { Tabs } from "./components/ui/Tabs";
 import { Banner, Button, GlassPanel, IconButton, Skeleton, Stat, Toast } from "./components/ui";
 import { LazyQuoteModal as VendorQuoteModal, LazyWizard as OnboardingWizard } from "./components/LazyDialogs";
 import { planActions, usePlanStore } from "./state/planStore";
+import { useRequestController } from "./lib/useRequestController";
 import { formatCompactMoney, formatNumber } from "./lib/format";
 
 const panels = {
@@ -46,6 +47,7 @@ export const App: React.FC = () => {
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const isVendorModalOpen = usePlanStore(state => state.quotesOpen);
   const reducedMotion = useReducedMotion();
+  const { begin: beginRequest, cancel: cancelRequest } = useRequestController();
 
   useEffect(() => { document.documentElement.classList.toggle("elder-friendly-mode", isElderMode); }, [isElderMode]);
   useEffect(() => {
@@ -74,13 +76,13 @@ export const App: React.FC = () => {
       onRationale: ({ rationale }) => { setStreamedRationale(rationale); setIsLoading(false); },
       onError: () => { setNaturalLanguageInput(prompt); setIsLoading(false); setIsDegraded(true); setStatusMessage("We could not apply that change."); },
       onComplete: () => setIsLoading(false),
-    });
+    }, beginRequest());
   };
 
   const handleTriggerScenario = async (scenario: { delta: PlanDelta; label: string }) => {
     if (!plan || isLoading) return; setRetryScenario(null); setIsDegraded(false); setStatusMessage(""); setIsLoading(true);
     try {
-      const response = await fetch(apiUrl("/api/plan/replan"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, delta: scenario.delta }) });
+      const response = await fetch(apiUrl("/api/plan/replan"), { method: "POST", signal: beginRequest(), headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, delta: scenario.delta }) });
       if (!response.ok) throw new Error();
       const result = await response.json(); updatePlanWithHistory(result.updated_plan, { lastDelta: scenario.delta, lastDiff: result.diff, tradeoffOptions: result.tradeoff_options || [] }); setStatusMessage("");
     } catch { setRetryScenario(scenario); setIsDegraded(true); setStatusMessage("We could not apply that change."); }
@@ -106,7 +108,7 @@ export const App: React.FC = () => {
       </div>
       {plan && <div className="mx-auto max-w-[1500px] space-y-2 px-4 pb-3 lg:px-6">
         <div className="summary-grid rounded-2xl border border-line/70 bg-white/42 p-1"><Stat label="Attendees" value={formatNumber(plan.guest_count)} /><Stat label="Special diets" value={formatNumber(Object.values(plan.special_diets).reduce((total, count) => total + count, 0))} detail="Guest counts entered" /><Stat label="Days to go" value={formatNumber(plan.days_until_event)} /><Stat label="Total budget" value={formatCompactMoney(plan.total_budget_cap_inr)} /><Stat label="Contingency" value={formatCompactMoney(contingency)} /></div>
-        <form onSubmit={handleNaturalLanguageSubmit} className="flex flex-col gap-2 sm:flex-row"><label className="sr-only" htmlFor="global-command">Describe a change</label><input id="global-command" className="field-control flex-1" value={naturalLanguageInput} onChange={(event) => setNaturalLanguageInput(event.target.value)} placeholder="Describe a change to your plan…" /><Button variant="primary" type="submit" disabled={!naturalLanguageInput.trim() || isLoading}>{isLoading ? "Updating" : "Describe a change"}</Button></form>
+        <form onSubmit={handleNaturalLanguageSubmit} className="flex flex-col gap-2 sm:flex-row"><label className="sr-only" htmlFor="global-command">Describe a change</label><input id="global-command" className="field-control flex-1" value={naturalLanguageInput} maxLength={500} onChange={(event) => { cancelRequest(); setIsLoading(false); setNaturalLanguageInput(event.target.value); }} placeholder="Describe a change to your plan…" /><Button variant="primary" type="submit" disabled={!naturalLanguageInput.trim() || isLoading}>{isLoading ? "Updating" : "Describe a change"}</Button></form>
         {streamedRationale && <p aria-live="polite" aria-atomic="true" className="text-sm text-muted">{streamedRationale}</p>}
       </div>}
     </header>

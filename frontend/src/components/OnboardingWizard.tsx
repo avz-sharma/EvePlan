@@ -1,3 +1,4 @@
+import { useRequestController } from "../lib/useRequestController";
 import React, { useEffect, useMemo, useState } from "react";
 import type { CatalogEvent, EventDay, EventPlan, PlanEvent, TimeSlot, VendorCategory } from "../api/types";
 import { apiUrl } from "../api/client";
@@ -23,6 +24,7 @@ const blankPlan = (): EventPlan => ({
 function makeId(): string { return globalThis.crypto?.randomUUID?.() ?? `event-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`; }
 
 export const OnboardingWizard: React.FC<Props> = ({ isOpen, onClose, onPlanCreated }) => {
+  const { begin: beginRequest, cancel: cancelRequest } = useRequestController();
   const [form, setForm] = useState<EventPlan>(blankPlan);
   const [step, setStep] = useState(1);
   const [catalog, setCatalog] = useState<CatalogEvent[]>([]);
@@ -47,7 +49,7 @@ export const OnboardingWizard: React.FC<Props> = ({ isOpen, onClose, onPlanCreat
       setCatalog(catalogPayload.events ?? []);
       setExamples(examplePayload ?? []);
       setNotice(catalogPayload.notice ?? "");
-    }).catch(() => setError("Event examples could not be loaded. You can still add a custom event."));
+    }).catch(() => !controller.signal.aborted && setError("Event examples could not be loaded. You can still add a custom event."));
     return () => controller.abort();
   }, [isOpen]);
 
@@ -86,7 +88,7 @@ export const OnboardingWizard: React.FC<Props> = ({ isOpen, onClose, onPlanCreat
   const checkCustomMapping = async () => {
     if (!customName.trim()) return;
     try {
-      const response = await fetch(apiUrl("/api/plan/map-custom-event"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: customName.trim() }) });
+      const response = await fetch(apiUrl("/api/plan/map-custom-event"), { method: "POST", signal: beginRequest(), headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: customName.trim() }) });
       const payload = await response.json();
       setMappingSuggestion(payload.suggestion ?? null); setUseMappingSuggestion(false);
     } catch { setMappingSuggestion(null); }
@@ -128,14 +130,15 @@ export const OnboardingWizard: React.FC<Props> = ({ isOpen, onClose, onPlanCreat
       vendor_assignments: [], budget_buckets: [], tasks: [], notes: [],
     };
     try {
-      const response = await fetch(apiUrl("/api/plan/build"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const response = await fetch(apiUrl("/api/plan/build"), { method: "POST", signal: beginRequest(), headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const result = await response.json();
       if (!response.ok) throw new Error(typeof result.detail === "string" ? result.detail : "We could not build your plan. Check the entered values.");
       onPlanCreated(result as EventPlan); onClose(); setStep(1);
-    } catch (err) { setError(err instanceof Error ? err.message : "We could not build your plan. Please retry."); }
+    } catch (err) { if (err instanceof DOMException && err.name === "AbortError") return; setError(err instanceof Error ? err.message : "We could not build your plan. Please retry."); }
     finally { setIsLoading(false); }
   };
 
+  useEffect(() => { if (!isOpen) cancelRequest(); }, [isOpen, cancelRequest]);
   if (!isOpen) return null;
   const field = (label: string, value: string | number, onChange: (value: string) => void, type = "text", min?: number) => (
     <label className="grid gap-1 text-sm font-medium text-ink">{label}<input className="field-control" type={type} min={min} value={value} onChange={(event) => onChange(event.target.value)} /></label>
