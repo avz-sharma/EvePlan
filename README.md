@@ -2,7 +2,7 @@
 
 EvePlan builds a multi-day celebration plan from the events a host chooses. It coordinates event dates, task dependencies, guest counts, host-entered budgets, and vendor choices. There is no religion question or religion field.
 
-The React app keeps plan branches in browser storage. A deterministic Python engine rebuilds tasks and budgets; optional Gemini interprets a change request. Vendor discovery uses free Google Maps search URLs and manual entry. No Maps API key or billing account is needed. The supplied EvePlan PNG is the application logo.
+Google sign-in comes before the celebration setup wizard. The React app keeps plan branches in account-specific browser storage. A deterministic Python engine rebuilds tasks and budgets; optional Gemini interprets a change request. Vendor discovery uses free Google Maps search URLs and manual entry. No Maps API key or billing account is needed. The supplied EvePlan PNG is the application logo.
 
 ```mermaid
 flowchart LR
@@ -34,7 +34,7 @@ pnpm install --frozen-lockfile
 pnpm run dev
 ```
 
-Open `http://localhost:5173`. API health is at `http://localhost:8000/health`; locally hosted Swagger and ReDoc are at `/docs` and `/redoc`. API settings and Vite both read the root `.env`. Environment variables override files. On Linux/macOS, use `.venv/bin/python` instead of the Windows Python path.
+Open `http://localhost:5173`. API health is at `http://localhost:8000/health`; locally hosted Swagger and ReDoc are at `/docs` and `/redoc`. API settings and Vite both read the root `.env`. Environment variables override files. Configure Google OAuth as described below before signing in; use AUTH_REQUIRED=false only for isolated local tests. On Linux/macOS, use `.venv/bin/python` instead of the Windows Python path.
 
 ## Environment and keys
 
@@ -108,7 +108,7 @@ ALLOWED_ORIGINS: '["https://your-site.example"]'
 gcloud run deploy eveplan-api --source . --region asia-south1 --allow-unauthenticated --min-instances 0 --max-instances 1 --concurrency 8 --timeout 300 --cpu 1 --memory 512Mi --env-vars-file deploy.env.yaml
 ```
 
-Use Secret Manager references for optional server keys. Build the frontend with its API base and optional browser key, then publish `frontend/dist` on a static host that supports `_headers` (for example Netlify or Cloudflare Pages). Other hosts must apply the generated headers themselves. The build emits CSP and security headers, adds the configured API origin to `connect-src`, and gives hashed assets/fonts a one-year immutable cache policy. HTML revalidates. No live application URL is claimed until a service is actually deployed.
+Use Secret Manager references for optional server keys. Build the frontend with its API base and optional browser key, then publish `frontend/dist` on a static host that supports `_headers` (for example Netlify or Cloudflare Pages). Other hosts must apply the generated headers themselves. The build emits CSP and security headers, adds the configured API origin to `connect-src`, and gives hashed assets/fonts a one-year immutable cache policy. HTML revalidates. The Vercel deployment is at https://eveplan-beige.vercel.app; Google login is pending OAuth client configuration.
 
 ## Five-minute demo
 
@@ -123,4 +123,18 @@ Use Secret Manager references for optional server keys. Build the frontend with 
 - Performance and test measurement artifacts are kept in [docs/measurements/](docs/measurements/).
 - Audit reports, requirements mapping, and deployment notes are kept locally in the audits/ folder. This folder is gitignored and is not included in GitHub checkouts.
 - Automated checks run in [GitHub Actions](https://github.com/avz-sharma/EvePlan/actions/workflows/quality.yml).
-- Deployment status: no live frontend or API has been published from this workspace.
+- Deployment: [EvePlan on Vercel](https://eveplan-beige.vercel.app). Google OAuth credentials still need to be configured before sign-in works.
+
+## Google sign-in and Vercel
+
+Google sign-in appears before celebration setup. The backend verifies Google's authorization code with state and PKCE, then sets an eight-hour signed HttpOnly cookie. Google tokens are never stored in the browser. Plans stay local and use separate storage keys for each Google account; they do not sync between devices. Sign out clears the cookie and closes the plan UI. Already issued cookies expire naturally; rotating SESSION_SECRET invalidates all sessions.
+
+1. Create a Google Auth Platform project and OAuth client of type **Web application**. Configure the consent audience and, in testing mode, add permitted test users. Request only openid, email and profile. This is separate from Maps/Places; vendor discovery still needs no key.
+2. Add the exact authorized redirect URI `https://YOUR-DOMAIN/api/auth/callback`. For local use add `http://localhost:5173/api/auth/callback`.
+3. Import this GitHub repository into Vercel with the repository root as Root Directory. The committed vercel.json builds the Vite frontend and serves FastAPI through api/index.py on the same origin. Do not set a separate frontend root or VITE_API_BASE_URL.
+4. Set server environment variables in Vercel: GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET, SESSION_SECRET (a randomly generated value of at least 32 characters), APP_ORIGIN (the stable HTTPS domain with no trailing slash), and AUTH_REQUIRED=true. Store secrets in Vercel, never in source or chat. Redeploy after setting them and register the same domain in Google.
+5. Verify login, setup, reload and logout on that stable domain. Callback URIs for random previews must be registered separately; use the stable production domain for sign-in.
+
+For isolated local testing only, AUTH_REQUIRED=false enables the existing offline workflow. Vercel always enforces login even if this flag is false. Production with missing credentials stays locked and shows a setup-pending message. The CI smoke API explicitly sets the local bypass and mocks sign-in in dedicated tests. In-memory quota/rate guards remain per function instance on Vercel; enforce optional provider project quotas separately.
+
+Setup references: [Google OAuth web server flow](https://developers.google.com/identity/protocols/oauth2/web-server), [Vercel Python runtime](https://vercel.com/docs/functions/runtimes/python). The app is deployed at [eveplan-beige.vercel.app](https://eveplan-beige.vercel.app). Google OAuth credentials are not yet configured, so the live application stays locked at the login setup screen. The registered callback must be `https://eveplan-beige.vercel.app/api/auth/callback`.

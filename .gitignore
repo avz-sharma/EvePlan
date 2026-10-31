@@ -46,3 +46,8 @@ Thumbs.db
 
 # Local audit and report documents
 /audits/
+
+.vercel/
+.vercel
+.env*
+!.env.example
