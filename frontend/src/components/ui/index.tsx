@@ -53,7 +53,6 @@ export const EmptyState: React.FC<{ title: string; children: React.ReactNode }> 
   </div>
 );
 
-export const Tooltip: React.FC<React.HTMLAttributes<HTMLSpanElement> & { label: string }> = ({ label, ...props }) => <span title={label} aria-label={label} {...props} />;
 
 export const Dialog: React.FC<{ open: boolean; label: string; onClose: () => void; children: React.ReactNode }> = ({ open, label, onClose, children }) => {
   const dialog = useRef<HTMLElement>(null);

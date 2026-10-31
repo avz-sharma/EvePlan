@@ -12,6 +12,7 @@ interface SearchPayload { mode: "google_places" | "maps_link"; results: VendorSe
 interface Shortlisted { result: VendorSearchResult; quote: number | null; categoryCap: number | null; capacity: number | null }
 interface SearchViewport { lat: number; lng: number; radius_m: number }
 const makeId = () => globalThis.crypto?.randomUUID?.() ?? `manual-${Date.now()}`;
+const noCategories: VendorCategory[] = [];
 const interviewTemplates: Record<VendorCategory, string[]> = {
   venue: ["What is the confirmed guest capacity for this event?", "What is the indoor backup and accessibility setup?", "Which services and taxes are included in the written quote?"],
   caterer: ["What is included in the per-plate quote?", "Can you accommodate the counts the host entered for special diets?", "How are menu changes and final headcount changes priced?"],
@@ -53,7 +54,7 @@ export const VendorsTab: React.FC = () => {
   const browserKey = import.meta.env.VITE_GOOGLE_MAPS_BROWSER_KEY;
   const selected = events.find((item) => item.event.id === eventId);
   const metadata = selected?.event.catalog_id ? catalog.find((item) => item.id === selected.event.catalog_id) : null;
-  const availableCategories = (metadata?.vendor_categories_needed ?? selected?.event.vendor_categories ?? []) as VendorCategory[];
+  const availableCategories = metadata?.vendor_categories_needed ?? selected?.event.vendor_categories ?? noCategories;
   const searchViewport = searchMode === "viewport" ? viewport : null;
 
   useEffect(() => {

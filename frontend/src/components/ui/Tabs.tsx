@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-export interface TabItem { id: string; label: string }
+interface TabItem { id: string; label: string }
 
 interface TabsProps { tabs: TabItem[]; value: string; onChange: (value: string) => void }
 

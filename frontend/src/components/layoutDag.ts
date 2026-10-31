@@ -1,6 +1,6 @@
 import type { TaskNode } from "../api/types";
 
-export interface DagNode { task: TaskNode; x: number; y: number; level: number; width: number; height: number }
+interface DagNode { task: TaskNode; x: number; y: number; level: number; width: number; height: number }
 export interface DagLayout { nodes: DagNode[]; edges: Array<{ id: string; from: DagNode; to: DagNode }>; width: number; height: number }
 
 const NODE_WIDTH = 214;

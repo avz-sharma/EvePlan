@@ -1,8 +1,8 @@
-import type { components, paths } from "./schema";
+import type { components } from "./schema";
 
 export type VendorCategory = "venue" | "caterer" | "decorator" | "photographer" | "makeup" | "music" | "transport";
 export type TimeSlot = "morning" | "afternoon" | "evening" | "night";
-export type SubEventType = "HALDI" | "SANGEET" | "WEDDING" | "RECEPTION";
+type SubEventType = "HALDI" | "SANGEET" | "WEDDING" | "RECEPTION";
 
 export interface PlanEvent {
   id: string;
@@ -51,8 +51,8 @@ export interface BudgetBucket {
   category_budget_cap_inr?: number | null;
 }
 
-export interface DietarySplit { regular: number; jain: number; vegan: number; kids: number }
-export interface AccessibilityNeeds { elderly_count: number; wheelchair_access_required: boolean; ground_floor_dining: boolean }
+interface DietarySplit { regular: number; jain: number; vegan: number; kids: number }
+interface AccessibilityNeeds { elderly_count: number; wheelchair_access_required: boolean; ground_floor_dining: boolean }
 
 export interface VendorAssignment {
   event_id: string;
@@ -116,8 +116,4 @@ export type PlanDelta = Partial<components["schemas"]["PlanDelta"]>;
 export type CascadeDiff = components["schemas"]["CascadeDiff"];
 export type TradeOffOption = components["schemas"]["TradeOffOption"];
 export type NormalizedQuote = components["schemas"]["NormalizedQuote"];
-export type NormalizedQuoteItem = components["schemas"]["NormalizedQuoteItem"];
-export type HiddenCostFlag = components["schemas"]["HiddenCostFlag"];
 export type QuoteComparison = components["schemas"]["QuoteComparison"];
-export type ReplanResponse = components["schemas"]["ReplanResponse"];
-export type ApiEndpoints = paths;
