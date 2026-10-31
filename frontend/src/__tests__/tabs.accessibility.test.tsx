@@ -34,8 +34,6 @@ describe("Phase 1/2 tab accessibility contracts", () => {
     const { container } = render(<main><Tab /></main>);
     await waitFor(() => expect(container.querySelector("h1, h2")).not.toBeNull());
     const result = await axe(container, { rules: { "color-contrast": { enabled: false } } });
-    // Characterize existing issues; tighten to zero when the semantic-heading fix lands.
-    const expected = ["Timeline", "Vendors", "Quotes"].includes(_name) ? ["heading-order"] : [];
-    expect(result.violations.map(issue => issue.id)).toEqual(expected);
+    expect(result.violations).toEqual([]);
   });
 });

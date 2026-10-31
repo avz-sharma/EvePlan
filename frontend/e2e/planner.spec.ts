@@ -21,6 +21,13 @@ test("wizard, plan, streamed replan and degraded vendor assignment", async ({ pa
   await wizard.getByRole("button", { name: "Next", exact: true }).click();
   await wizard.getByRole("button", { name: "Build plan", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Smoke celebration" })).toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem("eveplan_active_plan")!).days
+    .every((day: { events: { guest_count: number }[] }) => day.events.every(event => event.guest_count === 120)))).toBe(true);
+  await page.getByRole("tab", { name: "Events", exact: true }).click();
+  await page.getByLabel("Venue type", { exact: true }).first().fill("outdoor");
+  await page.getByLabel("Venue type", { exact: true }).first().press("Tab");
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("eveplan_active_plan")!).days[0].events[0].venue_type)).toBe("outdoor");
+  await page.getByRole("tab", { name: "Overview", exact: true }).click();
   await page.getByLabel("Describe a change", { exact: true }).fill("+40 guests");
   await page.getByRole("button", { name: "Describe a change", exact: true }).click();
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("eveplan_active_plan")!).guest_count)).toBe(160);

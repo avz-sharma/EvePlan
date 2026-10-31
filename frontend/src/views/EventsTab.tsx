@@ -10,6 +10,14 @@ const categories: VendorCategory[] = ["venue", "caterer", "decorator", "photogra
 const slots: TimeSlot[] = ["morning", "afternoon", "evening", "night"];
 const makeId = () => globalThis.crypto?.randomUUID?.() ?? `event-${Date.now()}`;
 
+function VenueTypeField({ event, onSave }: { event: PlanEvent; onSave: (value: string | null) => void }) {
+  const [value, setValue] = useState(event.venue_type ?? "");
+  useEffect(() => setValue(event.venue_type ?? ""), [event.venue_type]);
+  return <label className="grid gap-1 text-sm">Venue type<input className="field-control"
+    value={value} onChange={change => setValue(change.target.value)} placeholder="Optional"
+    onBlur={() => { const next = value.trim() || null; if (next !== event.venue_type) onSave(next); }} /></label>;
+}
+
 export const EventsTab: React.FC = () => {
   const plan = useCurrentPlan();
   const { begin: beginRequest } = useRequestController();
@@ -69,7 +77,7 @@ export const EventsTab: React.FC = () => {
           const count = countDrafts[event.id] ?? event.guest_count ?? plan.guest_count;
           const metadata = catalog.find((item) => item.id === event.catalog_id);
           return <article key={event.id} className="rounded-xl border border-line/70 bg-white/65 p-3"><div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="font-semibold">{eventName(event)}</h3><p className="text-sm capitalize text-muted">{event.time_slot}{event.venue_type ? ` · ${event.venue_type}` : ""}</p><p className="mt-1 text-xs text-muted">Vendor categories: {(metadata?.vendor_categories_needed ?? event.vendor_categories).join(", ") || "Set for custom event"}</p></div><Button disabled={busy} aria-label={`Remove ${eventName(event)}`} onClick={() => void apply("remove_event", { event_id: event.id })}><Trash2 size={16} />Remove</Button></div>
-            <div className="mt-3 grid gap-2 sm:grid-cols-3"><label className="grid gap-1 text-sm">Guests for this event<input className="field-control" type="number" min={1} max={plan.guest_count} value={count} onChange={(change) => setCountDrafts((current) => ({ ...current, [event.id]: Number(change.target.value) || 0 }))} /></label><label className="grid gap-1 text-sm">Time of day<select className="field-control" value={event.time_slot} onChange={(change) => void apply("update_event", { event_id: event.id, event: { ...event, time_slot: change.target.value } })}>{slots.map((slot) => <option key={slot}>{slot}</option>)}</select></label><label className="grid gap-1 text-sm">Venue type<input className="field-control" value={event.venue_type ?? ""} placeholder="Optional" onBlur={(change) => { const value = change.target.value.trim() || null; if (value !== event.venue_type) void apply("update_event", { event_id: event.id, event: { ...event, venue_type: value } }); }} /></label></div>
+            <div className="mt-3 grid gap-2 sm:grid-cols-3"><label className="grid gap-1 text-sm">Guests for this event<input className="field-control" type="number" min={1} max={plan.guest_count} value={count} onChange={(change) => setCountDrafts((current) => ({ ...current, [event.id]: Number(change.target.value) || 0 }))} /></label><label className="grid gap-1 text-sm">Time of day<select className="field-control" value={event.time_slot} onChange={(change) => void apply("update_event", { event_id: event.id, event: { ...event, time_slot: change.target.value } })}>{slots.map((slot) => <option key={slot}>{slot}</option>)}</select></label><VenueTypeField event={event} onSave={value => void apply("update_event", { event_id: event.id, event: { ...event, venue_type: value } })} /></div>
             <div className="mt-3 flex flex-wrap gap-2"><Button disabled={busy || count < 1 || count === event.guest_count} variant="primary" onClick={() => void apply("set_guest_count", { event_id: event.id, guest_count: count })}>Save guest count</Button><label className="flex items-center gap-2 text-sm">Move to day<select className="field-control min-w-24" value={day.day_number} onChange={(change) => { const target = Number(change.target.value); if (target !== day.day_number) void apply("move_event", { event_id: event.id, target_day_number: target }); }}>{plan.days.map((option) => <option key={option.day_number} value={option.day_number}>{option.day_number}</option>)}</select></label></div>
           </article>;
         })}</div>

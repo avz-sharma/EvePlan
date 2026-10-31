@@ -49,7 +49,7 @@ export const Skeleton: React.FC<{ className?: string }> = ({ className }) => <di
 
 export const EmptyState: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <div className="rounded-xl border border-dashed border-line p-8 text-center">
-    <h3 className="text-lg font-semibold">{title}</h3><p className="mt-2 text-sm text-muted">{children}</p>
+    <h2 className="text-lg font-semibold">{title}</h2><p className="mt-2 text-sm text-muted">{children}</p>
   </div>
 );
 

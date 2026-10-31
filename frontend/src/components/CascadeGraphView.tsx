@@ -12,6 +12,7 @@ export const CascadeGraphView: React.FC<Props> = ({ tasks, affectedTaskIds = [],
   if (!tasks.length) return <p className="rounded-xl border border-dashed border-line p-8 text-center text-sm text-muted">Tasks will appear here when a plan is available.</p>;
 
   return <div className="space-y-3">
+    <h2 className="sr-only">Task dependency map</h2>
     {mutatedAttribute && <p className="text-sm text-accent">Updated: {mutatedAttribute}</p>}
     <div className="w-full overflow-hidden rounded-2xl border border-line/70 bg-white/45 p-2">
       <svg role="img" aria-labelledby="timeline-title timeline-desc" viewBox={`0 0 ${layout.width} ${layout.height}`} preserveAspectRatio="xMinYMin meet" className="block h-auto w-full max-w-full">

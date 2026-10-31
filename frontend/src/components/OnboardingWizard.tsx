@@ -141,7 +141,7 @@ export const OnboardingWizard: React.FC<Props> = ({ isOpen, onClose, onPlanCreat
   useEffect(() => { if (!isOpen) cancelRequest(); }, [isOpen, cancelRequest]);
   if (!isOpen) return null;
   const field = (label: string, value: string | number, onChange: (value: string) => void, type = "text", min?: number) => (
-    <label className="grid gap-1 text-sm font-medium text-ink">{label}<input className="field-control" type={type} min={min} value={value} onChange={(event) => onChange(event.target.value)} /></label>
+    <label key={label} className="grid gap-1 text-sm font-medium text-ink">{label}<input className="field-control" type={type} min={min} value={value} onChange={(event) => onChange(event.target.value)} /></label>
   );
 
   return <Dialog open={isOpen} label="Build a celebration plan" onClose={onClose}>
