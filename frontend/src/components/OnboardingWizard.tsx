@@ -196,7 +196,7 @@ export const OnboardingWizard: React.FC<Props> = ({ isOpen, onClose, onPlanCreat
 
       {error && <p role="alert" aria-live="assertive" className="rounded-xl bg-danger-soft px-3 py-2 text-sm text-danger">{error}</p>}
       {!error && <p className="sr-only" aria-live="polite">{notice}</p>}
-      <footer className="flex flex-wrap justify-between gap-2 border-t border-line/70 pt-4"><Button type="button" onClick={step === 1 ? onClose : back}>{step === 1 ? "Cancel" : "Back"}</Button>{step < 5 ? <Button type="button" variant="primary" onClick={next}>Next</Button> : <Button type="submit" variant="primary" disabled={isLoading}>{isLoading ? "Building plan…" : "Build plan"}</Button>}</footer>
+      <footer className="flex flex-wrap justify-between gap-2 border-t border-line/70 pt-4"><Button type="button" onClick={step === 1 ? onClose : back}>{step === 1 ? "Cancel" : "Back"}</Button>{step < 5 ? <Button key="next-step" type="button" variant="primary" onClick={next}>Next</Button> : <Button key="build-plan" type="submit" variant="primary" disabled={isLoading}>{isLoading ? "Building plan…" : "Build plan"}</Button>}</footer>
     </form>
   </Dialog>;
 };
