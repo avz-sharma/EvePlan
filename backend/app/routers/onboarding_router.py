@@ -1,3 +1,5 @@
+"""Catalog, onboarding, event-edit and quote-edit HTTP boundaries."""
+
 from datetime import date, timedelta
 from typing import Literal
 
@@ -27,7 +29,11 @@ router = APIRouter(prefix="/api/plan", tags=["Event Planning"])
 EXAMPLE_SELECTIONS: dict[str, tuple[str, list[list[tuple[str, TimeSlot]]]]] = {
     "three_day_celebration": (
         "Mehendi, Sangeet and Pheras over 3 days",
-        [[("mehendi", TimeSlot.AFTERNOON)], [("sangeet", TimeSlot.EVENING)], [("pheras", TimeSlot.EVENING)]],
+        [
+            [("mehendi", TimeSlot.AFTERNOON)],
+            [("sangeet", TimeSlot.EVENING)],
+            [("pheras", TimeSlot.EVENING)],
+        ],
     ),
     "nikah_walima": (
         "Nikah and Walima over 2 days",
@@ -39,16 +45,31 @@ EXAMPLE_SELECTIONS: dict[str, tuple[str, list[list[tuple[str, TimeSlot]]]]] = {
     ),
     "pooja_special_diets": (
         "Mehendi, Pooja and Pheras with special-diet guests",
-        [[("mehendi", TimeSlot.AFTERNOON)], [("pooja", TimeSlot.MORNING)], [("pheras", TimeSlot.EVENING)]],
+        [
+            [("mehendi", TimeSlot.AFTERNOON)],
+            [("pooja", TimeSlot.MORNING)],
+            [("pheras", TimeSlot.EVENING)],
+        ],
     ),
 }
 
 
 class EventEditRequest(BaseModel):
+    """A client plan and one bounded event or day editing operation."""
+
     model_config = ConfigDict(extra="forbid")
 
     plan: EventPlan
-    operation: Literal["add_day", "remove_day", "add_event", "remove_event", "set_guest_count", "move_event", "reorder_days", "update_event"]
+    operation: Literal[
+        "add_day",
+        "remove_day",
+        "add_event",
+        "remove_event",
+        "set_guest_count",
+        "move_event",
+        "reorder_days",
+        "update_event",
+    ]
     event_id: str | None = None
     day_number: int | None = Field(default=None, ge=1, le=5)
     target_day_number: int | None = Field(default=None, ge=1, le=5)
@@ -57,6 +78,8 @@ class EventEditRequest(BaseModel):
 
 
 class VendorAssignmentRequest(BaseModel):
+    """A branch-local plan and host-entered vendor assignment."""
+
     model_config = ConfigDict(extra="forbid")
 
     plan: EventPlan
@@ -64,6 +87,8 @@ class VendorAssignmentRequest(BaseModel):
 
 
 class QuoteMutationRequest(BaseModel):
+    """A quote editing operation and optional host-selected reserve percentage."""
+
     model_config = ConfigDict(extra="forbid")
     plan: EventPlan
     operation: Literal["save", "select", "remove", "contingency"]
@@ -74,18 +99,31 @@ class QuoteMutationRequest(BaseModel):
 
 @router.post("/quotes/edit")
 async def edit_saved_quote(req: QuoteMutationRequest) -> dict[str, object]:
-    updated, diff = await run_plan_operation(mutate_quote, req.plan, load_event_catalog(), date.today(),
-        req.operation, req.quote, req.quote_id, req.contingency_percent)
+    """Rebuild quotations and return the resulting plan and cascade diff."""
+    updated, diff = await run_plan_operation(
+        mutate_quote,
+        req.plan,
+        load_event_catalog(),
+        date.today(),
+        req.operation,
+        req.quote,
+        req.quote_id,
+        req.contingency_percent,
+    )
     return {"updated_plan": updated, "diff": diff}
 
 
 class ScenarioFixtureRequest(BaseModel):
+    """The current plan used to derive deterministic example outcomes."""
+
     model_config = ConfigDict(extra="forbid")
 
     plan: EventPlan
 
 
 class CustomEventMapRequest(BaseModel):
+    """A bounded host event name for matching saved catalog aliases."""
+
     model_config = ConfigDict(extra="forbid")
 
     text: str = Field(min_length=1, max_length=120)
@@ -117,13 +155,25 @@ def _example_days(preset_id: str, catalog: EventCatalog) -> list[EventDay]:
 
 @router.get("/catalog")
 async def get_event_catalog() -> dict[str, object]:
+    """Return planning defaults while keeping internal tradition tags server-side."""
     catalog = load_event_catalog()
     # Internal tradition tags are only consumed by the pure inference function.
-    public_events = [{key: value for key, value in event.items() if key != "tradition_tags"} for event in catalog["events"]]
+    public_events = [
+        {key: value for key, value in event.items() if key != "tradition_tags"}
+        for event in catalog["events"]
+    ]
     return {
         "notice": catalog["_header"],
         "events": public_events,
-        "vendor_categories": ["venue", "caterer", "decorator", "photographer", "makeup", "music", "transport"],
+        "vendor_categories": [
+            "venue",
+            "caterer",
+            "decorator",
+            "photographer",
+            "makeup",
+            "music",
+            "transport",
+        ],
     }
 
 
@@ -135,45 +185,62 @@ async def get_example_selections() -> list[dict[str, object]]:
     result: list[dict[str, object]] = []
     for preset_id, (title, _) in EXAMPLE_SELECTIONS.items():
         draft = EventPlan(
-            id=f"example-{preset_id}", title=title, template="celebration",
-            guest_count=1, total_budget_cap_inr=0, per_plate_min_inr=0, per_plate_max_inr=0,
+            id=f"example-{preset_id}",
+            title=title,
+            template="celebration",
+            guest_count=1,
+            total_budget_cap_inr=0,
+            per_plate_min_inr=0,
+            per_plate_max_inr=0,
             first_event_date=today + timedelta(days=90),
             days=_example_days(preset_id, catalog),
         )
         built = build_event_plan(draft, catalog, today, allow_incomplete=True)
-        result.append({
-            "id": preset_id,
-            "title": title,
-            "days": [
-                {
-                    "day_number": day.day_number,
-                    "events": [event.model_copy(update={"guest_count": None}).model_dump(mode="json") for event in day.events],
-                }
-                for day in built.days
-            ],
-            "requires_special_diets": preset_id == "pooja_special_diets",
-        })
+        result.append(
+            {
+                "id": preset_id,
+                "title": title,
+                "days": [
+                    {
+                        "day_number": day.day_number,
+                        "events": [
+                            event.model_copy(update={"guest_count": None}).model_dump(mode="json")
+                            for event in day.events
+                        ],
+                    }
+                    for day in built.days
+                ],
+                "requires_special_diets": preset_id == "pooja_special_diets",
+            }
+        )
     return result
 
 
 @router.post("/map-custom-event")
 async def map_custom_event(req: CustomEventMapRequest) -> dict[str, object]:
+    """Suggest an exact saved alias match without invoking a model."""
     return {"suggestion": suggest_catalog_event(req.text)}
 
 
 @router.post("/build", response_model=EventPlan)
 async def build_plan(req: EventPlan) -> EventPlan:
+    """Resolve host selections into a deterministic event-aware plan."""
     return await run_plan_operation(build_event_plan, req, load_event_catalog(), _today())
 
 
 @router.post("/scenarios")
 async def get_plan_scenario_fixtures(req: ScenarioFixtureRequest) -> list[dict[str, object]]:
-    return await run_plan_operation(build_quick_scenario_fixtures, req.plan, load_event_catalog(), _today())
+    """Build example changes relative to the supplied plan."""
+    return await run_plan_operation(
+        build_quick_scenario_fixtures, req.plan, load_event_catalog(), _today()
+    )
 
 
 @router.post("/events/edit")
 async def edit_plan_events(req: EventEditRequest) -> dict[str, object]:
-    updated_plan, diff = await run_plan_operation(edit_event_plan,
+    """Apply an event or day edit and return its downstream impact."""
+    updated_plan, diff = await run_plan_operation(
+        edit_event_plan,
         req.plan,
         load_event_catalog(),
         _today(),
@@ -189,5 +256,8 @@ async def edit_plan_events(req: EventEditRequest) -> dict[str, object]:
 
 @router.post("/vendors/assign")
 async def assign_plan_vendor(req: VendorAssignmentRequest) -> dict[str, object]:
-    updated_plan, diff = await run_plan_operation(assign_vendor, req.plan, load_event_catalog(), _today(), req.assignment)
+    """Replace one event/category vendor and rebuild the affected branch."""
+    updated_plan, diff = await run_plan_operation(
+        assign_vendor, req.plan, load_event_catalog(), _today(), req.assignment
+    )
     return {"updated_plan": updated_plan, "diff": diff}

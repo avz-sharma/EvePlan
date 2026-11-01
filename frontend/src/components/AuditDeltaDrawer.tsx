@@ -7,6 +7,7 @@ interface AuditDeltaDrawerProps {
   lastDiff: CascadeDiff | null;
 }
 
+/** Show the latest deterministic change and its affected tasks and constraints. */
 export const AuditDeltaDrawer: React.FC<AuditDeltaDrawerProps> = ({
   lastDelta,
   lastDiff,

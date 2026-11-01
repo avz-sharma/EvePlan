@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { clsx } from "clsx";
 
+/** Provide the shared translucent container with configurable semantic element. */
 export const GlassPanel: React.FC<React.HTMLAttributes<HTMLElement> & { as?: "section" | "div" | "article" }> = ({ as: Tag = "section", className, ...props }) => (
   <Tag className={clsx("glass-panel rounded-2xl p-grid-3 md:p-grid-4", className)} {...props} />
 );
 
+/** Render a native button with consistent sizing and visible focus styles. */
 export const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "secondary" | "quiet" | "danger" }> = ({ variant = "secondary", className, ...props }) => (
   <button className={clsx("inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-[transform,opacity] duration-200 hover:-translate-y-px active:translate-y-0 active:scale-[.98] disabled:cursor-not-allowed disabled:opacity-50", {
     "bg-accent text-white hover:bg-accent/90": variant === "primary",
@@ -14,10 +16,12 @@ export const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { 
   }, className)} {...props} />
 );
 
+/** Give icon-only actions an accessible name and native button behavior. */
 export const IconButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & { label: string }> = ({ label, className, ...props }) => (
   <button aria-label={label} title={label} className={clsx("inline-flex size-11 items-center justify-center rounded-xl border border-line bg-white/70 transition-[transform,opacity] duration-200 hover:-translate-y-px active:translate-y-0 active:scale-[.98] hover:bg-white disabled:opacity-40", className)} {...props} />
 );
 
+/** Render a compact status label with a semantic color tone. */
 export const Chip: React.FC<React.HTMLAttributes<HTMLSpanElement> & { tone?: "accent" | "gold" | "success" | "warning" | "danger" }> = ({ tone = "accent", className, ...props }) => (
   <span className={clsx("inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold", {
     "border-accent/30 bg-accent/10 text-accent": tone === "accent",
@@ -28,6 +32,7 @@ export const Chip: React.FC<React.HTMLAttributes<HTMLSpanElement> & { tone?: "ac
   }, className)} {...props} />
 );
 
+/** Present a named summary value and optional explanatory detail. */
 export const Stat: React.FC<{ label: string; value: React.ReactNode; detail?: string }> = ({ label, value, detail }) => (
   <div className="min-w-0 rounded-xl px-3 py-2">
     <div className="text-xs font-medium text-muted">{label}</div>
@@ -36,6 +41,7 @@ export const Stat: React.FC<{ label: string; value: React.ReactNode; detail?: st
   </div>
 );
 
+/** Announce a contextual status message using the requested tone. */
 export const Banner: React.FC<React.HTMLAttributes<HTMLDivElement> & { tone?: "info" | "success" | "warning" | "danger" }> = ({ tone = "info", className, ...props }) => (
   <div role="status" className={clsx("rounded-xl border px-4 py-3 text-sm", {
     "border-accent/25 bg-accent/8 text-ink": tone === "info",
@@ -45,8 +51,10 @@ export const Banner: React.FC<React.HTMLAttributes<HTMLDivElement> & { tone?: "i
   }, className)} {...props} />
 );
 
+/** Render a decorative loading shape hidden from assistive technology. */
 export const Skeleton: React.FC<{ className?: string }> = ({ className }) => <div aria-hidden="true" className={clsx("rounded-lg bg-ink/10", className)} />;
 
+/** Explain an empty section with a heading and next-step content. */
 export const EmptyState: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <div className="rounded-xl border border-dashed border-line p-8 text-center">
     <h2 className="text-lg font-semibold">{title}</h2><p className="mt-2 text-sm text-muted">{children}</p>
@@ -54,6 +62,7 @@ export const EmptyState: React.FC<{ title: string; children: React.ReactNode }> 
 );
 
 
+/** Trap keyboard focus, close on Escape and restore the invoking control. */
 export const Dialog: React.FC<{ open: boolean; label: string; onClose: () => void; children: React.ReactNode }> = ({ open, label, onClose, children }) => {
   const dialog = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -79,4 +88,5 @@ export const Dialog: React.FC<{ open: boolean; label: string; onClose: () => voi
   </div>;
 };
 
+/** Announce transient planner feedback without moving keyboard focus. */
 export const Toast: React.FC<{ message: string | null }> = ({ message }) => message ? <div role="status" aria-live="polite" className="fixed bottom-5 right-5 z-50 rounded-xl bg-ink px-4 py-3 text-sm text-white shadow-lg">{message}</div> : null;

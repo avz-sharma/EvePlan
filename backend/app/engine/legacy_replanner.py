@@ -22,7 +22,6 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
     root_task_id = "task_venue_booking"
     mutated_attr = "general"
 
-    # 1. Apply Headcount Mutations
     if delta.guest_count_delta != 0 or delta.guest_count_override is not None:
         mutated_attr = "guest_count"
         updated_plan.guest_count = (
@@ -35,7 +34,6 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
         affected_categories.add("Catering")
         affected_categories.add("Logistics & Transport")
 
-    # 2. Apply Per-Plate Catering Rate Shifts
     if delta.per_plate_delta_inr != 0:
         mutated_attr = "per_plate_rate"
         updated_plan.per_plate_min_inr = max(
@@ -49,7 +47,6 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
         affected_tasks.add(root_task_id)
         affected_categories.add("Catering")
 
-    # 3. Apply Timeline Date Shifts
     if delta.days_until_event_delta != 0:
         mutated_attr = "timeline_days"
         updated_plan.days_until_event = max(
@@ -60,7 +57,6 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
         affected_categories.add("Venue")
         affected_categories.add("Logistics & Transport")
 
-    # 4. Apply Venue Capacity Overrides & Weather Moves
     if delta.venue_capacity_override is not None:
         mutated_attr = "venue_capacity"
         updated_plan.venue_capacity = delta.venue_capacity_override
@@ -87,7 +83,6 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
         affected_categories.add("Decor")
         updated_plan.notes.append("An outdoor event was moved indoors after a venue change.")
 
-    # 5. Apply Jain Dietary Adjustments
     if delta.dietary_jain_delta != 0:
         updated_plan.dietary_split.jain = max(
             0, updated_plan.dietary_split.jain + delta.dietary_jain_delta
@@ -95,13 +90,11 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
         affected_tasks.add("task_catering_headcount")
         affected_categories.add("Catering")
 
-    # 6. Apply Budget Cap Adjustments
     if delta.budget_cap_inr_delta != 0:
         updated_plan.total_budget_cap_inr = max(
             1.0, updated_plan.total_budget_cap_inr + delta.budget_cap_inr_delta
         )
 
-    # 7. Update Budget Buckets for Headcount & Rate Scaling
     for i, bucket in enumerate(updated_plan.budget_buckets):
         if "Catering" in bucket.category:
             new_min = round(updated_plan.guest_count * updated_plan.per_plate_min_inr, 2)
@@ -117,7 +110,6 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
                 update={"allocated_min_inr": new_min, "allocated_max_inr": new_max}
             )
 
-    # 8. Re-evaluate Budget Contingency & Trade-offs
     updated_buckets, _, _ = evaluate_budget_tradeoffs(
         updated_plan.budget_buckets,
         updated_plan.total_budget_cap_inr,
@@ -128,12 +120,10 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
     )
     updated_plan.budget_buckets = updated_buckets
 
-    # 9. Evaluate Conflicts
     violations, tasks_to_reopen = evaluate_conflicts(updated_plan)
     for t_id in tasks_to_reopen:
         affected_tasks.add(t_id)
 
-    # 10. Compute Forward Graph Adjacency for Hop Level Propagation
     adj: dict[str, list[str]] = defaultdict(list)
     for task in updated_plan.tasks:
         for dep_id in task.dependencies:

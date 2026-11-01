@@ -10,6 +10,7 @@ interface TradeOffCardsProps {
   onApplyOption: (option: TradeOffOption) => void;
 }
 
+/** Preview and apply deterministic budget recovery options with keyboard controls. */
 export const TradeOffCards: React.FC<TradeOffCardsProps> = ({
   options,
   onHoverOption,

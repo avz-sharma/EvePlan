@@ -20,6 +20,7 @@ from .quote_selection import effective_assignments
 def build_budgets(
     plan: EventPlan, catalog: EventCatalog, index: Mapping[str, EventCatalogEntry]
 ) -> list[BudgetBucket]:
+    """Aggregate host quotes and per-event catering ranges, applying the reserve once."""
     plan = plan.model_copy(update={"vendor_assignments": effective_assignments(plan)})
     guest_counts: dict[str, int] = defaultdict(int)
     categories: set[str] = set()

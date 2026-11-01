@@ -4,6 +4,7 @@ interface TabItem { id: string; label: string }
 
 interface TabsProps { tabs: TabItem[]; value: string; onChange: (value: string) => void }
 
+/** Navigate plan sections with roving focus, arrow keys, Home and End. */
 export const Tabs: React.FC<TabsProps> = ({ tabs, value, onChange }) => {
   const list = useRef<HTMLDivElement>(null);
   const focusAt = (index: number) => {

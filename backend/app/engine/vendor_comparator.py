@@ -1,3 +1,5 @@
+"""Compare written quote amounts against the host budget without invented prices."""
+
 from ..schemas.vendor_quote import HiddenCostFlag, NormalizedQuote, QuoteComparison
 
 
@@ -16,15 +18,17 @@ def compare_vendor_quote(
     ]
     for label, included in confirmation_fields:
         if included is False:
-            flags.append(HiddenCostFlag(
-                name=f"{label} marked as excluded",
-                estimated_impact_inr=None,
-                description=(
-                    "The host marked this as excluded. Confirm whether it applies to this event "
-                    "and ask the vendor for any amount; EvePlan does not estimate it."
-                ),
-                severity="MEDIUM",
-            ))
+            flags.append(
+                HiddenCostFlag(
+                    name=f"{label} marked as excluded",
+                    estimated_impact_inr=None,
+                    description=(
+                        "The host marked this as excluded. Confirm whether it applies to this event "
+                        "and ask the vendor for any amount; EvePlan does not estimate it."
+                    ),
+                    severity="MEDIUM",
+                )
+            )
 
     variance = round(quote.raw_total_inr - allocated_budget_max_inr, 2)
     is_within_budget = variance <= 0

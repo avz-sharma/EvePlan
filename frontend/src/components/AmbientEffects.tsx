@@ -42,6 +42,7 @@ export function Particles() {
   return <canvas ref={canvas} aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 size-full" />;
 }
 
+/** Follow a fine pointer with a spring while respecting reduced motion and pointer capabilities. */
 export function SmoothCursor() {
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(false);

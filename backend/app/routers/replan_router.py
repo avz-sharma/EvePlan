@@ -37,12 +37,12 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/plan", tags=["Replanning"])
 
 
-# ---------------------------------------------------------------------------
 # Request / Response models
-# ---------------------------------------------------------------------------
 
 
 class ReplanRequest(BaseModel):
+    """A client plan and a validated structured intent change."""
+
     model_config = ConfigDict(extra="forbid")
 
     plan: EventPlan = Field(description="Current client-persisted plan state")
@@ -50,6 +50,8 @@ class ReplanRequest(BaseModel):
 
 
 class ReplanResponse(BaseModel):
+    """A deterministic rebuilt plan, impact diff and budget recovery options."""
+
     model_config = ConfigDict(extra="forbid")
 
     updated_plan: EventPlan = Field(description="Healed and rescheduled plan state")
@@ -66,6 +68,8 @@ class ReplanResponse(BaseModel):
 
 
 class NaturalLanguageReplanRequest(BaseModel):
+    """A client plan and a bounded natural-language change request."""
+
     model_config = ConfigDict(extra="forbid")
 
     plan: EventPlan = Field(description="Current client-persisted plan state")
@@ -74,16 +78,14 @@ class NaturalLanguageReplanRequest(BaseModel):
     )
 
 
-# ---------------------------------------------------------------------------
 # Helpers
-# ---------------------------------------------------------------------------
 
 
 def _build_templated_rationale(diff: CascadeDiff, options: list[TradeOffOption]) -> str:
     """Generate a human-readable rationale from deterministic engine facts (zero LLM)."""
     parts: list[str] = [diff.summary]
     if diff.violations:
-        parts.append(f"⚠️ {len(diff.violations)} constraint violation(s) detected.")
+        parts.append(f"{len(diff.violations)} constraint violation(s) detected.")
     if options:
         option_titles = ", ".join(f'"{o.title}"' for o in options[:3])
         parts.append(
@@ -126,19 +128,21 @@ def _extract_replan_delta(plan_json: str, prompt: str) -> tuple[PlanDelta, str, 
             pass
     delta, extracted = parse_user_intent(prompt)
     if not extracted or delta == PlanDelta():
-        raise ValueError('Could not understand the change. Try "only 50 guests" or "add 20 guests".')
+        raise ValueError(
+            'Could not understand the change. Try "only 50 guests" or "add 20 guests".'
+        )
     return delta, "fallback", True
 
 
-# ---------------------------------------------------------------------------
 # POST /api/plan/replan — synchronous deterministic endpoint
-# ---------------------------------------------------------------------------
 
 
 @router.post("/replan", response_model=ReplanResponse)
 async def replan_event(req: ReplanRequest) -> ReplanResponse:
     """Pure deterministic replanning endpoint complying with LAW-01 & Free-Tier guidelines."""
-    updated_plan, diff, tradeoff_options = await run_plan_operation(_run_deterministic_replan, req.plan, req.delta)
+    updated_plan, diff, tradeoff_options = await run_plan_operation(
+        _run_deterministic_replan, req.plan, req.delta
+    )
 
     return ReplanResponse(
         updated_plan=updated_plan,
@@ -149,9 +153,7 @@ async def replan_event(req: ReplanRequest) -> ReplanResponse:
     )
 
 
-# ---------------------------------------------------------------------------
 # POST /api/plan/replan/stream — 3-stage SSE endpoint
-# ---------------------------------------------------------------------------
 
 
 @router.post("/replan/stream")
@@ -165,11 +167,13 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
     """
 
     async def event_generator() -> AsyncIterator[str]:
+        """Yield intent, checked engine output and rationale in dependency order."""
         plan_json = req.plan.model_dump_json()
 
-        # ── Stage 1: Extract PlanDelta ────────────────────────────────
         try:
-            delta, source, degraded = await run_in_threadpool(_extract_replan_delta, plan_json, req.user_prompt)
+            delta, source, degraded = await run_in_threadpool(
+                _extract_replan_delta, plan_json, req.user_prompt
+            )
         except ValueError as error:
             yield f"event: error\ndata: {json.dumps({'message': str(error)})}\n\n"
             return
@@ -184,9 +188,10 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
         )
         yield f"event: delta\ndata: {delta_payload}\n\n"
 
-        # ── Stage 2: Deterministic Engine Diff (immediate, <10ms) ─────
         try:
-            updated_plan, diff, tradeoff_options = await run_in_threadpool(_run_deterministic_replan, req.plan, delta)
+            updated_plan, diff, tradeoff_options = await run_in_threadpool(
+                _run_deterministic_replan, req.plan, delta
+            )
         except ValueError as error:
             yield f"event: error\ndata: {json.dumps({'message': str(error)})}\n\n"
             return
@@ -195,14 +200,11 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
             {
                 "updated_plan": json.loads(updated_plan.model_dump_json()),
                 "diff": json.loads(diff.model_dump_json()),
-                "tradeoff_options": [
-                    json.loads(o.model_dump_json()) for o in tradeoff_options
-                ],
+                "tradeoff_options": [json.loads(o.model_dump_json()) for o in tradeoff_options],
             }
         )
         yield f"event: engine_diff\ndata: {engine_payload}\n\n"
 
-        # ── Stage 3: Rationale (templated default, LLM-enhanced optional) ──
         templated_rationale = _build_templated_rationale(diff, tradeoff_options)
 
         # The intent extraction consumes the one allowed LLM call.
@@ -227,9 +229,7 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
     )
 
 
-# ---------------------------------------------------------------------------
 # GET /api/plan/quota — current quota status for UI badges
-# ---------------------------------------------------------------------------
 
 
 @router.get("/quota")

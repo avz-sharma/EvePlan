@@ -1,3 +1,5 @@
+"""I/O services and optional provider integrations outside the pure engine."""
+
 from .fallback_parser import parse_user_intent
 from .groq_extractor import extract_intent_delta, is_groq_available
 from .quota_guard import QuotaState, quota_guard

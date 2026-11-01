@@ -1,4 +1,5 @@
 """Signed, purpose-bound expiring cookies; Google access tokens are never persisted."""
+
 from typing import cast
 
 from itsdangerous import BadSignature, URLSafeTimedSerializer
@@ -13,21 +14,34 @@ MIN_SIGNING_SECRET_LENGTH = 32
 
 
 def required() -> bool:
+    """Always require login on Vercel, including when local test bypass is configured."""
     return bool(settings.VERCEL) or settings.AUTH_REQUIRED
 
 
 def configured() -> bool:
-    return bool(settings.GOOGLE_OAUTH_CLIENT_ID and settings.GOOGLE_OAUTH_CLIENT_SECRET
-                and settings.SESSION_SECRET and len(settings.SESSION_SECRET.get_secret_value()) >= MIN_SIGNING_SECRET_LENGTH)
+    """Require OAuth credentials and a sufficiently long session signing secret."""
+    return bool(
+        settings.GOOGLE_OAUTH_CLIENT_ID
+        and settings.GOOGLE_OAUTH_CLIENT_SECRET
+        and settings.SESSION_SECRET
+        and len(settings.SESSION_SECRET.get_secret_value()) >= MIN_SIGNING_SECRET_LENGTH
+    )
 
 
 def serializer(purpose: str) -> URLSafeTimedSerializer:
-    if not settings.SESSION_SECRET or len(settings.SESSION_SECRET.get_secret_value()) < MIN_SIGNING_SECRET_LENGTH:
+    """Bind signed cookies to a purpose so flow cookies cannot become sessions."""
+    if (
+        not settings.SESSION_SECRET
+        or len(settings.SESSION_SECRET.get_secret_value()) < MIN_SIGNING_SECRET_LENGTH
+    ):
         raise ValueError("Authentication is not configured")
-    return URLSafeTimedSerializer(settings.SESSION_SECRET.get_secret_value(), salt=f"eveplan-{purpose}-v1")
+    return URLSafeTimedSerializer(
+        settings.SESSION_SECRET.get_secret_value(), salt=f"eveplan-{purpose}-v1"
+    )
 
 
 def read_cookie(value: str | None, purpose: str, max_age: int) -> dict[str, object] | None:
+    """Reject expired, malformed or wrong-purpose signed cookie values."""
     if not value:
         return None
     try:

@@ -10,23 +10,35 @@ from fastapi.staticfiles import StaticFiles
 
 
 def configure_docs(app: FastAPI) -> None:
+    """Mount locally hosted API documentation under the application CSP."""
     directory = Path(__file__).resolve().parent / "static"
     app.mount("/static", StaticFiles(directory=directory), name="documentation-assets")
 
     @app.get("/docs", include_in_schema=False)
     async def swagger() -> HTMLResponse:
+        """Serve Swagger using local assets and an external initialization script."""
         page = get_swagger_ui_html(
-            openapi_url="/openapi.json", title=f"{app.title} — API docs",
+            openapi_url="/openapi.json",
+            title=f"{app.title} — API docs",
             swagger_js_url="/static/docs/swagger-ui-bundle.js",
             swagger_css_url="/static/docs/swagger-ui.css",
             swagger_favicon_url="/static/docs/favicon-32x32.png",
         )
-        html = re.sub(r"<script>.*?</script>", '<script src="/static/docs/swagger-init.js"></script>',
-                      bytes(page.body).decode(), flags=re.DOTALL)
+        html = re.sub(
+            r"<script>.*?</script>",
+            '<script src="/static/docs/swagger-init.js"></script>',
+            bytes(page.body).decode(),
+            flags=re.DOTALL,
+        )
         return HTMLResponse(html)
 
     @app.get("/redoc", include_in_schema=False)
     async def redoc() -> HTMLResponse:
-        return get_redoc_html(openapi_url="/openapi.json", title=f"{app.title} — ReDoc",
-                              redoc_js_url="/static/redoc/redoc.standalone.js",
-                              redoc_favicon_url="/static/docs/favicon-32x32.png", with_google_fonts=False)
+        """Serve ReDoc without a third-party script dependency."""
+        return get_redoc_html(
+            openapi_url="/openapi.json",
+            title=f"{app.title} — ReDoc",
+            redoc_js_url="/static/redoc/redoc.standalone.js",
+            redoc_favicon_url="/static/docs/favicon-32x32.png",
+            with_google_fonts=False,
+        )

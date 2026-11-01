@@ -1,3 +1,5 @@
+"""Validated API and deterministic planning data contracts."""
+
 from .intent_delta import CascadeDiff, PlanDelta, TradeOffOption
 from .plan_state import (
     AccessibilityNeeds,
@@ -39,4 +41,3 @@ __all__ = [
     "HiddenCostFlag",
     "QuoteComparison",
 ]
-

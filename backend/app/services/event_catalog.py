@@ -10,5 +10,6 @@ from ..schemas.catalog import EventCatalog
 
 @lru_cache(maxsize=1)
 def load_event_catalog() -> EventCatalog:
+    """Cache the committed starter catalog outside the pure engine boundary."""
     catalog_path = Path(__file__).resolve().parents[1] / "engine" / "data" / "event_catalog.json"
     return cast(EventCatalog, json.loads(catalog_path.read_text(encoding="utf-8")))

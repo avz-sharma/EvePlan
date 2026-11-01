@@ -123,7 +123,6 @@ def parse_user_intent(user_text: str) -> tuple[PlanDelta, bool]:
     constraints: list[str] = []
     extracted = False
 
-    # --- Guest count ---
     for pattern in _GUEST_PATTERNS:
         match = pattern.search(user_text)
         if match:
@@ -142,14 +141,15 @@ def parse_user_intent(user_text: str) -> tuple[PlanDelta, bool]:
         guest_delta = -int(next(group for group in reduction.groups() if group))
         extracted = True
     if not guest_delta:
-        total = _GUEST_TOTAL_PATTERN.search(user_text) or _BARE_GUEST_TOTAL_PATTERN.fullmatch(user_text)
+        total = _GUEST_TOTAL_PATTERN.search(user_text) or _BARE_GUEST_TOTAL_PATTERN.fullmatch(
+            user_text
+        )
         if total:
             guest_total = int(next(group for group in total.groups() if group))
             if not 1 <= guest_total <= 100_000:
                 raise ValueError("Guest count must be between 1 and 100,000.")
             extracted = True
 
-    # --- Date shifts (weeks) ---
     m = _DATE_EARLIER_PATTERN.search(user_text)
     if m:
         days_delta = -int(m.group(1)) * 7
@@ -160,7 +160,6 @@ def parse_user_intent(user_text: str) -> tuple[PlanDelta, bool]:
             days_delta = int(m.group(1)) * 7
             extracted = True
 
-    # --- Date shifts (days) ---
     if days_delta == 0:
         m = _DATE_DAYS_EARLIER.search(user_text)
         if m:
@@ -172,31 +171,26 @@ def parse_user_intent(user_text: str) -> tuple[PlanDelta, bool]:
                 days_delta = int(m.group(1))
                 extracted = True
 
-    # --- Per-plate rate hike ---
     m = _PLATE_RATE_PATTERN.search(user_text) or _PLATE_RATE_PATTERN_2.search(user_text)
     if m:
         plate_delta = _parse_indian_amount(m)
         extracted = True
 
-    # --- Indoor relocation ---
     if _INDOOR_PATTERNS.search(user_text):
         indoor = True
         extracted = True
         constraints.append("Weather-related indoor relocation flagged via fallback parser.")
 
-    # --- Jain dietary ---
     m = _JAIN_PATTERN.search(user_text)
     if m:
         jain_delta = int(m.group(1))
         extracted = True
 
-    # --- Venue capacity ---
     m = _VENUE_CAPACITY_PATTERN.search(user_text)
     if m:
         venue_override = int(m.group(1))
         extracted = True
 
-    # --- Budget reduction ---
     m = _BUDGET_PATTERN.search(user_text)
     if m:
         budget_delta = -_parse_indian_amount(m)
@@ -215,4 +209,3 @@ def parse_user_intent(user_text: str) -> tuple[PlanDelta, bool]:
     )
 
     return delta, extracted
-

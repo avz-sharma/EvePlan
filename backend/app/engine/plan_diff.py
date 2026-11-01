@@ -9,6 +9,7 @@ from ..schemas.plan_state import BudgetBucket, EventPlan, TaskNode
 def changed_budget_categories(
     before: Sequence[BudgetBucket], after: Sequence[BudgetBucket]
 ) -> set[str]:
+    """Return categories whose full allocation records changed, including removals."""
     old: dict[str, BudgetBucket] = {}
     new: dict[str, BudgetBucket] = {}
     for bucket in before:
@@ -22,10 +23,12 @@ def changed_budget_categories(
 
 def event_guest_counts(plan: EventPlan) -> dict[str, int]:
     # The builder resolves optional counts before these checks run.
+    """Index resolved event attendance for capacity and quote checks."""
     return {event.id: event.guest_count or 0 for day in plan.days for event in day.events}
 
 
 def vendor_capacity_violations(plan: EventPlan) -> list[str]:
+    """Report assigned vendors whose stated capacity is below event attendance."""
     guests = event_guest_counts(plan)
     return [
         f"{item.category.value} vendor capacity ({item.capacity}) is below event attendance ({guests.get(item.event_id, 0)})."
@@ -35,6 +38,7 @@ def vendor_capacity_violations(plan: EventPlan) -> list[str]:
 
 
 def dependent_hops(tasks: list[TaskNode], roots: set[str]) -> dict[str, int]:
+    """Find shortest downstream distances, retaining removed roots for edit diffs."""
     successors: dict[str, list[str]] = defaultdict(list)
     task_ids = {task.id for task in tasks}
     for task in tasks:

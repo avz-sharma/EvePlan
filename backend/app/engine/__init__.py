@@ -1,3 +1,5 @@
+"""Pure deterministic planning operations; catalog I/O is injected by callers."""
+
 from .budget_tradeoffs import evaluate_budget_tradeoffs
 from .cascade_replanner import apply_delta
 from .conflict_rules import evaluate_conflicts
@@ -17,4 +19,3 @@ __all__ = [
     "apply_delta",
     "compare_vendor_quote",
 ]
-

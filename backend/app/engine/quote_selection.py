@@ -9,6 +9,7 @@ from ..schemas.plan_state import (
 
 
 def validate_quotes(plan: EventPlan) -> None:
+    """Reject orphaned, duplicate or conflicting selected quote records."""
     events = {event.id for day in plan.days for event in day.events}
     ids: set[str] = set()
     groups: set[tuple[str, str]] = set()
@@ -24,6 +25,7 @@ def validate_quotes(plan: EventPlan) -> None:
 
 
 def effective_assignments(plan: EventPlan) -> list[VendorAssignment]:
+    """Overlay selected written quotes on manual assignments without double counting."""
     selected = [q for q in plan.saved_quotes if q.selected]
     groups = {(q.event_id, q.category) for q in selected}
     return [a for a in plan.vendor_assignments if (a.event_id, a.category) not in groups] + [

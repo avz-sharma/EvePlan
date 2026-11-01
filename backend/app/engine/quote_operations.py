@@ -31,6 +31,7 @@ def mutate_quote(
     quote_id: str | None = None,
     contingency_percent: float | None = None,
 ) -> tuple[EventPlan, CascadeDiff]:
+    """Save, select or remove a quotation and reconcile selected costs and task state."""
     quotes = list(plan.saved_quotes)
     target = next((q for q in quotes if q.id == quote_id), None)
     assignments = list(plan.vendor_assignments)

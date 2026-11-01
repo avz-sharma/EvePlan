@@ -20,6 +20,7 @@ type Analysis = {
   follow_up_questions: string[];
 };
 
+/** Keep manual quotation editing and comparison scoped to the selected branch. */
 export function SavedQuotes({ comparison = false }: { comparison?: boolean }) {
   const current = useCurrentPlan();
   const fork = usePlanStore(s => s.forkedPlan);

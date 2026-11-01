@@ -1,5 +1,6 @@
 import type { VendorCategory } from "../api/types";
 // Search variants use existing engine categories, so assignments keep their contract.
+/** Service chips and search labels for keyless vendor discovery. */
 export const vendorDiscoveryCategories: Record<VendorCategory, readonly string[]> = {
   photographer: ["Photographers", "Videographers"],
   caterer: ["Caterers"],

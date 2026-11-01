@@ -5,6 +5,7 @@ import { GlassPanel } from "./ui";
 
 interface Props { tasks: TaskNode[] }
 
+/** Present task dates and dependencies as a readable ordered checklist. */
 export const TimelineChecklist: React.FC<Props> = ({ tasks }) => <GlassPanel className="space-y-4">
   <div><h2 className="text-xl">Task schedule</h2><p className="mt-1 text-sm text-muted">Dates are counted back from each event. Prerequisites connect work across days.</p></div>
   {!tasks.length ? <p className="text-sm text-muted">Tasks will appear here when your plan includes events.</p> : <ol className="space-y-2">{tasks.map((task, index) => <li key={task.id} className={`rounded-xl border p-3 ${task.is_critical ? "border-danger/30 bg-danger/5" : "border-line/70 bg-white/50"}`}>

@@ -17,6 +17,7 @@ interface Props {
   isLoading: boolean;
 }
 
+/** Offer deterministic example changes rebuilt from the current plan. */
 export const QuickScenarioChips: React.FC<Props> = ({ plan, onApplyFixture, isLoading }) => {
   const [fixtures, setFixtures] = useState<ScenarioFixture[]>([]);
   const [loading, setLoading] = useState(false);

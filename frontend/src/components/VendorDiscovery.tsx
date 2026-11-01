@@ -4,6 +4,7 @@ import { generateGoogleMapsSearchUrl } from "../lib/googleMapsUrl";
 import { vendorDiscoveryCategories } from "../lib/vendorDiscoveryCategories";
 import { Button, GlassPanel } from "./ui";
 
+/** Build explicit external Maps searches from host-selected service and location. */
 export function VendorDiscovery({ category, city, onCityChange, eventType }: {
   category: VendorCategory | ""; city: string; onCityChange: (city: string) => void; eventType: string;
 }) {

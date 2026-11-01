@@ -19,6 +19,7 @@ function VenueTypeField({ event, onSave }: { event: PlanEvent; onSave: (value: s
     onBlur={() => { const next = value.trim() || null; if (next !== event.venue_type) onSave(next); }} /></label>;
 }
 
+/** Edit event attendance, venues and day ordering through deterministic API operations. */
 export const EventsTab: React.FC = () => {
   const plan = useCurrentPlan();
   const { begin: beginRequest } = useRequestController();

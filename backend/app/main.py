@@ -1,3 +1,5 @@
+"""FastAPI composition for authentication, request guards and planning routes."""
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -29,8 +31,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(CompressionMiddleware)
-app.add_middleware(SecurityMiddleware, max_body_bytes=settings.MAX_REQUEST_BYTES,
-                   requests_per_minute=settings.API_REQUESTS_PER_MINUTE)
+app.add_middleware(
+    SecurityMiddleware,
+    max_body_bytes=settings.MAX_REQUEST_BYTES,
+    requests_per_minute=settings.API_REQUESTS_PER_MINUTE,
+)
 
 # Attach Routers
 app.include_router(onboarding_router)
@@ -42,5 +47,5 @@ configure_docs(app)
 
 @app.get("/health")
 async def health_check() -> dict[str, str]:
+    """Return an inexpensive health response without authentication or provider calls."""
     return {"status": "ok", "service": "celebration-planner-engine"}
-

@@ -12,6 +12,7 @@
           "Authentication"
         ],
         "summary": "Session",
+        "description": "Report the current signed identity without exposing Google tokens.",
         "operationId": "session_api_auth_session_get",
         "responses": {
           "200": {
@@ -31,6 +32,7 @@
           "Authentication"
         ],
         "summary": "Login",
+        "description": "Start Google authorization with a signed, short-lived state and PKCE verifier.",
         "operationId": "login_api_auth_google_get",
         "responses": {
           "200": {
@@ -50,6 +52,7 @@
           "Authentication"
         ],
         "summary": "Callback",
+        "description": "Validate the OAuth flow, issue a session, and clear the one-use flow cookie.",
         "operationId": "callback_api_auth_callback_get",
         "parameters": [
           {
@@ -111,6 +114,7 @@
           "Authentication"
         ],
         "summary": "Logout",
+        "description": "Clear the session only for requests from the configured application origin.",
         "operationId": "logout_api_auth_logout_post",
         "responses": {
           "200": {
@@ -130,6 +134,7 @@
           "Event Planning"
         ],
         "summary": "Edit Saved Quote",
+        "description": "Rebuild quotations and return the resulting plan and cascade diff.",
         "operationId": "edit_saved_quote_api_plan_quotes_edit_post",
         "requestBody": {
           "content": {
@@ -173,6 +178,7 @@
           "Event Planning"
         ],
         "summary": "Get Event Catalog",
+        "description": "Return planning defaults while keeping internal tradition tags server-side.",
         "operationId": "get_event_catalog_api_plan_catalog_get",
         "responses": {
           "200": {
@@ -223,6 +229,7 @@
           "Event Planning"
         ],
         "summary": "Map Custom Event",
+        "description": "Suggest an exact saved alias match without invoking a model.",
         "operationId": "map_custom_event_api_plan_map_custom_event_post",
         "requestBody": {
           "content": {
@@ -266,6 +273,7 @@
           "Event Planning"
         ],
         "summary": "Build Plan",
+        "description": "Resolve host selections into a deterministic event-aware plan.",
         "operationId": "build_plan_api_plan_build_post",
         "requestBody": {
           "content": {
@@ -307,6 +315,7 @@
           "Event Planning"
         ],
         "summary": "Get Plan Scenario Fixtures",
+        "description": "Build example changes relative to the supplied plan.",
         "operationId": "get_plan_scenario_fixtures_api_plan_scenarios_post",
         "requestBody": {
           "content": {
@@ -353,6 +362,7 @@
           "Event Planning"
         ],
         "summary": "Edit Plan Events",
+        "description": "Apply an event or day edit and return its downstream impact.",
         "operationId": "edit_plan_events_api_plan_events_edit_post",
         "requestBody": {
           "content": {
@@ -396,6 +406,7 @@
           "Event Planning"
         ],
         "summary": "Assign Plan Vendor",
+        "description": "Replace one event/category vendor and rebuild the affected branch.",
         "operationId": "assign_plan_vendor_api_plan_vendors_assign_post",
         "requestBody": {
           "content": {
@@ -627,6 +638,7 @@
           "Vendor Coordination"
         ],
         "summary": "Analyze Saved",
+        "description": "Return optional provider advice without changing the host selection.",
         "operationId": "analyze_saved_api_vendor_analyze_saved_post",
         "requestBody": {
           "content": {
@@ -670,6 +682,7 @@
           "Vendor Search"
         ],
         "summary": "Search Vendors",
+        "description": "Return a Maps search link without importing business listings.",
         "operationId": "search_vendors_api_vendors_search_post",
         "requestBody": {
           "content": {
@@ -713,6 +726,7 @@
           "Vendor Search"
         ],
         "summary": "Get Vendor Details",
+        "description": "Explain the unavailable legacy vendor detail endpoint.",
         "operationId": "get_vendor_details_api_vendors__place_id__get",
         "parameters": [
           {
@@ -750,6 +764,7 @@
     "/health": {
       "get": {
         "summary": "Health Check",
+        "description": "Return an inexpensive health response without authentication or provider calls.",
         "operationId": "health_check_health_get",
         "responses": {
           "200": {
@@ -796,7 +811,8 @@
         },
         "additionalProperties": false,
         "type": "object",
-        "title": "AccessibilityNeeds"
+        "title": "AccessibilityNeeds",
+        "description": "Legacy access requirements retained alongside host-entered needs."
       },
       "AnalyzeRequest": {
         "properties": {
@@ -819,7 +835,8 @@
           "plan",
           "quote_ids"
         ],
-        "title": "AnalyzeRequest"
+        "title": "AnalyzeRequest",
+        "description": "Two to eight saved quotation IDs and their containing plan."
       },
       "Body_upload_quote_document_api_vendor_upload_post": {
         "properties": {
@@ -899,7 +916,8 @@
           "allocated_max_inr",
           "contingency_inr"
         ],
-        "title": "BudgetBucket"
+        "title": "BudgetBucket",
+        "description": "Host-derived allocation range, reserve and category-cap status."
       },
       "CascadeDiff": {
         "properties": {
@@ -955,7 +973,8 @@
           "node_hops",
           "summary"
         ],
-        "title": "CascadeDiff"
+        "title": "CascadeDiff",
+        "description": "Deterministic affected tasks, budget categories, constraints and hop distances."
       },
       "CompareRequest": {
         "properties": {
@@ -980,7 +999,8 @@
           "allocated_budget_max_inr",
           "guest_count"
         ],
-        "title": "CompareRequest"
+        "title": "CompareRequest",
+        "description": "Written quote values and a host-entered budget for deterministic comparison."
       },
       "CustomEventMapRequest": {
         "properties": {
@@ -996,7 +1016,8 @@
         "required": [
           "text"
         ],
-        "title": "CustomEventMapRequest"
+        "title": "CustomEventMapRequest",
+        "description": "A bounded host event name for matching saved catalog aliases."
       },
       "DietarySplit": {
         "properties": {
@@ -1031,7 +1052,8 @@
         },
         "additionalProperties": false,
         "type": "object",
-        "title": "DietarySplit"
+        "title": "DietarySplit",
+        "description": "Legacy dietary-count summary retained for saved-plan compatibility."
       },
       "EventDay": {
         "properties": {
@@ -1067,7 +1089,8 @@
         "required": [
           "day_number"
         ],
-        "title": "EventDay"
+        "title": "EventDay",
+        "description": "One ordered celebration day and its selected events."
       },
       "EventEditRequest": {
         "properties": {
@@ -1155,7 +1178,8 @@
           "plan",
           "operation"
         ],
-        "title": "EventEditRequest"
+        "title": "EventEditRequest",
+        "description": "A client plan and one bounded event or day editing operation."
       },
       "EventPlan": {
         "properties": {
@@ -1390,7 +1414,8 @@
           "id",
           "title"
         ],
-        "title": "EventPlan"
+        "title": "EventPlan",
+        "description": "Bounded client-persisted inputs and their deterministic derived plan state."
       },
       "HTTPValidationError": {
         "properties": {
@@ -1443,7 +1468,8 @@
           "description",
           "severity"
         ],
-        "title": "HiddenCostFlag"
+        "title": "HiddenCostFlag",
+        "description": "A missing or ambiguous quote term requiring vendor confirmation."
       },
       "NaturalLanguageReplanRequest": {
         "properties": {
@@ -1465,7 +1491,8 @@
           "plan",
           "user_prompt"
         ],
-        "title": "NaturalLanguageReplanRequest"
+        "title": "NaturalLanguageReplanRequest",
+        "description": "A client plan and a bounded natural-language change request."
       },
       "NormalizedQuote": {
         "properties": {
@@ -1561,7 +1588,8 @@
           "raw_total_inr",
           "normalized_per_head_inr"
         ],
-        "title": "NormalizedQuote"
+        "title": "NormalizedQuote",
+        "description": "Host-transcribed quotation values used for deterministic comparison."
       },
       "NormalizedQuoteItem": {
         "properties": {
@@ -1613,7 +1641,8 @@
           "quantity",
           "total_inr"
         ],
-        "title": "NormalizedQuoteItem"
+        "title": "NormalizedQuoteItem",
+        "description": "An explicitly quoted line item; unspecified market costs are never inferred."
       },
       "PlanDelta": {
         "properties": {
@@ -1708,7 +1737,8 @@
         },
         "additionalProperties": false,
         "type": "object",
-        "title": "PlanDelta"
+        "title": "PlanDelta",
+        "description": "Flat, validated intent fields; arithmetic belongs to the pure engine."
       },
       "PlanEvent": {
         "properties": {
@@ -1788,7 +1818,8 @@
         "required": [
           "id"
         ],
-        "title": "PlanEvent"
+        "title": "PlanEvent",
+        "description": "An immutable event instance identified by a catalog choice or custom name."
       },
       "QuoteComparison": {
         "properties": {
@@ -1851,7 +1882,8 @@
           "target_counter_offer_inr",
           "negotiation_script"
         ],
-        "title": "QuoteComparison"
+        "title": "QuoteComparison",
+        "description": "Budget fit and clarification questions derived from written quote values."
       },
       "QuoteMutationRequest": {
         "properties": {
@@ -1909,7 +1941,8 @@
           "plan",
           "operation"
         ],
-        "title": "QuoteMutationRequest"
+        "title": "QuoteMutationRequest",
+        "description": "A quote editing operation and optional host-selected reserve percentage."
       },
       "ReplanRequest": {
         "properties": {
@@ -1928,7 +1961,8 @@
           "plan",
           "delta"
         ],
-        "title": "ReplanRequest"
+        "title": "ReplanRequest",
+        "description": "A client plan and a validated structured intent change."
       },
       "ReplanResponse": {
         "properties": {
@@ -1967,7 +2001,8 @@
           "updated_plan",
           "diff"
         ],
-        "title": "ReplanResponse"
+        "title": "ReplanResponse",
+        "description": "A deterministic rebuilt plan, impact diff and budget recovery options."
       },
       "SavedQuote": {
         "properties": {
@@ -2065,7 +2100,8 @@
           "category",
           "original_inr"
         ],
-        "title": "SavedQuote"
+        "title": "SavedQuote",
+        "description": "A written vendor quotation and optional finalized budget selection."
       },
       "ScenarioFixtureRequest": {
         "properties": {
@@ -2078,7 +2114,8 @@
         "required": [
           "plan"
         ],
-        "title": "ScenarioFixtureRequest"
+        "title": "ScenarioFixtureRequest",
+        "description": "The current plan used to derive deterministic example outcomes."
       },
       "SubEventType": {
         "type": "string",
@@ -2265,7 +2302,8 @@
           "category",
           "duration_days"
         ],
-        "title": "TaskNode"
+        "title": "TaskNode",
+        "description": "A dependency task with event-relative dates and calculated CPM values."
       },
       "TimeSlot": {
         "type": "string",
@@ -2275,7 +2313,8 @@
           "evening",
           "night"
         ],
-        "title": "TimeSlot"
+        "title": "TimeSlot",
+        "description": "Host-selectable time-of-day slots for an event."
       },
       "TradeOffOption": {
         "properties": {
@@ -2343,7 +2382,8 @@
           "impact_level",
           "tradeoff_rationale"
         ],
-        "title": "TradeOffOption"
+        "title": "TradeOffOption",
+        "description": "A budget adjustment with its host-visible trade-offs and estimated savings."
       },
       "ValidationError": {
         "properties": {
@@ -2453,7 +2493,8 @@
           "category",
           "place_id"
         ],
-        "title": "VendorAssignment"
+        "title": "VendorAssignment",
+        "description": "A host-entered vendor offer for one event and service."
       },
       "VendorAssignmentRequest": {
         "properties": {
@@ -2470,7 +2511,8 @@
           "plan",
           "assignment"
         ],
-        "title": "VendorAssignmentRequest"
+        "title": "VendorAssignmentRequest",
+        "description": "A branch-local plan and host-entered vendor assignment."
       },
       "VendorCategory": {
         "type": "string",
@@ -2483,7 +2525,8 @@
           "music",
           "transport"
         ],
-        "title": "VendorCategory"
+        "title": "VendorCategory",
+        "description": "Supported services used to group vendor assignments and quotations."
       },
       "VendorSearchRequest": {
         "properties": {
@@ -2509,7 +2552,8 @@
           "category",
           "city"
         ],
-        "title": "VendorSearchRequest"
+        "title": "VendorSearchRequest",
+        "description": "Bounded search terms for keyless external Maps navigation."
       }
     }
   }

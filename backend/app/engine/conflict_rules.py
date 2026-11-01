@@ -1,3 +1,5 @@
+"""Capacity, dietary and access conflicts derived from current plan facts."""
+
 from typing import cast
 
 from ..schemas.plan_state import EventPlan
@@ -5,14 +7,13 @@ from ..schemas.plan_state import EventPlan
 
 def evaluate_conflicts(plan: EventPlan) -> tuple[list[str], list[str]]:
     """Evaluates plan constraints deterministically.
-    
+
     Returns:
         tuple[list[str], list[str]]: (violations, tasks_to_reopen)
     """
     violations: list[str] = []
     tasks_to_reopen: list[str] = []
 
-    # 1. Venue Capacity Overrun Check
     # Phase 1 compatibility callers supply a concrete capacity. Phase 2 checks
     # optional capacities per assignment in the event-aware builder instead.
     capacity = cast(int, plan.venue_capacity)
@@ -31,7 +32,6 @@ def evaluate_conflicts(plan: EventPlan) -> tuple[list[str], list[str]]:
             ]
         )
 
-    # 2. Elderly Accessibility and Multi-Generational Fatigue
     if plan.accessibility.elderly_count >= 15:
         # Check whether multiple selected events have a short planning window.
         if len(plan.sub_events) >= 2 and plan.days_until_event <= 14:
@@ -46,7 +46,6 @@ def evaluate_conflicts(plan: EventPlan) -> tuple[list[str], list[str]]:
                     "Staircase navigation poses severe mobility barrier."
                 )
 
-    # 3. Dietary Split Requirements (Jain counters)
     if plan.dietary_split.jain > 0:
         catering_bucket = next((b for b in plan.budget_buckets if "Catering" in b.category), None)
         has_jain_assumption = (
@@ -61,7 +60,6 @@ def evaluate_conflicts(plan: EventPlan) -> tuple[list[str], list[str]]:
             )
             tasks_to_reopen.append("task_catering_headcount")
 
-    # 4. Budget Ceiling Check
     total_max_projected = sum(b.allocated_max_inr + b.contingency_inr for b in plan.budget_buckets)
     if total_max_projected > plan.total_budget_cap_inr:
         overage = total_max_projected - plan.total_budget_cap_inr
@@ -71,5 +69,3 @@ def evaluate_conflicts(plan: EventPlan) -> tuple[list[str], list[str]]:
         )
 
     return violations, list(set(tasks_to_reopen))
-
-

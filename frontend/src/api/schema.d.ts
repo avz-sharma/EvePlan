@@ -11,7 +11,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Session */
+        /**
+         * Session
+         * @description Report the current signed identity without exposing Google tokens.
+         */
         get: operations["session_api_auth_session_get"];
         put?: never;
         post?: never;
@@ -28,7 +31,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Login */
+        /**
+         * Login
+         * @description Start Google authorization with a signed, short-lived state and PKCE verifier.
+         */
         get: operations["login_api_auth_google_get"];
         put?: never;
         post?: never;
@@ -45,7 +51,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Callback */
+        /**
+         * Callback
+         * @description Validate the OAuth flow, issue a session, and clear the one-use flow cookie.
+         */
         get: operations["callback_api_auth_callback_get"];
         put?: never;
         post?: never;
@@ -64,7 +73,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Logout */
+        /**
+         * Logout
+         * @description Clear the session only for requests from the configured application origin.
+         */
         post: operations["logout_api_auth_logout_post"];
         delete?: never;
         options?: never;
@@ -81,7 +93,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Edit Saved Quote */
+        /**
+         * Edit Saved Quote
+         * @description Rebuild quotations and return the resulting plan and cascade diff.
+         */
         post: operations["edit_saved_quote_api_plan_quotes_edit_post"];
         delete?: never;
         options?: never;
@@ -96,7 +111,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Event Catalog */
+        /**
+         * Get Event Catalog
+         * @description Return planning defaults while keeping internal tradition tags server-side.
+         */
         get: operations["get_event_catalog_api_plan_catalog_get"];
         put?: never;
         post?: never;
@@ -135,7 +153,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Map Custom Event */
+        /**
+         * Map Custom Event
+         * @description Suggest an exact saved alias match without invoking a model.
+         */
         post: operations["map_custom_event_api_plan_map_custom_event_post"];
         delete?: never;
         options?: never;
@@ -152,7 +173,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Build Plan */
+        /**
+         * Build Plan
+         * @description Resolve host selections into a deterministic event-aware plan.
+         */
         post: operations["build_plan_api_plan_build_post"];
         delete?: never;
         options?: never;
@@ -169,7 +193,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Get Plan Scenario Fixtures */
+        /**
+         * Get Plan Scenario Fixtures
+         * @description Build example changes relative to the supplied plan.
+         */
         post: operations["get_plan_scenario_fixtures_api_plan_scenarios_post"];
         delete?: never;
         options?: never;
@@ -186,7 +213,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Edit Plan Events */
+        /**
+         * Edit Plan Events
+         * @description Apply an event or day edit and return its downstream impact.
+         */
         post: operations["edit_plan_events_api_plan_events_edit_post"];
         delete?: never;
         options?: never;
@@ -203,7 +233,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Assign Plan Vendor */
+        /**
+         * Assign Plan Vendor
+         * @description Replace one event/category vendor and rebuild the affected branch.
+         */
         post: operations["assign_plan_vendor_api_plan_vendors_assign_post"];
         delete?: never;
         options?: never;
@@ -325,7 +358,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Analyze Saved */
+        /**
+         * Analyze Saved
+         * @description Return optional provider advice without changing the host selection.
+         */
         post: operations["analyze_saved_api_vendor_analyze_saved_post"];
         delete?: never;
         options?: never;
@@ -342,7 +378,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Search Vendors */
+        /**
+         * Search Vendors
+         * @description Return a Maps search link without importing business listings.
+         */
         post: operations["search_vendors_api_vendors_search_post"];
         delete?: never;
         options?: never;
@@ -357,7 +396,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Vendor Details */
+        /**
+         * Get Vendor Details
+         * @description Explain the unavailable legacy vendor detail endpoint.
+         */
         get: operations["get_vendor_details_api_vendors__place_id__get"];
         put?: never;
         post?: never;
@@ -374,7 +416,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Health Check */
+        /**
+         * Health Check
+         * @description Return an inexpensive health response without authentication or provider calls.
+         */
         get: operations["health_check_health_get"];
         put?: never;
         post?: never;
@@ -388,7 +433,10 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** AccessibilityNeeds */
+        /**
+         * AccessibilityNeeds
+         * @description Legacy access requirements retained alongside host-entered needs.
+         */
         AccessibilityNeeds: {
             /**
              * Elderly Count
@@ -409,7 +457,10 @@ export interface components {
              */
             ground_floor_dining: boolean;
         };
-        /** AnalyzeRequest */
+        /**
+         * AnalyzeRequest
+         * @description Two to eight saved quotation IDs and their containing plan.
+         */
         AnalyzeRequest: {
             plan: components["schemas"]["EventPlan"];
             /** Quote Ids */
@@ -420,7 +471,10 @@ export interface components {
             /** File */
             file: string;
         };
-        /** BudgetBucket */
+        /**
+         * BudgetBucket
+         * @description Host-derived allocation range, reserve and category-cap status.
+         */
         BudgetBucket: {
             /**
              * Category
@@ -456,7 +510,10 @@ export interface components {
             /** Category Budget Cap Inr */
             category_budget_cap_inr?: number | null;
         };
-        /** CascadeDiff */
+        /**
+         * CascadeDiff
+         * @description Deterministic affected tasks, budget categories, constraints and hop distances.
+         */
         CascadeDiff: {
             /**
              * Mutated Attribute
@@ -491,7 +548,10 @@ export interface components {
              */
             summary: string;
         };
-        /** CompareRequest */
+        /**
+         * CompareRequest
+         * @description Written quote values and a host-entered budget for deterministic comparison.
+         */
         CompareRequest: {
             quote: components["schemas"]["NormalizedQuote"];
             /** Allocated Budget Max Inr */
@@ -499,12 +559,18 @@ export interface components {
             /** Guest Count */
             guest_count: number;
         };
-        /** CustomEventMapRequest */
+        /**
+         * CustomEventMapRequest
+         * @description A bounded host event name for matching saved catalog aliases.
+         */
         CustomEventMapRequest: {
             /** Text */
             text: string;
         };
-        /** DietarySplit */
+        /**
+         * DietarySplit
+         * @description Legacy dietary-count summary retained for saved-plan compatibility.
+         */
         DietarySplit: {
             /**
              * Regular
@@ -531,7 +597,10 @@ export interface components {
              */
             kids: number;
         };
-        /** EventDay */
+        /**
+         * EventDay
+         * @description One ordered celebration day and its selected events.
+         */
         EventDay: {
             /** Day Number */
             day_number: number;
@@ -540,7 +609,10 @@ export interface components {
             /** Events */
             events?: components["schemas"]["PlanEvent"][];
         };
-        /** EventEditRequest */
+        /**
+         * EventEditRequest
+         * @description A client plan and one bounded event or day editing operation.
+         */
         EventEditRequest: {
             plan: components["schemas"]["EventPlan"];
             /**
@@ -558,7 +630,10 @@ export interface components {
             /** Guest Count */
             guest_count?: number | null;
         };
-        /** EventPlan */
+        /**
+         * EventPlan
+         * @description Bounded client-persisted inputs and their deterministic derived plan state.
+         */
         EventPlan: {
             /**
              * Id
@@ -693,7 +768,10 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
-        /** HiddenCostFlag */
+        /**
+         * HiddenCostFlag
+         * @description A missing or ambiguous quote term requiring vendor confirmation.
+         */
         HiddenCostFlag: {
             /**
              * Name
@@ -716,7 +794,10 @@ export interface components {
              */
             severity: string;
         };
-        /** NaturalLanguageReplanRequest */
+        /**
+         * NaturalLanguageReplanRequest
+         * @description A client plan and a bounded natural-language change request.
+         */
         NaturalLanguageReplanRequest: {
             /** @description Current client-persisted plan state */
             plan: components["schemas"]["EventPlan"];
@@ -726,7 +807,10 @@ export interface components {
              */
             user_prompt: string;
         };
-        /** NormalizedQuote */
+        /**
+         * NormalizedQuote
+         * @description Host-transcribed quotation values used for deterministic comparison.
+         */
         NormalizedQuote: {
             /**
              * Vendor Name
@@ -774,7 +858,10 @@ export interface components {
              */
             includes_corkage?: boolean | null;
         };
-        /** NormalizedQuoteItem */
+        /**
+         * NormalizedQuoteItem
+         * @description An explicitly quoted line item; unspecified market costs are never inferred.
+         */
         NormalizedQuoteItem: {
             /**
              * Name
@@ -808,7 +895,10 @@ export interface components {
              */
             is_optional: boolean;
         };
-        /** PlanDelta */
+        /**
+         * PlanDelta
+         * @description Flat, validated intent fields; arithmetic belongs to the pure engine.
+         */
         PlanDelta: {
             /**
              * Guest Count Delta
@@ -867,7 +957,10 @@ export interface components {
              */
             new_constraints?: string[];
         };
-        /** PlanEvent */
+        /**
+         * PlanEvent
+         * @description An immutable event instance identified by a catalog choice or custom name.
+         */
         PlanEvent: {
             /** Id */
             id: string;
@@ -884,7 +977,10 @@ export interface components {
             /** Vendor Categories */
             vendor_categories?: components["schemas"]["VendorCategory"][];
         };
-        /** QuoteComparison */
+        /**
+         * QuoteComparison
+         * @description Budget fit and clarification questions derived from written quote values.
+         */
         QuoteComparison: {
             /** @description Parsed and normalized vendor quote */
             normalized_quote: components["schemas"]["NormalizedQuote"];
@@ -924,7 +1020,10 @@ export interface components {
              */
             vendor_interview_questions?: string[];
         };
-        /** QuoteMutationRequest */
+        /**
+         * QuoteMutationRequest
+         * @description A quote editing operation and optional host-selected reserve percentage.
+         */
         QuoteMutationRequest: {
             plan: components["schemas"]["EventPlan"];
             /**
@@ -938,14 +1037,20 @@ export interface components {
             /** Contingency Percent */
             contingency_percent?: number | null;
         };
-        /** ReplanRequest */
+        /**
+         * ReplanRequest
+         * @description A client plan and a validated structured intent change.
+         */
         ReplanRequest: {
             /** @description Current client-persisted plan state */
             plan: components["schemas"]["EventPlan"];
             /** @description Structured delta to apply */
             delta: components["schemas"]["PlanDelta"];
         };
-        /** ReplanResponse */
+        /**
+         * ReplanResponse
+         * @description A deterministic rebuilt plan, impact diff and budget recovery options.
+         */
         ReplanResponse: {
             /** @description Healed and rescheduled plan state */
             updated_plan: components["schemas"]["EventPlan"];
@@ -969,7 +1074,10 @@ export interface components {
              */
             degraded_mode: boolean;
         };
-        /** SavedQuote */
+        /**
+         * SavedQuote
+         * @description A written vendor quotation and optional finalized budget selection.
+         */
         SavedQuote: {
             /** Id */
             id: string;
@@ -1007,7 +1115,10 @@ export interface components {
              */
             selected: boolean;
         };
-        /** ScenarioFixtureRequest */
+        /**
+         * ScenarioFixtureRequest
+         * @description The current plan used to derive deterministic example outcomes.
+         */
         ScenarioFixtureRequest: {
             plan: components["schemas"]["EventPlan"];
         };
@@ -1017,7 +1128,10 @@ export interface components {
          * @enum {string}
          */
         SubEventType: "HALDI" | "SANGEET" | "WEDDING" | "RECEPTION";
-        /** TaskNode */
+        /**
+         * TaskNode
+         * @description A dependency task with event-relative dates and calculated CPM values.
+         */
         TaskNode: {
             /**
              * Id
@@ -1109,10 +1223,14 @@ export interface components {
         };
         /**
          * TimeSlot
+         * @description Host-selectable time-of-day slots for an event.
          * @enum {string}
          */
         TimeSlot: "morning" | "afternoon" | "evening" | "night";
-        /** TradeOffOption */
+        /**
+         * TradeOffOption
+         * @description A budget adjustment with its host-visible trade-offs and estimated savings.
+         */
         TradeOffOption: {
             /**
              * Id
@@ -1176,7 +1294,10 @@ export interface components {
             /** Context */
             ctx?: Record<string, never>;
         };
-        /** VendorAssignment */
+        /**
+         * VendorAssignment
+         * @description A host-entered vendor offer for one event and service.
+         */
         VendorAssignment: {
             /** Event Id */
             event_id: string;
@@ -1195,17 +1316,24 @@ export interface components {
             /** Capacity */
             capacity?: number | null;
         };
-        /** VendorAssignmentRequest */
+        /**
+         * VendorAssignmentRequest
+         * @description A branch-local plan and host-entered vendor assignment.
+         */
         VendorAssignmentRequest: {
             plan: components["schemas"]["EventPlan"];
             assignment: components["schemas"]["VendorAssignment"];
         };
         /**
          * VendorCategory
+         * @description Supported services used to group vendor assignments and quotations.
          * @enum {string}
          */
         VendorCategory: "venue" | "caterer" | "decorator" | "photographer" | "makeup" | "music" | "transport";
-        /** VendorSearchRequest */
+        /**
+         * VendorSearchRequest
+         * @description Bounded search terms for keyless external Maps navigation.
+         */
         VendorSearchRequest: {
             category: components["schemas"]["VendorCategory"];
             /** City */

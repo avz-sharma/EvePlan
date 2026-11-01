@@ -11,11 +11,13 @@ function useVisited(open: boolean): boolean {
   return open || visited;
 }
 
+/** Load celebration setup on demand while preserving its mounted draft. */
 export function LazyWizard(props: ComponentProps<typeof Wizard>) {
   const visited = useVisited(props.isOpen);
   return visited ? <Suspense fallback={null}><Wizard {...props} /></Suspense> : null;
 }
 
+/** Load quote comparison on demand while preserving entered values. */
 export function LazyQuoteModal(props: ComponentProps<typeof QuoteModal>) {
   const visited = useVisited(props.isOpen);
   return visited ? <Suspense fallback={null}><QuoteModal {...props} /></Suspense> : null;

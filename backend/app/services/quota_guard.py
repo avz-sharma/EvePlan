@@ -77,4 +77,3 @@ class QuotaState:
 
 # Module-level singleton used across the application
 quota_guard = QuotaState()
-

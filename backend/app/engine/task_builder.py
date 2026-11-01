@@ -18,6 +18,7 @@ from .event_metadata import event_metadata
 def build_tasks(
     plan: EventPlan, catalog: EventCatalog, index: Mapping[str, EventCatalogEntry]
 ) -> list[TaskNode]:
+    """Resolve event-relative task templates and reject impossible prerequisite dates."""
     event_context: dict[str, tuple[PlanEvent, date, EventCatalogEntry]] = {}
     templates_by_event: dict[str, list[TaskTemplate]] = {}
     for day in plan.days:

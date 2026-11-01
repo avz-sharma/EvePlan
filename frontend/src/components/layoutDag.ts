@@ -1,6 +1,7 @@
 import type { TaskNode } from "../api/types";
 
 interface DagNode { task: TaskNode; x: number; y: number; level: number; width: number; height: number }
+/** Positioned DAG nodes and edges sized for the dependency graph viewport. */
 export interface DagLayout { nodes: DagNode[]; edges: Array<{ id: string; from: DagNode; to: DagNode }>; width: number; height: number }
 
 const NODE_WIDTH = 214;

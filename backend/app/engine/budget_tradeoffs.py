@@ -1,3 +1,5 @@
+"""Deterministic budget adjustments based on entered amounts and planning heuristics."""
+
 import math
 from typing import Sequence
 
@@ -17,7 +19,9 @@ from .planning_heuristics import (
 )
 
 
-def compute_contingency_buffer(allocated_max_inr: float, buffer_percentage: float = CONTINGENCY_RATE) -> float:
+def compute_contingency_buffer(
+    allocated_max_inr: float, buffer_percentage: float = CONTINGENCY_RATE
+) -> float:
     """Computes the configured pure deterministic contingency reserve."""
     return round(allocated_max_inr * buffer_percentage, 2)
 
@@ -31,7 +35,7 @@ def evaluate_budget_tradeoffs(
     buffer_percentage: float = CONTINGENCY_RATE,
 ) -> tuple[list[BudgetBucket], list[TradeOffOption], bool]:
     """Recomputes the configured reserve and offers heuristic recovery options when over cap.
-    
+
     Zero LLM imports - pure deterministic arithmetic complying with LAW-01 and LAW-03.
     """
     updated_buckets: list[BudgetBucket] = []
@@ -71,7 +75,9 @@ def evaluate_budget_tradeoffs(
         # Option 1: Headcount Trim (Trim guest list to heal deficit)
         avg_cost_per_guest = total_projected_max / guest_count
         guests_to_trim = math.ceil(deficit_inr / avg_cost_per_guest)
-        guests_to_trim = min(guests_to_trim, max(1, math.floor(guest_count * GUEST_REDUCTION_MAX_SHARE)))
+        guests_to_trim = min(
+            guests_to_trim, max(1, math.floor(guest_count * GUEST_REDUCTION_MAX_SHARE))
+        )
         catering_savings = round(guests_to_trim * per_plate_max_inr * (1 + buffer_percentage), 2)
 
         tradeoff_options.append(
@@ -96,8 +102,14 @@ def evaluate_budget_tradeoffs(
 
         # Option 2: Decor Tier Downgrade & Floral Rationalization
         decor_bucket = next((b for b in updated_buckets if "Decor" in b.category), None)
-        decor_max = decor_bucket.allocated_max_inr if decor_bucket else deficit_inr * DECOR_FALLBACK_DEFICIT_SHARE
-        decor_cut = round(min(deficit_inr * DECOR_DEFICIT_SHARE, decor_max * DECOR_MAX_BUDGET_SHARE), 2)
+        decor_max = (
+            decor_bucket.allocated_max_inr
+            if decor_bucket
+            else deficit_inr * DECOR_FALLBACK_DEFICIT_SHARE
+        )
+        decor_cut = round(
+            min(deficit_inr * DECOR_DEFICIT_SHARE, decor_max * DECOR_MAX_BUDGET_SHARE), 2
+        )
 
         tradeoff_options.append(
             TradeOffOption(
@@ -153,4 +165,3 @@ def evaluate_budget_tradeoffs(
         )
 
     return updated_buckets, tradeoff_options, is_overall_violated
-

@@ -1,3 +1,5 @@
+"""In-memory upload type, byte and PDF-page limits and prompt-data boundaries."""
+
 import io
 from typing import Literal
 
@@ -15,16 +17,19 @@ MAGIC_SIGNATURES: dict[str, bytes] = {
 
 class FileValidationError(Exception):
     """Base error for quote upload validation."""
+
     pass
 
 
 class UnsupportedFileTypeError(FileValidationError):
     """Raised when file magic bytes do not match allowed media types."""
+
     pass
 
 
 class PayloadTooLargeError(FileValidationError):
     """Raised when payload exceeds size limit or PDF exceeds page limit."""
+
     pass
 
 
@@ -49,7 +54,7 @@ def detect_magic_type(content: bytes) -> Literal["pdf", "jpeg", "png", "webp"]:
 
 def validate_quote_upload(content: bytes, filename: str = "quote") -> tuple[str, int]:
     """Strictly validates uploaded bytes purely in memory complying with LAW-06.
-    
+
     Returns:
         tuple[str, int]: (detected_type, page_count_or_1)
     """
@@ -80,4 +85,3 @@ def sanitize_untrusted_input(raw_text: str) -> str:
     """Wraps user input in defensive boundary tags to prevent prompt injection."""
     clean = raw_text.strip().replace("</untrusted_user_input>", "")
     return f"<untrusted_user_input>\n{clean}\n</untrusted_user_input>"
-

@@ -19,6 +19,7 @@ const loginError = () => {
 type Identity = { id: string; name: string };
 type Session = { required: boolean; configured: boolean; user: Identity | null };
 
+/** Require Google sign-in before exposing account-scoped plans and setup. */
 export function AuthGate() {
   const [session, setSession] = useState<Session | null>(null);
   const [error, setError] = useState(loginError);

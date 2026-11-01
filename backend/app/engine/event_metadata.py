@@ -22,12 +22,14 @@ VENDOR_CATEGORY_LABELS = {
 
 
 def index_catalog(catalog: EventCatalog) -> dict[str, EventCatalogEntry]:
+    """Copy catalog entries into an ID lookup shared by all construction passes."""
     return {str(item["id"]): item.copy() for item in catalog.get("events", [])}
 
 
 def event_metadata(
     event: PlanEvent, catalog: EventCatalog, index: Mapping[str, EventCatalogEntry]
 ) -> EventCatalogEntry:
+    """Resolve a catalog event or derive defaults for a host-defined event."""
     if event.catalog_id:
         if event.catalog_id not in index:
             raise ValueError(f"Unknown catalog event: {event.catalog_id}")
@@ -48,6 +50,7 @@ def event_metadata(
 def build_hints(
     plan: EventPlan, catalog: EventCatalog, index: Mapping[str, EventCatalogEntry]
 ) -> dict[str, list[str]]:
+    """Derive confirmation prompts and search terms from event selections, never identity."""
     tags = {
         tag
         for day in plan.days

@@ -1,3 +1,5 @@
+"""Written quote comparison, validation-only uploads and optional analysis."""
+
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
 from pydantic import BaseModel, ConfigDict, Field
 from starlette.concurrency import run_in_threadpool
@@ -21,6 +23,8 @@ router = APIRouter(prefix="/api/vendor", tags=["Vendor Coordination"])
 
 
 class CompareRequest(BaseModel):
+    """Written quote values and a host-entered budget for deterministic comparison."""
+
     model_config = ConfigDict(extra="forbid")
 
     quote: NormalizedQuote
@@ -42,7 +46,11 @@ async def compare_quote(req: CompareRequest) -> QuoteComparison:
     "/upload",
     status_code=status.HTTP_501_NOT_IMPLEMENTED,
     response_model=None,
-    responses={status.HTTP_501_NOT_IMPLEMENTED: {"description": "Automatic quote extraction is unavailable."}},
+    responses={
+        status.HTTP_501_NOT_IMPLEMENTED: {
+            "description": "Automatic quote extraction is unavailable."
+        }
+    },
 )
 async def upload_quote_document(file: UploadFile = File(...)) -> None:
     """Validates quote document purely in memory via magic bytes and page caps complying with LAW-06."""
@@ -73,6 +81,8 @@ async def upload_quote_document(file: UploadFile = File(...)) -> None:
 
 
 class AnalyzeRequest(BaseModel):
+    """Two to eight saved quotation IDs and their containing plan."""
+
     model_config = ConfigDict(extra="forbid")
     plan: EventPlan
     quote_ids: list[str] = Field(min_length=2, max_length=8)
@@ -80,9 +90,14 @@ class AnalyzeRequest(BaseModel):
 
 @router.post("/analyze-saved")
 async def analyze_saved(req: AnalyzeRequest) -> dict[str, object]:
+    """Return optional provider advice without changing the host selection."""
     try:
         result = await run_in_threadpool(analyze_quotes, req.plan, req.quote_ids)
     except (ValueError, StopIteration) as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
-    return {"analysis": result, "message": "Groq recommends a vendor; you make the final choice." if result else
-            "Groq is unavailable or quota-limited. Compare the saved details below."}
+    return {
+        "analysis": result,
+        "message": "Groq recommends a vendor; you make the final choice."
+        if result
+        else "Groq is unavailable or quota-limited. Compare the saved details below.",
+    }

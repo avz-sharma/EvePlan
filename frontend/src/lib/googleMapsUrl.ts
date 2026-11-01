@@ -1,4 +1,5 @@
 const normalize = (value: string) => value.normalize("NFC").replace(/\s+/gu, " ").trim();
+/** Encode a keyless Maps search and reject incomplete or oversized queries. */
 export function generateGoogleMapsSearchUrl(category: string, location: string, eventType = "", keyword = ""): string {
   const inputs = [category, location, eventType, keyword].map(normalize);
   if (!inputs[0] || !inputs[1]) throw new Error("Choose a service and enter a city or location.");

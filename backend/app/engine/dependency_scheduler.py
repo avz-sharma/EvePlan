@@ -1,3 +1,5 @@
+"""Topological ordering and critical-path scheduling for task DAGs."""
+
 from collections import defaultdict, deque
 from typing import Sequence
 
@@ -6,12 +8,13 @@ from ..schemas.plan_state import TaskNode
 
 class CyclicDependencyError(Exception):
     """Raised when dependency graph contains one or more cycles."""
+
     pass
 
 
 def topological_sort_tasks(tasks: Sequence[TaskNode]) -> list[TaskNode]:
     """Applies Kahn's algorithm for topological sorting of tasks.
-    
+
     Raises CyclicDependencyError if any cycle is detected.
     """
     task_map: dict[str, TaskNode] = {t.id: t for t in tasks}
@@ -46,7 +49,7 @@ def topological_sort_tasks(tasks: Sequence[TaskNode]) -> list[TaskNode]:
 
 def compute_cpm_schedule(tasks: Sequence[TaskNode]) -> list[TaskNode]:
     """Performs forward and backward pass Critical Path Method (CPM).
-    
+
     Calculates earliest_start, latest_start, slack_days, and marks is_critical = (slack_days == 0).
     """
     sorted_tasks = topological_sort_tasks(tasks)
@@ -79,17 +82,13 @@ def compute_cpm_schedule(tasks: Sequence[TaskNode]) -> list[TaskNode]:
         if not adj[task.id]:
             t_lf = project_duration
         else:
-            t_lf = min(
-                task_map[succ_id].latest_start
-                for succ_id in adj[task.id]
-            )
+            t_lf = min(task_map[succ_id].latest_start for succ_id in adj[task.id])
         latest_finish[task.id] = t_lf
         t_ls = t_lf - task.duration_days
         task_map[task.id].latest_start = max(0, t_ls)
-        
+
         slack = max(0, task_map[task.id].latest_start - task_map[task.id].earliest_start)
         task_map[task.id].slack_days = slack
-        task_map[task.id].is_critical = (slack == 0)
+        task_map[task.id].is_critical = slack == 0
 
     return [task_map[t.id] for t in tasks]
-

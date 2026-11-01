@@ -26,19 +26,24 @@ SECURITY_HEADERS = {
 
 
 class SecurityMiddleware:
-    def __init__(self, app: ASGIApp, max_body_bytes: int = 6_291_456,
-                 requests_per_minute: int = 240):
+    """Bound request bodies and client request rates before forwarding to endpoints."""
+
+    def __init__(
+        self, app: ASGIApp, max_body_bytes: int = 6_291_456, requests_per_minute: int = 240
+    ):
         self.app = app
         self.max_body_bytes = max_body_bytes
         self.requests_per_minute = requests_per_minute
         self.clients: OrderedDict[str, deque[float]] = OrderedDict()
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        """Check rate and body limits, then forward the bounded request with security headers."""
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
 
         async def secured_send(message: Message) -> None:
+            """Attach the same security headers to successful and rejected responses."""
             if message["type"] == "http.response.start":
                 headers = MutableHeaders(scope=message)
                 headers.update(SECURITY_HEADERS)
@@ -52,8 +57,11 @@ class SecurityMiddleware:
             while recent and recent[0] <= now - 60:
                 recent.popleft()
             if len(recent) >= self.requests_per_minute:
-                response = JSONResponse({"detail": "Request limit reached. Please retry shortly."}, 429,
-                                        headers={"Retry-After": str(max(1, int(61 - now + recent[0])))})
+                response = JSONResponse(
+                    {"detail": "Request limit reached. Please retry shortly."},
+                    429,
+                    headers={"Retry-After": str(max(1, int(61 - now + recent[0])))},
+                )
                 await response(scope, receive, secured_send)
                 return
             recent.append(now)
@@ -65,7 +73,9 @@ class SecurityMiddleware:
             try:
                 declared = int(headers.get("content-length", "0"))
             except ValueError:
-                await JSONResponse({"detail": "Invalid Content-Length"}, 400)(scope, receive, secured_send)
+                await JSONResponse({"detail": "Invalid Content-Length"}, 400)(
+                    scope, receive, secured_send
+                )
                 return
             chunks: list[bytes] = []
             size = 0
@@ -80,12 +90,15 @@ class SecurityMiddleware:
                     if size > self.max_body_bytes or not message.get("more_body", False):
                         break
             if declared > self.max_body_bytes or size > self.max_body_bytes:
-                await JSONResponse({"detail": "Request body is too large"}, 413)(scope, receive, secured_send)
+                await JSONResponse({"detail": "Request body is too large"}, 413)(
+                    scope, receive, secured_send
+                )
                 return
             body = b"".join(chunks)
             delivered = False
 
             async def replay() -> Message:
+                """Deliver the checked body once, then preserve client disconnect notifications."""
                 nonlocal delivered
                 if delivered:
                     return await receive()

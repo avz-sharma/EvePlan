@@ -6,6 +6,7 @@ import { Button, Chip } from "./ui";
 
 interface Props { result: QuoteComparison; guestCount: number; copied: boolean; onCopy: () => void; onReset: () => void }
 
+/** Present written-quote comparisons and questions without inventing market prices. */
 export const QuoteResults: React.FC<Props> = ({ result, guestCount, copied, onCopy, onReset }) => <div className="space-y-5">
   <div className="grid gap-3 text-sm md:grid-cols-3">
     <div className="rounded-xl border border-line bg-white/60 p-4"><span className="text-muted">Quote total</span><p className="mt-1 text-lg font-bold">{formatMoney(result.normalized_quote.raw_total_inr)}</p><span className="text-xs text-muted">{formatMoney(result.normalized_quote.normalized_per_head_inr)} per attendee</span></div>

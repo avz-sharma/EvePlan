@@ -10,6 +10,7 @@ interface BudgetAllocationBarsProps {
   previewAdjustments?: Record<string, number> | null;
 }
 
+/** Compare entered category allocations against the current plan budget. */
 export const BudgetAllocationBars: React.FC<BudgetAllocationBarsProps> = ({ buckets, totalBudgetCapInr, previewAdjustments }) => {
   const cap = Math.max(totalBudgetCapInr, 1);
   const percent = (amount: number) => Math.max(0, Math.min(100, amount / cap * 100));

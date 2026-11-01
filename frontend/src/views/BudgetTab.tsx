@@ -7,6 +7,7 @@ import { BudgetAllocationBars } from "../components/BudgetAllocationBars";
 import { TradeOffCards } from "../components/TradeOffCards";
 import { EmptyState } from "../components/ui";
 
+/** Inspect category allocations and edit the plan-wide contingency reserve. */
 export const BudgetTab: React.FC = () => {
   const plan = useCurrentPlan();
   const [percent, setPercent] = useState(String(plan.contingency_percent ?? 10));

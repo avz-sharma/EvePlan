@@ -6,6 +6,7 @@ import { layoutDag } from "./layoutDag";
 
 interface Props { tasks: TaskNode[]; affectedTaskIds?: string[]; mutatedAttribute?: string | null }
 
+/** Render the task DAG with accessible task descriptions and cascade emphasis. */
 export const CascadeGraphView: React.FC<Props> = ({ tasks, affectedTaskIds = [], mutatedAttribute }) => {
   const layout = useMemo(() => layoutDag(tasks), [tasks]);
   const reduceMotion = useReducedMotion();

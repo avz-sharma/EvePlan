@@ -31,6 +31,7 @@ const selectedTab = (): TabId => {
   return tabs.some((tab) => tab.id === id) ? id : "overview";
 };
 
+/** Compose plan navigation, branch history and streamed replanning feedback. */
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabId>(selectedTab);
   const [isElderMode, setIsElderMode] = useState(false);

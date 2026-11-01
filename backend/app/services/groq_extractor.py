@@ -36,6 +36,7 @@ def _load_prompt_template() -> str:
 
 
 def is_groq_available() -> bool:
+    """Require a nonempty server key and remaining local daily quota."""
     key = settings.GROQ_API_KEY
     return bool(key and key.get_secret_value().strip() and quota_guard.remaining_daily() > 0)
 
@@ -56,7 +57,10 @@ def extract_intent_delta(plan_state_json: str, user_prompt: str) -> tuple[PlanDe
     try:
         response = httpx.post(
             GROQ_COMPLETIONS_URL,
-            headers={"Authorization": f"Bearer {key.get_secret_value()}", "Content-Type": "application/json"},
+            headers={
+                "Authorization": f"Bearer {key.get_secret_value()}",
+                "Content-Type": "application/json",
+            },
             json={
                 "model": settings.GROQ_MODEL,
                 "messages": [{"role": "user", "content": prompt}],

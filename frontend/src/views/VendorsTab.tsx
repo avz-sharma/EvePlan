@@ -18,6 +18,7 @@ const interviewTemplates: Record<VendorCategory, string[]> = {
   transport: ["How many vehicles and seats are included?", "How are timing changes and waiting time handled?", "What accessibility and backup options are available?"],
 };
 
+/** Discover vendor search links and compare saved written offers. */
 export const VendorsTab: React.FC = () => {
   const plan = useCurrentPlan();
   const forkedPlan = usePlanStore(state => state.forkedPlan);

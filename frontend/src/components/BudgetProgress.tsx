@@ -11,6 +11,7 @@ function AnimatedCircularProgressBar({ value, gaugePrimaryColor = "#09318d", gau
   </div>;
 }
 
+/** Display host budget allocation and reserve without treating it as money already spent. */
 export function BudgetProgress({ used, total }: { used: number; total: number }) {
   const remaining = Math.max(0, total - used), excess = Math.max(0, used - total);
   return <section aria-label="Budget at a glance" className="glass-panel flex flex-col items-start gap-7 sm:flex-row sm:items-center rounded-3xl p-6 md:p-8"><AnimatedCircularProgressBar value={total > 0 ? used / total * 100 : 0} /><div className="min-w-0 flex-1"><p className="text-xs font-semibold uppercase tracking-wider text-gold">Room for every detail</p><h2 className="mt-2 text-2xl font-semibold">Your budget, in balance</h2><p className="mt-2 text-sm text-muted">Selected vendor costs, estimates and contingency reserve.</p><dl className="mt-5 grid gap-4 sm:grid-cols-3"><div><dt className="text-sm text-muted">Used / allocated</dt><dd className="text-xl font-semibold text-accent">{formatMoney(used)}</dd></div><div><dt className="text-sm text-muted">Remaining</dt><dd className="text-xl font-semibold">{formatMoney(remaining)}</dd></div><div><dt className="text-sm text-muted">Total budget</dt><dd className="text-xl font-semibold">{formatMoney(total)}</dd></div></dl>{excess > 0 && <p className="mt-3 text-sm text-danger">Over budget by {formatMoney(excess)}</p>}{total <= 0 && <p className="mt-3 text-sm text-muted">Set a budget to see the allocated percentage.</p>}</div></section>;

@@ -7,6 +7,7 @@ import { Chip, GlassPanel, Stat } from "../components/ui";
 import { QuickScenarioChips } from "../components/QuickScenarioChips";
 import { formatCompactMoney } from "../lib/format";
 
+/** Summarize the current celebration and its host-entered budget. */
 export const OverviewTab: React.FC = () => {
   const plan = useCurrentPlan();
   const onPlanUpdated = planActions.updated;

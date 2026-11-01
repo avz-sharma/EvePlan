@@ -56,9 +56,11 @@ function dispatch(action: Action) {
 const patch = (next: Partial<PlanState>) => dispatch({ type: "patch", patch: next });
 const subscribe = (listener: () => void) => { listeners.add(listener); return () => listeners.delete(listener); };
 
+/** Subscribe to a stable selected store snapshot without unrelated component renders. */
 export function usePlanStore<T>(select: (current: PlanState) => T): T {
   return useSyncExternalStore(subscribe, () => select(state), () => select(state));
 }
+/** Require a built plan in views mounted after onboarding. */
 export function useCurrentPlan(): EventPlan {
   const plan = usePlanStore(current => current.plan);
   if (!plan) throw new Error("The plan view requires a built plan.");
@@ -77,6 +79,7 @@ function historyStep(direction: number) {
   notify(direction < 0 ? "Change undone" : "Change restored");
 }
 
+/** Update immutable plan snapshots, account storage and independent branch histories. */
 export const planActions = {
   patch, notify,
   setOwner: (id: string | null) => { owner = id; state = { ...initialState }; listeners.forEach(listener => listener()); },

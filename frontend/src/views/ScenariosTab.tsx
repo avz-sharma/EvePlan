@@ -3,6 +3,7 @@ import { planActions, useCurrentPlan, usePlanStore } from "../state/planStore";
 import { ScenarioBranchCompare } from "../components/ScenarioBranchCompare";
 import { GlassPanel } from "../components/ui";
 
+/** Preview deterministic changes and compare the current plan with its fork. */
 export const ScenariosTab: React.FC = () => {
   const plan = useCurrentPlan();
   const forkedPlan = usePlanStore(state => state.forkedPlan);

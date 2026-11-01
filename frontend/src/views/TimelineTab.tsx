@@ -4,6 +4,7 @@ import { TimelineChecklist } from "../components/TimelineChecklist";
 import { Button, GlassPanel } from "../components/ui";
 import { useCurrentPlan, usePlanStore } from "../state/planStore";
 
+/** Show event-relative tasks as a checklist and dependency graph. */
 export const TimelineTab: React.FC = () => {
   const plan = useCurrentPlan();
   const lastDiff = usePlanStore(state => state.lastDiff);

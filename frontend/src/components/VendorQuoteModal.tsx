@@ -10,6 +10,7 @@ type Inclusion = "" | "included" | "excluded";
 interface Props { isOpen: boolean; onClose: () => void; allocatedCateringBudgetMaxInr: number | null; guestCount: number }
 const inclusionValue = (value: Inclusion): boolean | null => value === "" ? null : value === "included";
 
+/** Compare host-transcribed quote values and expose actionable request errors. */
 export const VendorQuoteModal: React.FC<Props> = ({ isOpen, onClose, allocatedCateringBudgetMaxInr, guestCount }) => {
   const { begin: beginRequest, cancel: cancelRequest } = useRequestController();
   const [comparison, setComparison] = useState<QuoteComparison | null>(null);

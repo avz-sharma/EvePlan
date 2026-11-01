@@ -1,3 +1,4 @@
+/** Ordered plan sections shared by route selection and keyboard tab navigation. */
 export const tabs = [
   { id: "overview", label: "Overview" },
   { id: "events", label: "Events" },
@@ -9,4 +10,5 @@ export const tabs = [
   { id: "how-it-works", label: "How it works" },
 ] as const;
 
+/** Valid plan-section route IDs derived from the tab configuration. */
 export type TabId = (typeof tabs)[number]["id"];

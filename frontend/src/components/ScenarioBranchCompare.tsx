@@ -22,6 +22,7 @@ const venueFit = (plan: EventPlan) => plan.vendor_assignments.filter((vendor) =>
   return `${event?.custom_name || event?.catalog_id || "Event"}: ${event?.guest_count ?? plan.guest_count}/${vendor.capacity}`;
 });
 
+/** Compare the active plan with its independent fork. */
 export const ScenarioBranchCompare: React.FC<Props> = ({ currentPlan, forkedPlan, onForkPlan, onSwitchToFork, onClearFork, canUndo, canRedo, onUndo, onRedo }) => {
   const planCard = (plan: EventPlan, label: string, color: "accent" | "gold") => <section className="rounded-2xl border border-line/70 bg-white/50 p-4" aria-label={label}>
     <div className="flex items-center justify-between gap-2"><h3 className="font-semibold">{label}</h3><Chip tone={color === "gold" ? "gold" : "success"}>{plan.days.length} days</Chip></div>

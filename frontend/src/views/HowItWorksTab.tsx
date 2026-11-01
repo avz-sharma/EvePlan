@@ -3,6 +3,7 @@ import { usePlanStore } from "../state/planStore";
 import { AuditDeltaDrawer } from "../components/AuditDeltaDrawer";
 import { GlassPanel } from "../components/ui";
 
+/** Explain planning inputs, derived outputs and optional provider behavior. */
 export const HowItWorksTab: React.FC = () => {
   const lastDelta = usePlanStore(state => state.lastDelta);
   const lastDiff = usePlanStore(state => state.lastDiff);
