@@ -1,15 +1,14 @@
+import { TIME_SLOTS as slots, VENDOR_CATEGORIES as categories } from "../lib/onboarding";
 import type { CatalogResponse } from "../api/types";
 import type { PlanMutationResponse } from "../api/types";
 import { useRequestController } from "../lib/useRequestController";
 import React, { useEffect, useMemo, useState } from "react";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
-import type { CatalogEvent, CascadeDiff, EventPlan, PlanEvent, TimeSlot, VendorCategory } from "../api/types";
+import type { CatalogEvent, CascadeDiff, EventPlan, PlanEvent, VendorCategory } from "../api/types";
 import { apiUrl, readResponse } from "../api/client";
 import { Button, GlassPanel } from "../components/ui";
 import { useCurrentPlan, planActions } from "../state/planStore";
 
-const categories: VendorCategory[] = ["venue", "caterer", "decorator", "photographer", "makeup", "music", "transport"];
-const slots: TimeSlot[] = ["morning", "afternoon", "evening", "night"];
 const makeId = () => globalThis.crypto?.randomUUID?.() ?? `event-${Date.now()}`;
 
 function VenueTypeField({ event, onSave }: { event: PlanEvent; onSave: (value: string | null) => void }) {

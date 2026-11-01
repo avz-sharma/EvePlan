@@ -1,6 +1,6 @@
 import type { PlanMutationResponse } from "./api/types";
 import React, { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m as motion, useReducedMotion } from "framer-motion";
 import { Eye, GitFork, Redo2, Undo2, Menu, PlusCircle, RefreshCw } from "lucide-react";
 import type { PlanDelta } from "./api/types";
 import { apiUrl, readResponse } from "./api/client";

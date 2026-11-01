@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { m as motion, useReducedMotion } from "framer-motion";
 import { formatMoney } from "../lib/format";
 
 /** Magic UI circular gauge pattern, adapted for real budget values and accessible progress. */

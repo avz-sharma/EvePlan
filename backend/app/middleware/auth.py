@@ -3,7 +3,7 @@ from starlette.responses import JSONResponse
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 from ..config import settings
-from ..services.auth_session import SESSION_COOKIE, read_cookie, required
+from ..services.auth_session import SESSION_COOKIE, SESSION_MAX_AGE_SECONDS, read_cookie, required
 
 
 class AuthenticationGate:
@@ -13,7 +13,7 @@ class AuthenticationGate:
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] == "http" and scope["path"].startswith("/api/") and not scope["path"].startswith("/api/auth/") and scope["method"] != "OPTIONS" and required():
             request = Request(scope)
-            user = read_cookie(request.cookies.get(SESSION_COOKIE), "session", 28800)
+            user = read_cookie(request.cookies.get(SESSION_COOKIE), "session", SESSION_MAX_AGE_SECONDS)
             if not user or not user.get("id"):
                 await JSONResponse({"detail": "Sign in to continue"}, status_code=401)(scope, receive, send)
                 return

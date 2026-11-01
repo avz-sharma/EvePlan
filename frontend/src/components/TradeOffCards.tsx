@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m as motion, useReducedMotion } from "framer-motion";
 import type { TradeOffOption } from "../api/types";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { formatMoney } from "../lib/format";

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { m as motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 
 /** Adapted from the supplied Magic UI particles: one bounded canvas, no render per pointer move. */
 export function Particles() {

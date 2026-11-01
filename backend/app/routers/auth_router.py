@@ -11,7 +11,9 @@ from starlette.responses import JSONResponse, RedirectResponse, Response
 from ..config import settings
 from ..services.auth_session import (
     FLOW_COOKIE,
+    FLOW_MAX_AGE_SECONDS,
     SESSION_COOKIE,
+    SESSION_MAX_AGE_SECONDS,
     configured,
     read_cookie,
     required,
@@ -28,7 +30,7 @@ def cookie(response: Response, name: str, value: str, max_age: int) -> None:
 
 @router.get("/session")
 async def session(request: Request) -> Response:
-    user = read_cookie(request.cookies.get(SESSION_COOKIE), "session", 28800)
+    user = read_cookie(request.cookies.get(SESSION_COOKIE), "session", SESSION_MAX_AGE_SECONDS)
     return JSONResponse({"required": required(), "configured": configured(), "user": user}, headers={"Cache-Control": "no-store"})
 
 
@@ -43,7 +45,7 @@ async def login() -> Response:
         "scope": "openid email profile", "state": state, "code_challenge": challenge,
         "code_challenge_method": "S256", "prompt": "select_account"})
     response = RedirectResponse("https://accounts.google.com/o/oauth2/v2/auth?" + query, status_code=302)
-    cookie(response, FLOW_COOKIE, serializer("flow").dumps({"state": state, "verifier": verifier}), 600)
+    cookie(response, FLOW_COOKIE, serializer("flow").dumps({"state": state, "verifier": verifier}), FLOW_MAX_AGE_SECONDS)
     return response
 
 
@@ -68,7 +70,7 @@ async def google_identity(code: str, verifier: str) -> dict[str, str]:
 
 @router.get("/callback")
 async def callback(request: Request, code: str = "", state: str = "", error: str = "") -> Response:
-    flow = read_cookie(request.cookies.get(FLOW_COOKIE), "flow", 600)
+    flow = read_cookie(request.cookies.get(FLOW_COOKIE), "flow", FLOW_MAX_AGE_SECONDS)
     verifier = flow.get("verifier") if flow else None
     reason = "cancelled" if error == "access_denied" else "session_expired" if not flow else "state_mismatch"
     response = RedirectResponse(settings.APP_ORIGIN + "/?auth_error=" + reason, status_code=303)
@@ -76,7 +78,7 @@ async def callback(request: Request, code: str = "", state: str = "", error: str
         try:
             user = await google_identity(code, verifier)
             response = RedirectResponse(settings.APP_ORIGIN + "/", status_code=303)
-            cookie(response, SESSION_COOKIE, serializer("session").dumps(user), 28800)
+            cookie(response, SESSION_COOKIE, serializer("session").dumps(user), SESSION_MAX_AGE_SECONDS)
         except (httpx.HTTPError, ValueError, KeyError, TypeError) as failure:
             reason = "provider_unavailable"
             if isinstance(failure, httpx.HTTPStatusError):

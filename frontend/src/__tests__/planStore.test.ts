@@ -56,3 +56,26 @@ it("keeps saved plans separate for each signed-in account", () => {
   expect(renderHook(() => usePlanStore(state => state.plan)).result.current?.title).toBe(plan.title);
   planActions.setOwner(null);
 });
+
+it("discards a corrupt saved snapshot so a new plan can be built", () => {
+  localStorage.setItem("eveplan_active_plan", "invalid JSON");
+  expect(planActions.restore()).toBe(false);
+  expect(localStorage.getItem("eveplan_active_plan")).toBeNull();
+});
+
+it("keeps branch history independent when an undone change is replaced", () => {
+  const { result } = renderHook(() => usePlanStore(state => state.plan));
+  const edited = { ...plan, title: "Edited active plan" };
+  act(() => {
+    planActions.update(edited);
+    planActions.fork();
+    planActions.undo();
+    planActions.update({ ...plan, title: "Replacement change" });
+    planActions.redo();
+  });
+  expect(result.current?.title).toBe("Replacement change");
+  act(() => { planActions.switchFork(); planActions.undo(); });
+  expect(result.current?.title).toBe("Edited active plan");
+  act(() => { planActions.switchFork(); planActions.undo(); });
+  expect(result.current?.title).toBe(plan.title);
+});

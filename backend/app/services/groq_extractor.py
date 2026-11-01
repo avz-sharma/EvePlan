@@ -16,7 +16,9 @@ from .upload_validator import sanitize_untrusted_input
 
 logger = logging.getLogger(__name__)
 _PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts"
-_CACHE_MAX = 128
+MAX_CACHED_RESPONSES = 128
+GROQ_COMPLETIONS_URL = "https://api.groq.com/openai/v1/chat/completions"
+INTENT_TIMEOUT_SECONDS = 20.0
 _extraction_cache: OrderedDict[str, PlanDelta] = OrderedDict()
 
 
@@ -53,7 +55,7 @@ def extract_intent_delta(plan_state_json: str, user_prompt: str) -> tuple[PlanDe
     prompt = _load_prompt_template().replace("{user_prompt}", sanitize_untrusted_input(user_prompt))
     try:
         response = httpx.post(
-            "https://api.groq.com/openai/v1/chat/completions",
+            GROQ_COMPLETIONS_URL,
             headers={"Authorization": f"Bearer {key.get_secret_value()}", "Content-Type": "application/json"},
             json={
                 "model": settings.GROQ_MODEL,
@@ -65,7 +67,7 @@ def extract_intent_delta(plan_state_json: str, user_prompt: str) -> tuple[PlanDe
                 "reasoning_format": "hidden",
                 "max_completion_tokens": 2048,
             },
-            timeout=20.0,
+            timeout=INTENT_TIMEOUT_SECONDS,
         )
         response.raise_for_status()
         content = response.json()["choices"][0]["message"]["content"]
@@ -75,6 +77,6 @@ def extract_intent_delta(plan_state_json: str, user_prompt: str) -> tuple[PlanDe
         raise IntentExtractionUnavailable("Use deterministic intent parsing") from error
 
     _extraction_cache[cache_key] = result.model_copy(deep=True)
-    while len(_extraction_cache) > _CACHE_MAX:
+    while len(_extraction_cache) > MAX_CACHED_RESPONSES:
         _extraction_cache.popitem(last=False)
     return result, False

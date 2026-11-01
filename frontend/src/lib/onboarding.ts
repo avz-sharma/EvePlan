@@ -1,8 +1,8 @@
 import type { EventPlan, TimeSlot, VendorCategory } from "../api/types";
 
-export const slots: TimeSlot[] = ["morning", "afternoon", "evening", "night"];
-export const categories: VendorCategory[] = ["venue", "caterer", "decorator", "photographer", "makeup", "music", "transport"];
-export const diets = ["jain", "halal", "vegetarian", "vegan", "no_alcohol"];
+export const TIME_SLOTS: TimeSlot[] = ["morning", "afternoon", "evening", "night"];
+export const VENDOR_CATEGORIES: VendorCategory[] = ["venue", "caterer", "decorator", "photographer", "makeup", "music", "transport"];
+export const DIETARY_CATEGORIES = ["jain", "halal", "vegetarian", "vegan", "no_alcohol"];
 
 export const blankPlan = (): EventPlan => ({
   id: "", title: "", template: "celebration", guest_count: 0, total_budget_cap_inr: 0,

@@ -11,7 +11,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from ..config import settings
 from ..schemas.plan_state import EventPlan
-from .groq_extractor import is_groq_available
+from .groq_extractor import GROQ_COMPLETIONS_URL, MAX_CACHED_RESPONSES, is_groq_available
 from .quota_guard import quota_guard
 
 
@@ -32,6 +32,8 @@ class QuoteAnalysis(BaseModel):
     missing_details: list[str] = Field(max_length=15)
     follow_up_questions: list[str] = Field(max_length=15)
 
+
+QUOTE_ANALYSIS_TIMEOUT_SECONDS = 25.0
 
 _cache: OrderedDict[str, QuoteAnalysis] = OrderedDict()
 
@@ -76,7 +78,7 @@ def analyze_quotes(plan: EventPlan, quote_ids: list[str]) -> QuoteAnalysis | Non
     )
     try:
         response = httpx.post(
-            "https://api.groq.com/openai/v1/chat/completions",
+            GROQ_COMPLETIONS_URL,
             headers={"Authorization": f"Bearer {api_key.get_secret_value()}", "Content-Type": "application/json"},
             json={
                 "model": settings.GROQ_MODEL,
@@ -94,7 +96,7 @@ def analyze_quotes(plan: EventPlan, quote_ids: list[str]) -> QuoteAnalysis | Non
                 "reasoning_format": "hidden",
                 "max_completion_tokens": 4096,
             },
-            timeout=25.0,
+            timeout=QUOTE_ANALYSIS_TIMEOUT_SECONDS,
         )
         response.raise_for_status()
         content = response.json()["choices"][0]["message"]["content"]
@@ -108,6 +110,6 @@ def analyze_quotes(plan: EventPlan, quote_ids: list[str]) -> QuoteAnalysis | Non
         return None
 
     _cache[key] = result
-    while len(_cache) > 128:
+    while len(_cache) > MAX_CACHED_RESPONSES:
         _cache.popitem(last=False)
     return result

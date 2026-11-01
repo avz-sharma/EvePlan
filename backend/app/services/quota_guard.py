@@ -8,6 +8,9 @@ import threading
 import time
 from dataclasses import dataclass, field
 
+SECONDS_PER_MINUTE = 60.0
+SECONDS_PER_DAY = 24 * 60 * 60
+
 
 @dataclass
 class QuotaState:
@@ -21,7 +24,7 @@ class QuotaState:
     # Daily counter (resets every 24h from first request)
     daily_limit: int = 20
     daily_count: int = 0
-    daily_reset_time: float = field(default_factory=lambda: time.monotonic() + 86400.0)
+    daily_reset_time: float = field(default_factory=lambda: time.monotonic() + SECONDS_PER_DAY)
 
     # Lock for thread safety
     _lock: threading.Lock = field(default_factory=threading.Lock)
@@ -30,7 +33,7 @@ class QuotaState:
         """Refill RPM tokens based on elapsed time since last refill."""
         now = time.monotonic()
         elapsed = now - self.rpm_last_refill
-        tokens_to_add = elapsed * (self.rpm_limit / 60.0)
+        tokens_to_add = elapsed * (self.rpm_limit / SECONDS_PER_MINUTE)
         self.rpm_tokens = min(self.rpm_limit, self.rpm_tokens + tokens_to_add)
         self.rpm_last_refill = now
 
@@ -39,7 +42,7 @@ class QuotaState:
         now = time.monotonic()
         if now >= self.daily_reset_time:
             self.daily_count = 0
-            self.daily_reset_time = now + 86400.0
+            self.daily_reset_time = now + SECONDS_PER_DAY
 
     def try_acquire(self) -> bool:
         """Attempt to acquire a quota token. Returns True if allowed."""
@@ -69,7 +72,7 @@ class QuotaState:
             if self.rpm_tokens >= 1.0:
                 return 0.0
             deficit = 1.0 - self.rpm_tokens
-            return deficit / (self.rpm_limit / 60.0)
+            return deficit / (self.rpm_limit / SECONDS_PER_MINUTE)
 
 
 # Module-level singleton used across the application

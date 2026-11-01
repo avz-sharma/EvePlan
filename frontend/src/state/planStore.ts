@@ -24,6 +24,7 @@ const initialState: PlanState = { plan: null, forkedPlan: null, history: [], his
   isLoading: false, quotesOpen: false, toast: null };
 let state = initialState;
 const listeners = new Set<() => void>();
+const TOAST_DURATION_MS = 2600;
 let toastTimer: number | undefined;
 
 let owner: string | null = null;
@@ -67,7 +68,7 @@ export function useCurrentPlan(): EventPlan {
 function notify(message: string) {
   window.clearTimeout(toastTimer);
   patch({ toast: message });
-  toastTimer = window.setTimeout(() => patch({ toast: null }), 2600);
+  toastTimer = window.setTimeout(() => patch({ toast: null }), TOAST_DURATION_MS);
 }
 function historyStep(direction: number) {
   const index = state.historyIndex + direction;
