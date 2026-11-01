@@ -1,0 +1,18 @@
+# Google sign-in
+
+
+Google sign-in appears before celebration setup. The backend verifies Google's authorization code with state and PKCE, then sets an eight-hour signed HttpOnly cookie. Google tokens are never stored in the browser. Plans stay local and use separate storage keys for each Google account; they do not sync between devices. Sign out clears the cookie and closes the plan UI. Already issued cookies expire naturally; rotating SESSION_SECRET invalidates all sessions.
+
+
+
+1. Open [Google Auth Platform Clients](https://console.cloud.google.com/auth/clients), select or create a project, and create an OAuth client of type **Web application**. Configure the consent audience and, in testing mode, add your Google account under test users. This app requests only openid, email and profile.
+2. Under **Authorized JavaScript origins**, add `http://localhost:5173`. Under **Authorized redirect URIs**, add exactly `http://localhost:5173/api/auth/callback`. For production, add your HTTPS site origin and its exact `/api/auth/callback` URL as separate entries.
+3. Copy the OAuth **Client ID** to `GOOGLE_OAUTH_CLIENT_ID` and the **Client secret** to `GOOGLE_OAUTH_CLIENT_SECRET` in the repository-root `.env`. Keep both server-side. Keep `APP_ORIGIN=http://localhost:5173` and set `SESSION_SECRET` to a random value at least 32 characters long. The OAuth callback URI must exactly match, including scheme, host, port, and path.
+4. From the repository root, run `Copy-Item .env.example .env`, paste `GROQ_API_KEY` from the Groq Console into `.env`, then fill the Google OAuth values above. `GROQ_MODEL` defaults to `qwen/qwen3.8-27b`.
+5. Import this GitHub repository into Vercel with the repository root as Root Directory. The committed vercel.json builds the Vite frontend and serves FastAPI through api/index.py on the same origin. Do not set a separate frontend root or VITE_API_BASE_URL.
+6. In Vercel, set server environment variables: `GROQ_API_KEY`, `GROQ_MODEL` (`qwen/qwen3.8-27b`), `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`, `SESSION_SECRET`, `APP_ORIGIN` (the stable HTTPS domain with no trailing slash), and `AUTH_REQUIRED=true`. Store secrets in Vercel, never in source or chat. Redeploy after setting them and register the same domain in Google.
+7. Start the backend and frontend using [the local setup commands](setup.md). Verify Google sign-in, create a plan, issue a natural-language change, and compare saved quotes. Callback URIs for random previews must be registered separately; use the stable production domain for sign-in.
+
+For isolated local testing only, AUTH_REQUIRED=false enables the existing offline workflow. Vercel always enforces login even if this flag is false. Production with missing credentials stays locked and shows a setup-pending message. The CI smoke API explicitly sets the local bypass and mocks sign-in in dedicated tests. In-memory request guards remain per function instance on Vercel; check Groq account usage and limits in the Groq Console.
+
+Setup references: [Google OAuth web server flow](https://developers.google.com/identity/protocols/oauth2/web-server), [Groq Qwen 3.8 27B model documentation](https://console.groq.com/docs/model/qwen/qwen3.8-27b), [Groq structured outputs](https://console.groq.com/docs/structured-outputs), and [Vercel Python runtime](https://vercel.com/docs/functions/runtimes/python). The app is deployed at [eveplan-beige.vercel.app](https://eveplan-beige.vercel.app). For production Google sign-in, register `https://eveplan-beige.vercel.app` as an authorized JavaScript origin and `https://eveplan-beige.vercel.app/api/auth/callback` as an authorized redirect URI.
