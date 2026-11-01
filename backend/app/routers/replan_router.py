@@ -24,10 +24,10 @@ from ..schemas.intent_delta import CascadeDiff, PlanDelta, TradeOffOption
 from ..schemas.plan_state import EventPlan
 from ..services.event_catalog import load_event_catalog
 from ..services.fallback_parser import parse_user_intent
-from ..services.gemini_extractor import (
+from ..services.groq_extractor import (
     IntentExtractionUnavailable,
     extract_intent_delta,
-    is_gemini_available,
+    is_groq_available,
 )
 from ..services.quota_guard import quota_guard
 
@@ -60,7 +60,7 @@ class ReplanResponse(BaseModel):
         default=False, description="True if served from pre-computed zero-quota fixture"
     )
     degraded_mode: bool = Field(
-        default=False, description="True if Gemini was unavailable and fallback was used"
+        default=False, description="True if Groq was unavailable and fallback was used"
     )
 
 
@@ -155,17 +155,17 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
         degraded = False
 
         # ── Stage 1: Extract PlanDelta ────────────────────────────────
-        gemini_available = is_gemini_available()
+        groq_available = is_groq_available()
         delta_dict: dict = {}  # type: ignore[type-arg]
         is_cached = False
 
-        if gemini_available:
+        if groq_available:
             try:
                 delta_dict, is_cached = await run_in_threadpool(extract_intent_delta, plan_json, req.user_prompt)
             except IntentExtractionUnavailable:
                 fallback_delta, _ = parse_user_intent(req.user_prompt)
                 delta_dict = fallback_delta.model_dump()
-                gemini_available = False
+                groq_available = False
                 degraded = True
         else:
             # Fallback to deterministic regex parser
@@ -180,7 +180,7 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
         delta_payload = json.dumps(
             {
                 "delta": delta.model_dump(),
-                "source": "cache" if is_cached else ("gemini" if gemini_available else "fallback"),
+                "source": "cache" if is_cached else ("groq" if groq_available else "fallback"),
                 "degraded_mode": degraded,
                 "remaining_quota": quota_guard.remaining_daily(),
             }
@@ -233,9 +233,9 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
 
 @router.get("/quota")
 async def get_quota_status() -> dict[str, object]:
-    """Returns current Gemini quota availability for frontend status badges."""
+    """Returns current Groq availability and local request-guard status."""
     return {
-        "gemini_available": is_gemini_available(),
+        "groq_available": is_groq_available(),
         "remaining_daily": quota_guard.remaining_daily(),
         "seconds_until_rpm": round(quota_guard.seconds_until_rpm_available(), 1),
     }

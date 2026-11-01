@@ -29,8 +29,8 @@ class Settings(BaseSettings):
             raise ValueError("Public APP_ORIGIN must use HTTPS")
         return value
 
-    GEMINI_API_KEY: SecretStr | None = None
-    GEMINI_MODEL: str = "gemini-2.5-flash-lite"
+    GROQ_API_KEY: SecretStr | None = None
+    GROQ_MODEL: str = "qwen/qwen3.8-27b"
     ALLOWED_ORIGINS: list[str] = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",

@@ -84,5 +84,5 @@ async def analyze_saved(req: AnalyzeRequest) -> dict[str, object]:
         result = await run_in_threadpool(analyze_quotes, req.plan, req.quote_ids)
     except (ValueError, StopIteration) as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
-    return {"analysis": result, "message": "AI suggestions; you choose the vendor." if result else
-            "AI is unavailable or quota-limited. Compare the saved details below."}
+    return {"analysis": result, "message": "Groq recommends a vendor; you make the final choice." if result else
+            "Groq is unavailable or quota-limited. Compare the saved details below."}

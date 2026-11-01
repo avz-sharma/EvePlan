@@ -37,7 +37,7 @@ def test_300_task_cascade_preserves_inputs_and_schedule_contract(delta: PlanDelt
 
 
 def test_sse_matches_post_engine_result_and_orders_events(monkeypatch) -> None:
-    monkeypatch.setattr(settings, "GEMINI_API_KEY", None)
+    monkeypatch.setattr(settings, "GROQ_API_KEY", None)
     plan = generated_plan(1).model_dump(mode="json")
     with TestClient(app) as client:
         response = client.post("/api/plan/replan/stream", json={

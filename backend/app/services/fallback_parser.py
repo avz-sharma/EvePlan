@@ -1,4 +1,4 @@
-"""Deterministic regex/keyword fallback parser for when Gemini API is unavailable.
+"""Deterministic regex/keyword fallback parser for when Groq API is unavailable.
 
 Extracts guest count changes, date shifts, per-plate rate hikes, and venue
 relocations from plain English using regex patterns. Sets degraded_mode = True

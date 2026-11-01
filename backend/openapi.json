@@ -521,7 +521,7 @@
           "Replanning"
         ],
         "summary": "Get Quota Status",
-        "description": "Returns current Gemini quota availability for frontend status badges.",
+        "description": "Returns current Groq availability and local request-guard status.",
         "operationId": "get_quota_status_api_plan_quota_get",
         "responses": {
           "200": {
@@ -1943,7 +1943,7 @@
           "degraded_mode": {
             "type": "boolean",
             "title": "Degraded Mode",
-            "description": "True if Gemini was unavailable and fallback was used",
+            "description": "True if Groq was unavailable and fallback was used",
             "default": false
           }
         },

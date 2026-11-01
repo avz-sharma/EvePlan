@@ -265,7 +265,7 @@ export interface paths {
         };
         /**
          * Get Quota Status
-         * @description Returns current Gemini quota availability for frontend status badges.
+         * @description Returns current Groq availability and local request-guard status.
          */
         get: operations["get_quota_status_api_plan_quota_get"];
         put?: never;
@@ -959,7 +959,7 @@ export interface components {
             is_cached_fixture: boolean;
             /**
              * Degraded Mode
-             * @description True if Gemini was unavailable and fallback was used
+             * @description True if Groq was unavailable and fallback was used
              * @default false
              */
             degraded_mode: boolean;

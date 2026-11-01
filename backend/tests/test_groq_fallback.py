@@ -1,16 +1,16 @@
-"""Tests for fallback parser, quota guard, and gemini extractor (mocked).
+"""Tests for fallback parser, quota guard, and Groq extractor (mocked).
 
 Covers:
 - Deterministic regex extraction for all 4 chaos pill scenarios
 - Quota guard token bucket exhaustion and reset
-- Graceful degradation when GEMINI_API_KEY is unset
+- Graceful degradation when GROQ_API_KEY is unset
 - No outbound network call when API key is unset
 """
 
 from unittest.mock import patch
 
 from app.services.fallback_parser import parse_user_intent
-from app.services.gemini_extractor import is_gemini_available
+from app.services.groq_extractor import IntentExtractionUnavailable, is_groq_available
 from app.services.quota_guard import QuotaState
 
 # ---------------------------------------------------------------------------
@@ -129,33 +129,36 @@ class TestQuotaGuard:
 
 
 # ---------------------------------------------------------------------------
-# Gemini Extractor Tests (Mocked — No Network)
+# Groq Extractor Tests (Mocked — No Network)
 # ---------------------------------------------------------------------------
 
 
-class TestGeminiExtractor:
-    def test_is_gemini_available_returns_false_when_key_unset(self) -> None:
-        """Self-audit checklist: app must run with GEMINI_API_KEY unset."""
-        with patch("app.services.gemini_extractor.settings") as mock_settings:
-            mock_settings.GEMINI_API_KEY = None
-            assert is_gemini_available() is False
+class TestGroqExtractor:
+    def test_is_groq_available_returns_false_when_key_unset(self) -> None:
+        """App must run with GROQ_API_KEY unset."""
+        with patch("app.services.groq_extractor.settings") as mock_settings:
+            mock_settings.GROQ_API_KEY = None
+            assert is_groq_available() is False
 
-    def test_is_gemini_available_returns_false_when_key_empty(self) -> None:
-        with patch("app.services.gemini_extractor.settings") as mock_settings:
+    def test_is_groq_available_returns_false_when_key_empty(self) -> None:
+        with patch("app.services.groq_extractor.settings") as mock_settings:
             from unittest.mock import MagicMock
 
             mock_key = MagicMock()
             mock_key.get_secret_value.return_value = ""
-            mock_settings.GEMINI_API_KEY = mock_key
-            assert is_gemini_available() is False
+            mock_settings.GROQ_API_KEY = mock_key
+            assert is_groq_available() is False
 
-    def test_extract_intent_returns_empty_delta_without_key(self) -> None:
+    def test_extract_intent_declines_without_key(self) -> None:
         """No outbound network call when API key is unset."""
-        with patch("app.services.gemini_extractor.settings") as mock_settings:
-            mock_settings.GEMINI_API_KEY = None
-            from app.services.gemini_extractor import extract_intent_delta
+        with patch("app.services.groq_extractor.settings") as mock_settings:
+            mock_settings.GROQ_API_KEY = None
+            from app.services.groq_extractor import extract_intent_delta
 
-            result, is_cached = extract_intent_delta("{}", "add 40 guests")
-            assert result["guest_count_delta"] == 0  # empty delta returned
-            assert is_cached is False
+            try:
+                extract_intent_delta("{}", "add 40 guests")
+            except IntentExtractionUnavailable:
+                pass
+            else:
+                raise AssertionError("expected deterministic fallback")
 

@@ -12,7 +12,6 @@ dependencies = [
     "httpx>=0.28.1,<0.29",
     "itsdangerous>=2.2,<3",
     "python-multipart>=0.0.32,<0.1",
-    "google-genai>=2.8.0,<3",
 ]
 
 [project.optional-dependencies]
@@ -39,11 +38,6 @@ strict = true
 warn_unused_configs = true
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
-
-[[tool.mypy.overrides]]
-module = ["google", "google.*"]
-ignore_missing_imports = true
-follow_imports = "skip"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -3,7 +3,7 @@ from importlib import import_module
 from fastapi.testclient import TestClient
 
 from app.main import app
-from app.services.gemini_extractor import IntentExtractionUnavailable
+from app.services.groq_extractor import IntentExtractionUnavailable
 from tests.plan_factory import generated_plan
 
 replan_router = import_module("app.routers.replan_router")
@@ -11,7 +11,7 @@ replan_router = import_module("app.routers.replan_router")
 
 def test_stream_uses_one_intent_call_and_template_rationale(monkeypatch):
     calls = []
-    monkeypatch.setattr(replan_router, "is_gemini_available", lambda: True)
+    monkeypatch.setattr(replan_router, "is_groq_available", lambda: True)
 
     def extract(_plan, prompt):
         calls.append(prompt)
@@ -32,7 +32,7 @@ def test_stream_uses_one_intent_call_and_template_rationale(monkeypatch):
 
 
 def test_stream_uses_parser_when_provider_or_quota_is_unavailable(monkeypatch):
-    monkeypatch.setattr(replan_router, "is_gemini_available", lambda: True)
+    monkeypatch.setattr(replan_router, "is_groq_available", lambda: True)
 
     def unavailable(*_args):
         raise IntentExtractionUnavailable("Mock quota exhaustion")

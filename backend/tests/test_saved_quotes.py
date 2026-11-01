@@ -101,7 +101,7 @@ def analysis_plan():
 
 def test_ai_unavailable_and_group_validation():
     plan = analysis_plan()
-    with patch.object(quote_analysis, "is_gemini_available", return_value=False):
+    with patch.object(quote_analysis, "is_groq_available", return_value=False):
         assert quote_analysis.analyze_quotes(plan, ["q1", "q2"]) is None
     with pytest.raises(ValueError):
         quote_analysis.analyze_quotes(plan, ["q1", "unknown"])
@@ -110,26 +110,26 @@ def test_ai_unavailable_and_group_validation():
         quote_analysis.analyze_quotes(mixed, ["q1", "q2"])
 
 
-@pytest.mark.parametrize("response", ['{}', '{"differences":[],"missing_details":[],"follow_up_questions":[],"recommendation":"Insufficient information","preferred_quote_id":"unknown"}', 'invalid'])
+@pytest.mark.parametrize("response", ['{}', '{"winner_quote_id":"unknown","confidence":"high","winner_reason":"Unknown winner","vendor_assessments":[{"quote_id":"q1","advantages":[],"tradeoffs":[]},{"quote_id":"q2","advantages":[],"tradeoffs":[]}],"differences":[],"missing_details":[],"follow_up_questions":[]}', 'invalid'])
 def test_ai_rejects_malformed_or_unknown_recommendations(response):
     quote_analysis._cache.clear()
     client = MagicMock()
-    client.__enter__.return_value.models.generate_content.return_value = SimpleNamespace(text=response)
-    with patch.object(quote_analysis, "is_gemini_available", return_value=True), patch.object(quote_analysis.quota_guard, "try_acquire", return_value=True), patch("google.genai.Client", return_value=client), patch.object(quote_analysis.settings, "GEMINI_API_KEY", SimpleNamespace(get_secret_value=lambda: "test")):
+    client.json.return_value = {"choices": [{"message": {"content": response}}]}
+    with patch.object(quote_analysis, "is_groq_available", return_value=True), patch.object(quote_analysis.quota_guard, "try_acquire", return_value=True), patch("app.services.quote_analysis.httpx.post", return_value=client), patch.object(quote_analysis.settings, "GROQ_API_KEY", SimpleNamespace(get_secret_value=lambda: "test")):
         assert quote_analysis.analyze_quotes(analysis_plan(), ["q1", "q2"]) is None
 
 
 def test_ai_caches_valid_analysis_and_changes_invalidate_cache():
     quote_analysis._cache.clear()
     client = MagicMock()
-    client.__enter__.return_value.models.generate_content.return_value = SimpleNamespace(text='{"differences":[],"missing_details":["Terms not specified"],"follow_up_questions":["Taxes included?"],"recommendation":"Insufficient information","preferred_quote_id":null}')
-    with patch.object(quote_analysis, "is_gemini_available", return_value=True), patch.object(quote_analysis.quota_guard, "try_acquire", return_value=True), patch("google.genai.Client", return_value=client), patch.object(quote_analysis.settings, "GEMINI_API_KEY", SimpleNamespace(get_secret_value=lambda: "test")):
+    client.json.return_value = {"choices": [{"message": {"content": '{"winner_quote_id":"q1","confidence":"medium","winner_reason":"q1 has a lower finalized quote.","vendor_assessments":[{"quote_id":"q1","advantages":["Lower final price"],"tradeoffs":["Terms need confirmation"]},{"quote_id":"q2","advantages":["More details provided"],"tradeoffs":["Higher final price"]}],"differences":[],"missing_details":["Terms not specified"],"follow_up_questions":["Taxes included?"]}'}}]}
+    with patch.object(quote_analysis, "is_groq_available", return_value=True), patch.object(quote_analysis.quota_guard, "try_acquire", return_value=True), patch("app.services.quote_analysis.httpx.post", return_value=client) as post, patch.object(quote_analysis.settings, "GROQ_API_KEY", SimpleNamespace(get_secret_value=lambda: "test")):
         plan = analysis_plan()
         assert quote_analysis.analyze_quotes(plan, ["q1", "q2"]) is not None
         quote_analysis.analyze_quotes(plan, ["q2", "q1"])
-        assert client.__enter__.return_value.models.generate_content.call_count == 1
+        assert post.call_count == 1
         quote_analysis.analyze_quotes(plan.model_copy(update={"total_budget_cap_inr": 1}), ["q1", "q2"])
-        assert client.__enter__.return_value.models.generate_content.call_count == 2
+        assert post.call_count == 2
 
 
 def test_replan_preserves_selected_prices_and_chosen_reserve():

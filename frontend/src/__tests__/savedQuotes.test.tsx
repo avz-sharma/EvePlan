@@ -76,13 +76,13 @@ it("isolates branch changes and includes quotation edits in undo/redo", async ()
 
 it("shows missing details, selects quotes and invalidates old AI suggestions", async () => {
   planActions.update({ ...plan, saved_quotes: [quote, { ...quote, id: "q2", vendor_id: "v2", vendor_name: "Vendor B" }] });
-  vi.mocked(fetch).mockResolvedValueOnce(new Response(JSON.stringify({ analysis: { differences: ["Different scope"], missing_details: ["Taxes not specified"], follow_up_questions: ["Delivery included?"], recommendation: "Insufficient information to choose a winner" }, message: "AI suggestions" })));
+  vi.mocked(fetch).mockResolvedValueOnce(new Response(JSON.stringify({ analysis: { winner_quote_id: "q1", confidence: "medium", winner_reason: "Vendor A has a lower finalized price for the entered scope.", vendor_assessments: [{ quote_id: "q1", advantages: ["Lower finalized price"], tradeoffs: ["Taxes not specified"] }, { quote_id: "q2", advantages: ["Clear delivery terms"], tradeoffs: ["Higher finalized price"] }], differences: ["Different scope"], missing_details: ["Taxes not specified"], follow_up_questions: ["Delivery included?"] }, message: "Groq recommends a vendor; you make the final choice." })));
   render(<SavedQuotes comparison />);
   expect(screen.getAllByText("Not specified").length).toBeGreaterThan(0);
   expect(fetch).not.toHaveBeenCalled();
-  fireEvent.click(screen.getByText("Analyze with AI"));
+  fireEvent.click(screen.getByText("Analyze with Groq"));
   await screen.findByText("Different scope");
-  expect(screen.getByText("Analyze with AI").hasAttribute("disabled")).toBe(true);
+  expect(screen.getByText("Analyze with Groq").hasAttribute("disabled")).toBe(true);
   fireEvent.click(screen.getAllByText("Select for Budget")[0]);
   await screen.findByText("Inputs changed. Analyze again for current suggestions.");
   expect(screen.queryByText("Different scope")).toBeNull();

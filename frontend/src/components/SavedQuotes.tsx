@@ -9,7 +9,16 @@ const categories: Record<VendorCategory, string> = { venue: "Venue", caterer: "C
 const emptyQuote = (event_id: string, category: VendorCategory): SavedQuote => ({ id: crypto.randomUUID(), vendor_id: crypto.randomUUID(), vendor_name: "", event_id, category, original_inr: 0, finalized_inr: null, description: "", conditions: "", notes: "", budget_cap_inr: null, selected: false });
 const label = (plan: EventPlan, id: string) => plan.days.flatMap(d => d.events).find(e => e.id === id)?.custom_name || plan.tasks.find(t => t.event_id === id)?.event_name || "Event";
 const money = (n: number | null) => n === null ? "Not specified" : formatMoney(n);
-type Analysis = { differences: string[]; missing_details: string[]; follow_up_questions: string[]; recommendation: string };
+type VendorAssessment = { quote_id: string; advantages: string[]; tradeoffs: string[] };
+type Analysis = {
+  winner_quote_id: string;
+  confidence: "high" | "medium" | "low";
+  winner_reason: string;
+  vendor_assessments: VendorAssessment[];
+  differences: string[];
+  missing_details: string[];
+  follow_up_questions: string[];
+};
 
 export function SavedQuotes({ comparison = false }: { comparison?: boolean }) {
   const current = useCurrentPlan();
@@ -81,7 +90,11 @@ function QuoteWorkspace({ plan, branch, comparison }: { plan: EventPlan; branch:
       <p>{q.selected ? "Selected for budget" : "Saved alternative"}</p><p className="text-sm">Confirm taxes, setup, delivery and cancellation terms where not specified.</p>
       <div className="flex flex-wrap gap-2"><Button disabled={busy || q.selected || q.finalized_inr === null} onClick={() => void run(() => planActions.mutateQuote("select", { quote_id: q.id }, branch))}>Select for Budget</Button>{!comparison && <><Button disabled={busy || !!editing} onClick={() => setEditing(q)}>Edit</Button><Button disabled={busy} onClick={() => void run(() => planActions.mutateQuote("remove", { quote_id: q.id }, branch))}>Remove</Button></>}</div>
     </article>)}</div>
-    {comparison && <><Button disabled={busy || chosen.length < 2 || chosen.length > 8 || (!!analysis?.result && analysis.fingerprint === fingerprint)} onClick={() => void analyze()}>Analyze with AI</Button><p className="text-sm">Optional AI suggestions use only your saved details. Compare two to eight quotations; you choose the vendor.</p>{analysis && analysis.fingerprint !== fingerprint && <p role="status">Inputs changed. Analyze again for current suggestions.</p>}{analysis?.fingerprint === fingerprint && <div aria-live="polite"><p>{analysis.message}</p>{analysis.result && <><p>{analysis.result.recommendation}</p>{[...analysis.result.differences, ...analysis.result.missing_details, ...analysis.result.follow_up_questions].map((text, i) => <p key={i}>{text}</p>)}</>}</div>}</>}
+    {comparison && <><Button disabled={busy || chosen.length < 2 || chosen.length > 8 || (!!analysis?.result && analysis.fingerprint === fingerprint)} onClick={() => void analyze()}>Analyze with Groq</Button><p className="text-sm">Groq compares two to eight saved offers for this event and service. It recommends one vendor and explains the evidence; you make the final selection.</p>{analysis && analysis.fingerprint !== fingerprint && <p role="status">Inputs changed. Analyze again for current suggestions.</p>}{analysis?.fingerprint === fingerprint && <div aria-live="polite"><p>{analysis.message}</p>{analysis.result && <>
+      {(() => { const winner = group.find(q => q.id === analysis.result?.winner_quote_id); return <section className="rounded-2xl border border-accent/30 bg-accent/5 p-4"><p className="text-xs font-semibold uppercase tracking-wider text-accent">Groq’s recommendation · {analysis.result?.confidence} confidence</p><h3 className="mt-1 text-xl font-semibold">Recommended vendor: {winner?.vendor_name ?? "Saved quote"}</h3><p className="mt-2 text-sm">{analysis.result?.winner_reason}</p></section>; })()}
+      <div className="grid gap-3 md:grid-cols-2">{analysis.result.vendor_assessments.map(item => { const vendor = group.find(q => q.id === item.quote_id); return <article key={item.quote_id} className="rounded-xl border border-line bg-white/50 p-4"><h4 className="font-semibold">{vendor?.vendor_name ?? "Vendor"}</h4><p className="mt-2 text-sm font-medium text-success">Advantages</p><ul className="list-disc pl-5 text-sm">{item.advantages.map((text, i) => <li key={i}>{text}</li>)}</ul><p className="mt-2 text-sm font-medium text-danger">Trade-offs</p><ul className="list-disc pl-5 text-sm">{item.tradeoffs.map((text, i) => <li key={i}>{text}</li>)}</ul></article>; })}</div>
+      {[...analysis.result.differences, ...analysis.result.missing_details, ...analysis.result.follow_up_questions].map((text, i) => <p key={i} className="text-sm">{text}</p>)}
+    </>}</div>}</>}
     <p role="status">{busy ? "Working…" : status}</p>
     <Dialog open={prompt} label="Compare vendor quotations" onClose={() => setPrompt(false)}><p>You now have 2 {categories[category]?.toLowerCase()} quotations from distinct vendors for {label(plan, eventId)}. Would you like to compare them?</p><div className="mt-4 flex gap-2"><Button onClick={() => { window.location.hash = `/vendors?event=${encodeURIComponent(eventId)}&category=${category}&branch=${branch}`; setPrompt(false); }}>Compare vendors</Button><Button onClick={() => setPrompt(false)}>Later</Button></div></Dialog>
   </GlassPanel>;

@@ -1,4 +1,4 @@
-"""In-process token bucket rate limiter and daily quota guard for free-tier Gemini API.
+"""In-process token bucket and daily request guard for optional Groq API usage.
 
 Protects the daily and per-minute request budget from runaway consumption.
 When limits are exhausted, flips the response to degraded_mode instead of erroring.
@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 
 @dataclass
 class QuotaState:
-    """Tracks RPM and daily quota state for the Gemini API."""
+    """Tracks per-instance RPM and daily request limits for Groq calls."""
 
     # RPM (requests per minute) token bucket
     rpm_limit: int = 5
