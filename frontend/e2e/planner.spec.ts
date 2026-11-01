@@ -33,13 +33,8 @@ test("wizard, plan, streamed replan and degraded vendor assignment", async ({ pa
   await page.getByRole("button", { name: "Describe a change", exact: true }).click();
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("eveplan_active_plan")!).guest_count)).toBe(160);
   await page.getByRole("tab", { name: "Vendors", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Manual vendor entry" })).toBeVisible();
-  await page.getByLabel("Vendor name", { exact: true }).fill("Host-entered venue");
-  await page.getByLabel("Your quote (₹)", { exact: true }).fill("100000");
-  await page.getByLabel("Category budget (₹)", { exact: true }).fill("90000");
-  await page.getByLabel("Capacity", { exact: true }).fill("90");
-  await page.getByRole("button", { name: "Pick manual vendor for this event" }).click();
-  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("eveplan_active_plan")!).vendor_assignments.length)).toBe(1);
+  await expect(page.getByRole("heading", { name: "Compare Saved Quotes", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Manual vendor entry", exact: true })).toHaveCount(0);
   await page.getByRole("tab", { name: "Quotes", exact: true }).click();
   await page.getByRole("button", { name: "Snap a quote" }).click();
   const quote = page.getByRole("dialog", { name: "Compare a vendor quote" });
@@ -140,4 +135,26 @@ for (const width of [390, 1280]) test(`saved quotation budget workflow at ${widt
   await page.getByRole("button", { name: "Update reserve", exact: true }).click();
   await expect(page.getByText("Reserve updated.", { exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
+
+for (const width of [390, 1280]) test(`soothing overview theme and budget at ${width}px`, async ({ page }) => {
+  const plan = JSON.parse(readFileSync("../backend/app/fixtures/scenario_outputs.json", "utf8")).fixtures[0].updated_plan;
+  await page.setViewportSize({ width, height: 900 });
+  await page.addInitScript(value => localStorage.setItem("eveplan_active_plan", JSON.stringify(value)), plan);
+  await page.goto("/#/overview");
+  await expect(page.getByRole("heading", { name: plan.title, exact: true })).toBeVisible();
+  const projected = plan.budget_buckets.reduce((sum: number, b: { allocated_max_inr: number; contingency_inr: number }) => sum + b.allocated_max_inr + b.contingency_inr, 0);
+  await expect(page.getByRole("progressbar", { name: "Budget allocated" })).toHaveAttribute("aria-valuenow", String(Math.round(projected / plan.total_budget_cap_inr * 100)));
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--accent").trim())).toBe("9 49 141");
+  await expect(page.locator("canvas[aria-hidden=true]")).toBeVisible();
+  await page.mouse.move(250, 300);
+  await expect(page.locator(".cursor-halo")).toHaveCSS("opacity", "1");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.screenshot({ path: `test-results/overview-${width}.png`, fullPage: true });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator(".cursor-halo")).toHaveCSS("display", "none");
+  await page.getByRole("tab", { name: "Vendors", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Manual vendor entry", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Compare Saved Quotes", exact: true })).toBeVisible();
 });

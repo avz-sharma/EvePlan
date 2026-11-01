@@ -1,14 +1,11 @@
-import { useRequestController } from "../lib/useRequestController";
 import React, { useEffect, useMemo, useState } from "react";
-import { Search, UserPlus } from "lucide-react";
-import type { CatalogEvent, PlanEvent, VendorAssignment, VendorCategory } from "../api/types";
+import type { CatalogEvent, PlanEvent, VendorCategory } from "../api/types";
 import { apiUrl } from "../api/client";
 import { Button, GlassPanel } from "../components/ui";
 import { SavedQuotes } from "../components/SavedQuotes";
 import { VendorDiscovery } from "../components/VendorDiscovery";
-import { useCurrentPlan, usePlanStore, planActions } from "../state/planStore";
+import { useCurrentPlan, usePlanStore } from "../state/planStore";
 
-const makeId = () => globalThis.crypto?.randomUUID?.() ?? `manual-${Date.now()}`;
 const noCategories: VendorCategory[] = [];
 const interviewTemplates: Record<VendorCategory, string[]> = {
   venue: ["What is the confirmed guest capacity for this event?", "What is the indoor backup and accessibility setup?", "Which services and taxes are included in the written quote?"],
@@ -22,9 +19,7 @@ const interviewTemplates: Record<VendorCategory, string[]> = {
 
 export const VendorsTab: React.FC = () => {
   const plan = useCurrentPlan();
-  const { begin: beginRequest } = useRequestController();
   const forkedPlan = usePlanStore(state => state.forkedPlan);
-  const onAssignVendor = (assignment: VendorAssignment, branch: "A" | "B") => planActions.assignVendor(assignment, branch, beginRequest());
 
   const [branch, setBranch] = useState<"A" | "B">("A");
   const activePlan = branch === "B" && forkedPlan ? forkedPlan : plan;
@@ -33,11 +28,6 @@ export const VendorsTab: React.FC = () => {
   const [catalog, setCatalog] = useState<CatalogEvent[]>([]);
   const [category, setCategory] = useState<VendorCategory | "">("");
   const [city, setCity] = useState(activePlan.city);
-  const [manualName, setManualName] = useState("");
-  const [manualNotes, setManualNotes] = useState("");
-  const [manualQuote, setManualQuote] = useState("");
-  const [manualCategoryCap, setManualCategoryCap] = useState("");
-  const [manualCapacity, setManualCapacity] = useState("");
   const [status, setStatus] = useState("");
   const selected = events.find((item) => item.event.id === eventId);
   const metadata = selected?.event.catalog_id ? catalog.find((item) => item.id === selected.event.catalog_id) : null;
@@ -56,25 +46,6 @@ export const VendorsTab: React.FC = () => {
     if (!availableCategories.includes(category as VendorCategory)) setCategory(availableCategories[0] ?? "");
   }, [eventId, availableCategories, category]);
 
-  const addManual = async () => {
-    if (!selected || !category || !manualName.trim()) return;
-    try {
-      await onAssignVendor({
-        event_id: selected.event.id,
-        category,
-        place_id: `manual:${makeId()}`,
-        notes: [`Vendor name: ${manualName.trim()}`, manualNotes.trim()].filter(Boolean).join("\n"),
-        quoted_total_inr: manualQuote ? Number(manualQuote) : null,
-        category_budget_cap_inr: manualCategoryCap ? Number(manualCategoryCap) : null,
-        capacity: manualCapacity ? Number(manualCapacity) : null,
-      }, branch);
-      setManualName(""); setManualNotes(""); setManualQuote(""); setManualCategoryCap(""); setManualCapacity("");
-      setStatus("Manual vendor entry assigned to this event.");
-    } catch (error) {
-      setStatus(error instanceof Error ? error.message : "Manual vendor entry could not be saved.");
-    }
-  };
-
   const eventLabel = (event: PlanEvent) => event.custom_name || catalog.find((item) => item.id === event.catalog_id)?.display_name || "Event";
   const brief = selected && category ? [
     `Vendor brief · ${category}`,
@@ -87,7 +58,7 @@ export const VendorsTab: React.FC = () => {
 
   return <div className="space-y-4">
     <SavedQuotes comparison />
-    <GlassPanel><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-wider text-accent">Vendor search</p><h1 className="mt-1 text-2xl">Vendors</h1><p className="mt-1 text-sm text-muted">Discover vendors on Google Maps, then enter your chosen vendor and written quote here.</p></div><div className="flex gap-2" role="group" aria-label="Plan branch">{(["A", "B"] as const).map((item) => <Button key={item} disabled={item === "B" && !forkedPlan} variant={branch === item ? "primary" : "quiet"} onClick={() => setBranch(item)}>Plan {item}{item === "B" && !forkedPlan ? " (fork first)" : ""}</Button>)}</div></div>
+    <GlassPanel><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-wider text-accent">Vendor search</p><h1 className="mt-1 text-2xl">Vendors</h1><p className="mt-1 text-sm text-muted">Discover vendors on Google Maps. Add their written offers in Quotes, then compare and select them here.</p></div><div className="flex gap-2" role="group" aria-label="Plan branch">{(["A", "B"] as const).map((item) => <Button key={item} disabled={item === "B" && !forkedPlan} variant={branch === item ? "primary" : "quiet"} onClick={() => setBranch(item)}>Plan {item}{item === "B" && !forkedPlan ? " (fork first)" : ""}</Button>)}</div></div>
       <div className="mt-4 grid gap-3 sm:grid-cols-3"><label className="grid gap-1 text-sm">Event<select className="field-control" value={eventId} onChange={(change) => setEventId(change.target.value)}>{events.map(({ event }) => <option key={event.id} value={event.id}>{eventLabel(event)}</option>)}</select></label></div>
       <div className="mt-3 flex min-h-24 flex-wrap content-start gap-2 sm:min-h-12" role="group" aria-label="Vendor category">{availableCategories.map((item) => <button key={item} type="button" aria-pressed={category === item} onClick={() => setCategory(item)} className={`min-h-11 rounded-full border px-4 text-sm capitalize ${category === item ? "border-accent bg-accent text-white" : "border-line bg-white/55"}`}>{item}</button>)}</div>
       {!availableCategories.length && <p className="mt-3 text-sm text-muted">This custom event has no vendor categories yet. Add needs on the Events tab to search.</p>}
@@ -97,6 +68,5 @@ export const VendorsTab: React.FC = () => {
 
     <VendorDiscovery category={category} city={city} onCityChange={setCity} eventType={selected ? eventLabel(selected.event) : ""} />
 
-    <GlassPanel className="space-y-3"><h2 className="flex items-center gap-2 text-xl"><UserPlus size={18} />Manual vendor entry</h2><p className="text-sm text-muted">Enter the vendor's name, notes, quote, category budget, and capacity yourself.</p><div className="grid gap-3 sm:grid-cols-2"><label className="grid gap-1 text-sm">Vendor name<input className="field-control" value={manualName} onChange={(change) => setManualName(change.target.value)} /></label><label className="grid gap-1 text-sm">Your quote (₹)<input className="field-control" type="number" min={0} value={manualQuote} onChange={(change) => setManualQuote(change.target.value)} /></label><label className="grid gap-1 text-sm">Category budget (₹)<input className="field-control" type="number" min={0} value={manualCategoryCap} onChange={(change) => setManualCategoryCap(change.target.value)} /></label><label className="grid gap-1 text-sm">Capacity<input className="field-control" type="number" min={1} value={manualCapacity} onChange={(change) => setManualCapacity(change.target.value)} /></label><label className="grid gap-1 text-sm">Your notes<input className="field-control" value={manualNotes} maxLength={2000} onChange={(change) => setManualNotes(change.target.value)} /></label></div><Button variant="primary" disabled={!manualName.trim() || !selected || !category} onClick={() => void addManual()}><Search size={16} />Pick manual vendor for this event</Button></GlassPanel>
   </div>;
 };

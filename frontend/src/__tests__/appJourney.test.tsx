@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
-import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { App } from "../App";
 import { planActions } from "../state/planStore";
 import type { EventPlan, NormalizedQuote, PlanEvent, VendorAssignment } from "../api/types";
@@ -75,12 +75,8 @@ it("preserves wizard review, streamed changes, undo/redo, vendor picks and quote
   fireEvent.click(screen.getAllByRole("button", { name: "Redo" })[0]);
   expect(JSON.parse(stored.get("eveplan_active_plan")!).guest_count).toBe(160);
   fireEvent.click(screen.getByRole("tab", { name: "Vendors" }));
-  await screen.findByRole("heading", { name: "Manual vendor entry" });
-  change("Vendor name", "Host venue");
-  change("Your quote (₹)", "100000");
-  await waitFor(() => expect(screen.getByRole("button", { name: "Pick manual vendor for this event" }).hasAttribute("disabled")).toBe(false));
-  fireEvent.click(screen.getByRole("button", { name: "Pick manual vendor for this event" }));
-  await waitFor(() => expect(JSON.parse(stored.get("eveplan_active_plan")!).vendor_assignments).toHaveLength(1));
+  await screen.findByRole("heading", { name: "Compare Saved Quotes" });
+  expect(screen.queryByRole("heading", { name: "Manual vendor entry" })).toBeNull();
   fireEvent.click(screen.getByRole("tab", { name: "Quotes" }));
   fireEvent.click(await screen.findByRole("button", { name: "Snap a quote" }));
   const quote = within(await screen.findByRole("dialog", { name: "Compare a vendor quote" }));

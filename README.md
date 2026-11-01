@@ -48,7 +48,7 @@ Gemini is optional. Google OAuth credentials are required for sign-in; AUTH_REQU
 | `MAX_REQUEST_BYTES`, `API_REQUESTS_PER_MINUTE` | Request-body and per-client abuse limits; defaults 6 MiB and 240/minute. |
 | `VITE_API_BASE_URL` | API origin or relative base; empty uses the same origin and Vite's local `/api` proxy. |
 
-Vendor discovery builds a URL in your browser from the selected service, event type, location and optional keyword. Click Find, then Search on Google Maps to open Google Maps externally. No search API is called and no listings, ratings or availability are imported. Enter a real vendor and their written quote manually to assign them to an event in Plan A or B. Template briefs and interview questions remain available.
+Vendor discovery builds a URL in your browser from the selected service, event type, location and optional keyword. Click Find, then Search on Google Maps to open Google Maps externally. No search API is called and no listings, ratings or availability are imported. Add a vendor and their written offer in Quotes, then select the finalized quote for an event in Plan A or B. Template briefs and interview questions remain available.
 
 Maps URLs require no Google key or billing: `api=1` is the URL protocol version. See [Google’s official documentation](https://developers.google.com/maps/documentation/urls/get-started). No feature in this app now requires Maps/Places billing. Optional Gemini is separate and unchanged.
 
@@ -121,7 +121,7 @@ Use Secret Manager references for optional server keys. Build the frontend with 
 1. Start with Gemini unset. Choose the three-day example, then enter a name, 120 guests, city, date, your total budget range and per-plate range. Review, then build. Each event defaults to 120 guests.
 2. Open Events, change one event's attendance, and move an event between days. Inspect the Timeline and Budget updates.
 3. Describe `+40 guests`. Inspect the streamed result, then undo and redo it.
-4. Fork a plan. In Vendors, choose an event and category, enter a manual vendor with your quote/capacity, and pick it. Inspect budget/task changes and switch branches to compare them.
+4. Fork a plan. In Quotes, choose a day, event and category, enter the vendor’s written offer, and select the finalized quote for budget. Inspect budget/task changes and switch branches to compare them.
 5. Compare a written quote using values you enter. Reload the page to demonstrate saved-plan restoration.
 
 ## Project Notes
