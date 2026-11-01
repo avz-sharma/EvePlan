@@ -17,12 +17,9 @@ env:
   AUTH_REQUIRED: "false"
 
 jobs:
-  backend:
+  quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    defaults:
-      run:
-        working-directory: backend
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -30,61 +27,25 @@ jobs:
           python-version: '3.12'
           cache: pip
           cache-dependency-path: backend/requirements-dev.lock
-      - run: python -m pip install --require-hashes -r requirements-dev.lock
-      - run: ruff check app/ tests/
-      - run: mypy --strict app/
-      - run: bandit -r app/ --exclude app/static -s B101
-      - run: pytest --cov=app --cov-report=json:coverage.json --cov-report=xml --cov-fail-under=70
-      - run: coverage report --include='app/engine/*' --fail-under=80
-      - run: pip-audit --disable-pip --require-hashes -r requirements-dev.lock
-      - uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: backend-coverage
-          path: backend/coverage.*
-
-  frontend:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    defaults:
-      run:
-        working-directory: frontend
-    steps:
-      - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: '24'
       - uses: pnpm/action-setup@v6
         with:
           version: 12.6.0
-      - uses: actions/setup-python@v7
-        with:
-          python-version: '3.12'
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run lint
-      - run: pnpm run check:unused
-      - run: pnpm run test:coverage
-      - run: pnpm run build
-      - run: pnpm audit
-      - run: python -m pip install --require-hashes -r ../backend/requirements.lock
-      - run: pnpm exec playwright install --with-deps chromium
-      - name: Start the degraded-mode API
-        run: |
-          python -m uvicorn app.main:app --app-dir ../backend --host 127.0.0.1 --port 8018 > ../backend-smoke.log 2>&1 &
-          for attempt in $(seq 1 30); do
-            curl --fail --silent http://127.0.0.1:8018/health && break
-            sleep 1
-          done
-          curl --fail http://127.0.0.1:8018/health
-      - run: pnpm run test:smoke
+      - run: python -m pip install --require-hashes -r backend/requirements-dev.lock
+      - run: pnpm --dir frontend install --frozen-lockfile
+      - run: pnpm --dir frontend exec playwright install --with-deps chromium
+      - run: python scripts/check.py
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: frontend-test-evidence
+          name: quality-evidence
           path: |
+            backend/coverage/
             frontend/coverage/
             frontend/test-results/
-            backend-smoke.log
+            .tools/quality/
 
   history-secrets:
     runs-on: ubuntu-latest

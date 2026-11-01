@@ -39,3 +39,7 @@ Vendor discovery builds a URL in your browser from the selected service, event t
 
 Maps URLs require no Google key: `api=1` is the URL protocol version. See [Google’s official documentation](https://developers.google.com/maps/documentation/urls/get-started). No feature in this app now requires Maps/Places billing.
 
+
+## Formatting
+
+`.editorconfig` defines UTF-8, LF and indentation. Run `python -m ruff format backend/app` for Python; `scripts/check.py` enforces it. Frontend `.prettierrc.json` supports Prettier-enabled editors. Prettier is not added as a project dependency; lint, types, unused-code checks and coverage remain mandatory.

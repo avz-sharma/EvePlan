@@ -40,6 +40,14 @@ Open `http://localhost:5173`. Configure Google sign-in using [auth.md](docs/auth
 
 ## Quality checks
 
+Run every gate with the same entry point used by CI, from the repository root:
+
+```powershell
+.venv/Scripts/python.exe scripts/check.py
+```
+
+The runner starts an offline API on port 8018 when needed and records logs under `.tools/quality/`. It also checks Python formatting and public docstrings. The individual commands are:
+
 
 From `backend/`, with the virtual environment active:
 
