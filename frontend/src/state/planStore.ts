@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import type { CascadeDiff, EventPlan, PlanDelta, TradeOffOption, VendorAssignment } from "../api/types";
+import type { CascadeDiff, EventPlan, PlanDelta, TradeOffOption, SavedQuote, VendorAssignment } from "../api/types";
 import { apiUrl } from "../api/client";
 
 interface PlanState {
@@ -7,6 +7,8 @@ interface PlanState {
   forkedPlan: EventPlan | null;
   history: EventPlan[];
   historyIndex: number;
+  forkHistory: EventPlan[];
+  forkHistoryIndex: number;
   lastDelta: PlanDelta | null;
   lastDiff: CascadeDiff | null;
   tradeoffOptions: TradeOffOption[];
@@ -16,7 +18,7 @@ interface PlanState {
   toast: string | null;
 }
 
-const initialState: PlanState = { plan: null, forkedPlan: null, history: [], historyIndex: -1,
+const initialState: PlanState = { plan: null, forkedPlan: null, history: [], historyIndex: -1, forkHistory: [], forkHistoryIndex: -1,
   lastDelta: null, lastDiff: null, tradeoffOptions: [], previewAdjustments: null,
   isLoading: false, quotesOpen: false, toast: null };
 let state = initialState;
@@ -90,15 +92,15 @@ export const planActions = {
       const fork = localStorage.getItem(storageKey("eveplan_forked_plan"));
       const forkedPlan = fork ? JSON.parse(fork) as EventPlan : null;
       if (forkedPlan) delete forkedPlan.profile_hints;
-      patch({ plan, forkedPlan, history: [plan], historyIndex: 0 });
+      patch({ plan, forkedPlan, history: [plan], historyIndex: 0, forkHistory: forkedPlan ? [forkedPlan] : [], forkHistoryIndex: forkedPlan ? 0 : -1 });
       return true;
     } catch { localStorage.removeItem(storageKey("eveplan_active_plan")); return false; }
   },
   undo: () => historyStep(-1), redo: () => historyStep(1),
-  fork: () => { if (state.plan) { patch({ forkedPlan: structuredClone(state.plan) }); notify("Plan fork created"); } },
+  fork: () => { if (state.plan) { const forkedPlan = structuredClone(state.plan); patch({ forkedPlan, forkHistory: [forkedPlan], forkHistoryIndex: 0 }); notify("Plan fork created"); } },
   switchFork: () => {
     if (!state.forkedPlan) return;
-    patch({ plan: state.forkedPlan, forkedPlan: state.plan }); notify("Plans switched");
+    patch({ plan: state.forkedPlan, forkedPlan: state.plan, history: state.forkHistory.length ? state.forkHistory : [state.forkedPlan], historyIndex: Math.max(0, state.forkHistoryIndex), forkHistory: state.history, forkHistoryIndex: state.historyIndex }); notify("Plans switched");
   },
   clearFork: () => patch({ forkedPlan: null }),
   openQuotes: () => patch({ quotesOpen: true }),
@@ -112,6 +114,17 @@ export const planActions = {
       budget_buckets, notes: [...plan.notes, `Applied trade-off: ${option.title}`] });
     patch({ tradeoffOptions: state.tradeoffOptions.filter(item => item.id !== option.id), previewAdjustments: null });
     notify("Trade-off applied");
+  },
+  mutateQuote: async (operation: "save" | "select" | "remove" | "contingency", values: { quote?: SavedQuote; quote_id?: string; contingency_percent?: number }, branch: "A" | "B" = "A") => {
+    const plan = branch === "B" ? state.forkedPlan : state.plan;
+    if (!plan) throw new Error("Plan is unavailable.");
+    const response = await fetch(apiUrl("/api/plan/quotes/edit"), { method: "POST",
+      headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, operation, ...values }) });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(typeof payload.detail === "string" ? payload.detail : "Check the quotation values.");
+    if ((branch === "B" ? state.forkedPlan : state.plan) !== plan) throw new Error("Plan changed while saving. Please retry.");
+    if (branch === "A") planActions.updated(payload.updated_plan, payload.diff);
+    else { const history = [...state.forkHistory.slice(0, state.forkHistoryIndex + 1), payload.updated_plan as EventPlan]; patch({ forkedPlan: payload.updated_plan, lastDiff: payload.diff, forkHistory: history, forkHistoryIndex: history.length - 1 }); }
   },
   assignVendor: async (assignment: VendorAssignment, branch: "A" | "B", signal?: AbortSignal) => {
     const plan = branch === "B" ? state.forkedPlan : state.plan;

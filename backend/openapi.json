@@ -124,6 +124,49 @@
         }
       }
     },
+    "/api/plan/quotes/edit": {
+      "post": {
+        "tags": [
+          "Event Planning"
+        ],
+        "summary": "Edit Saved Quote",
+        "operationId": "edit_saved_quote_api_plan_quotes_edit_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteMutationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Edit Saved Quote Api Plan Quotes Edit Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/plan/catalog": {
       "get": {
         "tags": [
@@ -578,6 +621,49 @@
         }
       }
     },
+    "/api/vendor/analyze-saved": {
+      "post": {
+        "tags": [
+          "Vendor Coordination"
+        ],
+        "summary": "Analyze Saved",
+        "operationId": "analyze_saved_api_vendor_analyze_saved_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Analyze Saved Api Vendor Analyze Saved Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/vendors/search": {
       "post": {
         "tags": [
@@ -711,6 +797,29 @@
         "additionalProperties": false,
         "type": "object",
         "title": "AccessibilityNeeds"
+      },
+      "AnalyzeRequest": {
+        "properties": {
+          "plan": {
+            "$ref": "#/components/schemas/EventPlan"
+          },
+          "quote_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "minItems": 2,
+            "title": "Quote Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "plan",
+          "quote_ids"
+        ],
+        "title": "AnalyzeRequest"
       },
       "Body_upload_quote_document_api_vendor_upload_post": {
         "properties": {
@@ -1232,6 +1341,21 @@
             "maxItems": 700,
             "title": "Vendor Assignments"
           },
+          "saved_quotes": {
+            "items": {
+              "$ref": "#/components/schemas/SavedQuote"
+            },
+            "type": "array",
+            "maxItems": 700,
+            "title": "Saved Quotes"
+          },
+          "contingency_percent": {
+            "type": "number",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Contingency Percent",
+            "default": 10
+          },
           "profile_hints": {
             "additionalProperties": {
               "items": {
@@ -1715,6 +1839,64 @@
         ],
         "title": "QuoteComparison"
       },
+      "QuoteMutationRequest": {
+        "properties": {
+          "plan": {
+            "$ref": "#/components/schemas/EventPlan"
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "save",
+              "select",
+              "remove",
+              "contingency"
+            ],
+            "title": "Operation"
+          },
+          "quote": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SavedQuote"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "quote_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quote Id"
+          },
+          "contingency_percent": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contingency Percent"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "plan",
+          "operation"
+        ],
+        "title": "QuoteMutationRequest"
+      },
       "ReplanRequest": {
         "properties": {
           "plan": {
@@ -1772,6 +1954,104 @@
           "diff"
         ],
         "title": "ReplanResponse"
+      },
+      "SavedQuote": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Id"
+          },
+          "vendor_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Vendor Id"
+          },
+          "vendor_name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "pattern": "\\S",
+            "title": "Vendor Name"
+          },
+          "event_id": {
+            "type": "string",
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Event Id"
+          },
+          "category": {
+            "$ref": "#/components/schemas/VendorCategory"
+          },
+          "original_inr": {
+            "type": "number",
+            "maximum": 1000000000000.0,
+            "minimum": 0.0,
+            "title": "Original Inr"
+          },
+          "finalized_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finalized Inr"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Description",
+            "default": ""
+          },
+          "conditions": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Conditions",
+            "default": ""
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Notes",
+            "default": ""
+          },
+          "budget_cap_inr": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1000000000000.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Cap Inr"
+          },
+          "selected": {
+            "type": "boolean",
+            "title": "Selected",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "vendor_id",
+          "vendor_name",
+          "event_id",
+          "category",
+          "original_inr"
+        ],
+        "title": "SavedQuote"
       },
       "ScenarioFixtureRequest": {
         "properties": {

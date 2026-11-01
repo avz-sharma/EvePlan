@@ -111,6 +111,7 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
         updated_plan.guest_count,
         updated_plan.per_plate_min_inr,
         updated_plan.per_plate_max_inr,
+        updated_plan.contingency_percent / 100,
     )
     updated_plan.budget_buckets = updated_buckets
 

@@ -1,7 +1,6 @@
 from typing import cast
 
 from ..schemas.plan_state import EventPlan
-from .planning_heuristics import CONTINGENCY_RATE
 
 
 def evaluate_conflicts(plan: EventPlan) -> tuple[list[str], list[str]]:
@@ -67,7 +66,7 @@ def evaluate_conflicts(plan: EventPlan) -> tuple[list[str], list[str]]:
     if total_max_projected > plan.total_budget_cap_inr:
         overage = total_max_projected - plan.total_budget_cap_inr
         violations.append(
-            f"BUDGET: Total projected spend (₹{total_max_projected:,.0f} including {CONTINGENCY_RATE:.0%} reserve) "
+            f"BUDGET: Total projected spend (₹{total_max_projected:,.0f} including {plan.contingency_percent:g}% reserve) "
             f"breaches hard cap (₹{plan.total_budget_cap_inr:,.0f}) by ₹{overage:,.0f}."
         )
 

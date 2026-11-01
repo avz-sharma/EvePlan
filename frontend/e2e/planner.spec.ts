@@ -105,3 +105,39 @@ test("Google login precedes celebration setup and sign-out locks it", async ({ p
   await expect(page.getByRole("link", { name: "Continue with Google" })).toBeVisible();
   await expect(page.getByRole("dialog", { name: "Build a celebration plan" })).toHaveCount(0);
 });
+
+
+for (const width of [390, 1280]) test(`saved quotation budget workflow at ${width}px`, async ({ page }) => {
+  const plan = JSON.parse(readFileSync("../backend/app/fixtures/scenario_outputs.json", "utf8")).fixtures[0].updated_plan;
+  await page.setViewportSize({ width, height: 844 });
+  await page.addInitScript(value => { if (!localStorage.getItem("eveplan_active_plan")) localStorage.setItem("eveplan_active_plan", JSON.stringify(value)); }, plan);
+  await page.goto("/#/quotes");
+  for (const [name, original, final] of [["Vendor Alpha", "120000", "100000"], ["Vendor Beta", "95000", "80000"]]) {
+    await page.getByRole("button", { name: "Add a Manual Quote", exact: true }).click();
+    await page.getByLabel("Vendor name", { exact: true }).fill(name);
+    await page.getByLabel("Vendor's quoted price (₹)", { exact: true }).fill(original);
+    await page.getByLabel("Negotiated/finalized price (₹)", { exact: true }).fill(final);
+    await page.getByLabel("Description / inclusions", { exact: true }).fill("Host-entered scope");
+    await page.getByRole("button", { name: "Save Quote", exact: true }).click();
+    await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
+  }
+  const prompt = page.getByRole("dialog", { name: "Compare vendor quotations" });
+  await expect(prompt).toBeVisible();
+  await prompt.getByRole("button", { name: "Compare vendors", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Compare Saved Quotes", exact: true })).toBeVisible();
+  const beta = page.locator("article").filter({ has: page.getByRole("heading", { name: "Vendor Beta", exact: true }) });
+  await beta.getByRole("button", { name: "Select for Budget", exact: true }).click();
+  await expect(beta.getByText("Selected for budget", { exact: true })).toBeVisible();
+  await expect.poll(() => page.evaluate(() => {
+    const plan = JSON.parse(localStorage.getItem("eveplan_active_plan")!);
+    const bucket = plan.budget_buckets.find((b: { category: string }) => b.category === "Decor");
+    return [bucket.allocated_max_inr, bucket.contingency_inr];
+  })).toEqual([80000, 8000]);
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "Vendor Beta", exact: true })).toBeVisible();
+  await page.getByRole("tab", { name: "Budget", exact: true }).click();
+  await page.getByLabel("Plan contingency (%)", { exact: true }).fill("20");
+  await page.getByRole("button", { name: "Update reserve", exact: true }).click();
+  await expect(page.getByText("Reserve updated.", { exact: true })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});

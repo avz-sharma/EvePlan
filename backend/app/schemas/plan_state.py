@@ -143,6 +143,8 @@ class EventPlan(BaseModel):
     accessibility_needs: list[AccessibilityNeed] = Field(default_factory=list, max_length=40, description="User-entered accessibility needs")
     elder_members: int = Field(default=0, ge=0, le=100_000)
     vendor_assignments: list["VendorAssignment"] = Field(default_factory=list, max_length=700)
+    saved_quotes: list["SavedQuote"] = Field(default_factory=list, max_length=700)
+    contingency_percent: float = Field(default=10, ge=0, le=100, allow_inf_nan=False)
     profile_hints: dict[HintKey, HintList] = Field(default_factory=dict, max_length=10, description="Derived from selected events; contains no religion field")
     notes: list[PlanNote] = Field(default_factory=list, max_length=100, description="Event planning notes and constraint warnings")
 
@@ -172,3 +174,20 @@ class VendorAssignment(BaseModel):
     quoted_total_inr: float | None = Field(default=None, ge=0.0)
     category_budget_cap_inr: float | None = Field(default=None, ge=0.0)
     capacity: int | None = Field(default=None, ge=1, le=100_000)
+
+
+class SavedQuote(BaseModel):
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    id: str = Field(min_length=1, max_length=80)
+    vendor_id: str = Field(min_length=1, max_length=80)
+    vendor_name: str = Field(min_length=1, max_length=120, pattern=r"\S")
+    event_id: str = Field(min_length=1, max_length=80)
+    category: VendorCategory
+    original_inr: float = Field(ge=0, le=1e12, allow_inf_nan=False)
+    finalized_inr: float | None = Field(default=None, ge=0, le=1e12, allow_inf_nan=False)
+    description: str = Field(default="", max_length=4000)
+    conditions: str = Field(default="", max_length=2000)
+    notes: str = Field(default="", max_length=2000)
+    budget_cap_inr: float | None = Field(default=None, ge=0, le=1e12, allow_inf_nan=False)
+    selected: bool = False

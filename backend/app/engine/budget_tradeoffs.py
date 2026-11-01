@@ -28,6 +28,7 @@ def evaluate_budget_tradeoffs(
     guest_count: int,
     per_plate_min_inr: float,
     per_plate_max_inr: float,
+    buffer_percentage: float = CONTINGENCY_RATE,
 ) -> tuple[list[BudgetBucket], list[TradeOffOption], bool]:
     """Recomputes the configured reserve and offers heuristic recovery options when over cap.
     
@@ -38,7 +39,7 @@ def evaluate_budget_tradeoffs(
 
     for bucket in buckets:
         # Recompute the configured reserve deterministically.
-        contingency = compute_contingency_buffer(bucket.allocated_max_inr, CONTINGENCY_RATE)
+        contingency = compute_contingency_buffer(bucket.allocated_max_inr, buffer_percentage)
         bucket_total = bucket.allocated_max_inr + contingency
         total_projected_max += bucket_total
 
@@ -71,7 +72,7 @@ def evaluate_budget_tradeoffs(
         avg_cost_per_guest = total_projected_max / guest_count
         guests_to_trim = math.ceil(deficit_inr / avg_cost_per_guest)
         guests_to_trim = min(guests_to_trim, max(1, math.floor(guest_count * GUEST_REDUCTION_MAX_SHARE)))
-        catering_savings = round(guests_to_trim * per_plate_max_inr * (1 + CONTINGENCY_RATE), 2)
+        catering_savings = round(guests_to_trim * per_plate_max_inr * (1 + buffer_percentage), 2)
 
         tradeoff_options.append(
             TradeOffOption(
@@ -88,7 +89,7 @@ def evaluate_budget_tradeoffs(
                 impact_level="MEDIUM",
                 tradeoff_rationale=(
                     f"Reduces catering volume by {guests_to_trim} plates at ₹{per_plate_max_inr:.0f}/head "
-                    f"+ {CONTINGENCY_RATE:.0%} reserve, reducing the projected amount by ₹{catering_savings:,.0f}."
+                    f"+ {buffer_percentage:.0%} reserve, reducing the projected amount by ₹{catering_savings:,.0f}."
                 ),
             )
         )
@@ -131,7 +132,7 @@ def evaluate_budget_tradeoffs(
         tradeoff_options.append(
             TradeOffOption(
                 id="opt_tier_and_buffer_shift",
-                title=f"Review catering scope and contingency reserve ({CONTINGENCY_RATE * (1 - CONTINGENCY_REDUCTION_SHARE):.0%} remaining)",
+                title=f"Review catering scope and contingency reserve ({buffer_percentage * (1 - CONTINGENCY_REDUCTION_SHARE):.0%} remaining)",
                 description=(
                     "Review catering scope and reduce the contingency allowance only after "
                     "vendor terms and remaining risks are confirmed."

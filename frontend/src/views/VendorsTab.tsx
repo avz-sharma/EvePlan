@@ -4,6 +4,7 @@ import { Search, UserPlus } from "lucide-react";
 import type { CatalogEvent, PlanEvent, VendorAssignment, VendorCategory } from "../api/types";
 import { apiUrl } from "../api/client";
 import { Button, GlassPanel } from "../components/ui";
+import { SavedQuotes } from "../components/SavedQuotes";
 import { VendorDiscovery } from "../components/VendorDiscovery";
 import { useCurrentPlan, usePlanStore, planActions } from "../state/planStore";
 
@@ -85,6 +86,7 @@ export const VendorsTab: React.FC = () => {
   ].filter(Boolean).join("\n") : "";
 
   return <div className="space-y-4">
+    <SavedQuotes comparison />
     <GlassPanel><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="text-xs font-semibold uppercase tracking-wider text-accent">Vendor search</p><h1 className="mt-1 text-2xl">Vendors</h1><p className="mt-1 text-sm text-muted">Discover vendors on Google Maps, then enter your chosen vendor and written quote here.</p></div><div className="flex gap-2" role="group" aria-label="Plan branch">{(["A", "B"] as const).map((item) => <Button key={item} disabled={item === "B" && !forkedPlan} variant={branch === item ? "primary" : "quiet"} onClick={() => setBranch(item)}>Plan {item}{item === "B" && !forkedPlan ? " (fork first)" : ""}</Button>)}</div></div>
       <div className="mt-4 grid gap-3 sm:grid-cols-3"><label className="grid gap-1 text-sm">Event<select className="field-control" value={eventId} onChange={(change) => setEventId(change.target.value)}>{events.map(({ event }) => <option key={event.id} value={event.id}>{eventLabel(event)}</option>)}</select></label></div>
       <div className="mt-3 flex min-h-24 flex-wrap content-start gap-2 sm:min-h-12" role="group" aria-label="Vendor category">{availableCategories.map((item) => <button key={item} type="button" aria-pressed={category === item} onClick={() => setCategory(item)} className={`min-h-11 rounded-full border px-4 text-sm capitalize ${category === item ? "border-accent bg-accent text-white" : "border-line bg-white/55"}`}>{item}</button>)}</div>

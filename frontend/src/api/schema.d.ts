@@ -72,6 +72,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/plan/quotes/edit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Edit Saved Quote */
+        post: operations["edit_saved_quote_api_plan_quotes_edit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/plan/catalog": {
         parameters: {
             query?: never;
@@ -299,6 +316,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/vendor/analyze-saved": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Analyze Saved */
+        post: operations["analyze_saved_api_vendor_analyze_saved_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/vendors/search": {
         parameters: {
             query?: never;
@@ -374,6 +408,12 @@ export interface components {
              * @default false
              */
             ground_floor_dining: boolean;
+        };
+        /** AnalyzeRequest */
+        AnalyzeRequest: {
+            plan: components["schemas"]["EventPlan"];
+            /** Quote Ids */
+            quote_ids: string[];
         };
         /** Body_upload_quote_document_api_vendor_upload_post */
         Body_upload_quote_document_api_vendor_upload_post: {
@@ -628,6 +668,13 @@ export interface components {
             elder_members: number;
             /** Vendor Assignments */
             vendor_assignments?: components["schemas"]["VendorAssignment"][];
+            /** Saved Quotes */
+            saved_quotes?: components["schemas"]["SavedQuote"][];
+            /**
+             * Contingency Percent
+             * @default 10
+             */
+            contingency_percent: number;
             /**
              * Profile Hints
              * @description Derived from selected events; contains no religion field
@@ -872,6 +919,20 @@ export interface components {
              */
             vendor_interview_questions?: string[];
         };
+        /** QuoteMutationRequest */
+        QuoteMutationRequest: {
+            plan: components["schemas"]["EventPlan"];
+            /**
+             * Operation
+             * @enum {string}
+             */
+            operation: "save" | "select" | "remove" | "contingency";
+            quote?: components["schemas"]["SavedQuote"] | null;
+            /** Quote Id */
+            quote_id?: string | null;
+            /** Contingency Percent */
+            contingency_percent?: number | null;
+        };
         /** ReplanRequest */
         ReplanRequest: {
             /** @description Current client-persisted plan state */
@@ -902,6 +963,44 @@ export interface components {
              * @default false
              */
             degraded_mode: boolean;
+        };
+        /** SavedQuote */
+        SavedQuote: {
+            /** Id */
+            id: string;
+            /** Vendor Id */
+            vendor_id: string;
+            /** Vendor Name */
+            vendor_name: string;
+            /** Event Id */
+            event_id: string;
+            category: components["schemas"]["VendorCategory"];
+            /** Original Inr */
+            original_inr: number;
+            /** Finalized Inr */
+            finalized_inr?: number | null;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Conditions
+             * @default
+             */
+            conditions: string;
+            /**
+             * Notes
+             * @default
+             */
+            notes: string;
+            /** Budget Cap Inr */
+            budget_cap_inr?: number | null;
+            /**
+             * Selected
+             * @default false
+             */
+            selected: boolean;
         };
         /** ScenarioFixtureRequest */
         ScenarioFixtureRequest: {
@@ -1210,6 +1309,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+        };
+    };
+    edit_saved_quote_api_plan_quotes_edit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuoteMutationRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -1581,6 +1715,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+        };
+    };
+    analyze_saved_api_vendor_analyze_saved_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyzeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

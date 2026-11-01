@@ -108,6 +108,7 @@ def _run_deterministic_replan(
         guest_count=updated_plan.guest_count,
         per_plate_min_inr=updated_plan.per_plate_min_inr,
         per_plate_max_inr=updated_plan.per_plate_max_inr,
+        buffer_percentage=updated_plan.contingency_percent / 100,
     )
     return updated_plan, diff, tradeoff_options
 

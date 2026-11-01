@@ -64,7 +64,15 @@ export interface VendorAssignment {
   capacity: number | null;
 }
 
+export interface SavedQuote {
+  id: string; vendor_id: string; vendor_name: string; event_id: string; category: VendorCategory;
+  original_inr: number; finalized_inr: number | null; description: string; conditions: string;
+  notes: string; budget_cap_inr: number | null; selected: boolean;
+}
+
 export interface EventPlan {
+  saved_quotes?: SavedQuote[];
+  contingency_percent?: number;
   id: string;
   title: string;
   template: string;

@@ -10,8 +10,16 @@ from ..engine.plan_builder import (
     build_event_plan,
     build_quick_scenario_fixtures,
     edit_event_plan,
+    mutate_quote,
 )
-from ..schemas.plan_state import EventDay, EventPlan, PlanEvent, TimeSlot, VendorAssignment
+from ..schemas.plan_state import (
+    EventDay,
+    EventPlan,
+    PlanEvent,
+    SavedQuote,
+    TimeSlot,
+    VendorAssignment,
+)
 from ..services.custom_event_mapper import suggest_catalog_event
 from ..services.event_catalog import load_event_catalog
 
@@ -54,6 +62,25 @@ class VendorAssignmentRequest(BaseModel):
 
     plan: EventPlan
     assignment: VendorAssignment
+
+
+class QuoteMutationRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    plan: EventPlan
+    operation: Literal["save", "select", "remove", "contingency"]
+    quote: SavedQuote | None = None
+    quote_id: str | None = None
+    contingency_percent: float | None = Field(default=None, ge=0, le=100, allow_inf_nan=False)
+
+
+@router.post("/quotes/edit")
+async def edit_saved_quote(req: QuoteMutationRequest) -> dict[str, object]:
+    try:
+        updated, diff = await run_in_threadpool(mutate_quote, req.plan, load_event_catalog(), date.today(),
+            req.operation, req.quote, req.quote_id, req.contingency_percent)
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+    return {"updated_plan": updated, "diff": diff}
 
 
 class ScenarioFixtureRequest(BaseModel):

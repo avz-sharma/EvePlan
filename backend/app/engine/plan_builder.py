@@ -16,12 +16,13 @@ from ..schemas.plan_state import (
     EventDay,
     EventPlan,
     PlanEvent,
+    SavedQuote,
     TaskNode,
     VendorAssignment,
 )
 from .dependency_scheduler import compute_cpm_schedule
 from .plan_diff import changed_budget_categories, event_guest_counts, vendor_capacity_violations
-from .planning_heuristics import CONTINGENCY_RATE, GUEST_SURGE_SCENARIO_SHARE
+from .planning_heuristics import GUEST_SURGE_SCENARIO_SHARE
 
 VENDOR_CATEGORY_LABELS = {
     "venue": "Venue",
@@ -184,6 +185,7 @@ def _build_tasks(plan: EventPlan, catalog: Mapping[str, Any], index: Mapping[str
 
 
 def _build_budgets(plan: EventPlan, catalog: Mapping[str, Any], index: Mapping[str, dict[str, Any]]) -> list[BudgetBucket]:
+    plan = plan.model_copy(update={"vendor_assignments": effective_assignments(plan)})
     guest_counts: dict[str, int] = defaultdict(int)
     categories: set[str] = set()
     for day in plan.days:
@@ -232,7 +234,7 @@ def _build_budgets(plan: EventPlan, catalog: Mapping[str, Any], index: Mapping[s
             assumptions = ["No user-entered quote; amount is not estimated."]
         if category == "caterer" and plan.per_plate_max_inr <= 0 and not quotes.get(category):
             assumptions = ["No per-plate budget or quote entered; amount is not estimated."]
-        contingency = round(maximum * CONTINGENCY_RATE, 2)
+        contingency = round(maximum * plan.contingency_percent / 100, 2)
         category_cap = category_caps[category] if category in categories_with_caps else None
         result.append(BudgetBucket(
             category=label,
@@ -287,13 +289,14 @@ def build_event_plan(
         "days": days,
         "total_budget_cap_inr": plan.budget_range_max_inr or plan.total_budget_cap_inr,
     })
+    validate_quotes(resolved)
     index = _index_catalog(catalog)
     prior_status = {task.id: task.status for task in plan.tasks}
     resolved.profile_hints = _build_hints(resolved, catalog, index)
     tasks = _build_tasks(resolved, catalog, index)
     assigned_categories = {
         (assignment.event_id, VENDOR_CATEGORY_LABELS[assignment.category.value])
-        for assignment in resolved.vendor_assignments
+        for assignment in effective_assignments(resolved)
     }
     resolved.tasks = [
         task.model_copy(update={
@@ -426,6 +429,7 @@ def edit_event_plan(
     remaining_event_ids = {event.id for day in days for event in day.events}
     candidate = plan.model_copy(update={
         "days": days,
+        "saved_quotes": [quote for quote in plan.saved_quotes if quote.event_id in remaining_event_ids],
         "vendor_assignments": [assignment for assignment in plan.vendor_assignments if assignment.event_id in remaining_event_ids],
     })
     rebuilt = build_event_plan(candidate, catalog, today)
@@ -465,7 +469,7 @@ def assign_vendor(
         item for item in plan.vendor_assignments
         if not (item.event_id == assignment.event_id and item.category == assignment.category)
     ] + [assignment]
-    updated = build_event_plan(plan.model_copy(update={"vendor_assignments": assignments}), catalog, today)
+    updated = build_event_plan(plan.model_copy(update={"vendor_assignments": assignments, "saved_quotes": [q.model_copy(update={"selected": False}) if q.event_id == assignment.event_id and q.category == assignment.category else q for q in plan.saved_quotes]}), catalog, today)
     task_category = VENDOR_CATEGORY_LABELS[assignment.category.value]
     updated.tasks = [
         task.model_copy(update={"status": "IN_PROGRESS"})
@@ -553,3 +557,75 @@ def build_quick_scenario_fixtures(
             "is_saved_fixture": True,
         })
     return fixtures
+
+
+def validate_quotes(plan: EventPlan) -> None:
+    events = {event.id for day in plan.days for event in day.events}
+    ids: set[str] = set()
+    groups: set[tuple[str, str]] = set()
+    for quote in plan.saved_quotes:
+        if quote.event_id not in events or quote.id in ids:
+            raise ValueError("Quotation references an unknown event or duplicate quotation ID")
+        ids.add(quote.id)
+        if quote.selected:
+            group = (quote.event_id, quote.category.value)
+            if quote.finalized_inr is None or group in groups:
+                raise ValueError("Select one quotation per event/category with a finalized amount")
+            groups.add(group)
+
+
+def effective_assignments(plan: EventPlan) -> list[VendorAssignment]:
+    selected = [q for q in plan.saved_quotes if q.selected]
+    groups = {(q.event_id, q.category) for q in selected}
+    return [a for a in plan.vendor_assignments if (a.event_id, a.category) not in groups] + [
+        VendorAssignment(event_id=q.event_id, category=q.category, place_id=f"quote:{q.id}",
+                         notes=q.vendor_name, quoted_total_inr=q.finalized_inr,
+                         category_budget_cap_inr=q.budget_cap_inr) for q in selected
+    ]
+
+
+def mutate_quote(plan: EventPlan, catalog: Mapping[str, Any], today: date,
+                 operation: str, quote: SavedQuote | None = None, quote_id: str | None = None,
+                 contingency_percent: float | None = None) -> tuple[EventPlan, CascadeDiff]:
+    quotes = list(plan.saved_quotes)
+    target = next((q for q in quotes if q.id == quote_id), None)
+    assignments = list(plan.vendor_assignments)
+    if operation == "save":
+        if quote is None:
+            raise ValueError("Quotation is required")
+        previous = next((q for q in quotes if q.id == quote.id), None)
+        if previous and (previous.event_id, previous.category) != (quote.event_id, quote.category):
+            raise ValueError("Quotation event/category cannot change; remove it and add a new quotation")
+        target = quote
+        quotes = [q for q in quotes if q.id != quote.id] + [quote]
+    elif operation in {"select", "remove"}:
+        if target is None:
+            raise ValueError("Quotation was not found")
+        if operation == "remove":
+            quotes = [q for q in quotes if q.id != quote_id]
+        else:
+            target = target.model_copy(update={"selected": True})
+    elif operation != "contingency":
+        raise ValueError("Unknown quotation operation")
+    if target and target.selected and operation != "remove":
+        quotes = [q.model_copy(update={"selected": q.id == target.id})
+                  if (q.event_id, q.category) == (target.event_id, target.category) else q for q in quotes]
+        assignments = [a for a in assignments if (a.event_id, a.category) != (target.event_id, target.category)]
+    candidate = plan.model_copy(update={"saved_quotes": quotes, "vendor_assignments": assignments,
+        "contingency_percent": plan.contingency_percent if contingency_percent is None else contingency_percent})
+    old_groups = {(a.event_id, VENDOR_CATEGORY_LABELS[a.category.value]) for a in effective_assignments(plan)}
+    new_groups = {(a.event_id, VENDOR_CATEGORY_LABELS[a.category.value]) for a in effective_assignments(candidate)}
+    removed_groups = old_groups - new_groups
+    candidate = candidate.model_copy(update={"tasks": [
+        t.model_copy(update={"status": "PENDING"})
+        if (t.event_id, t.budget_category) in removed_groups and t.status == "IN_PROGRESS" else t
+        for t in candidate.tasks
+    ]})
+    updated = build_event_plan(candidate, catalog, today)
+    changed = changed_budget_categories(plan.budget_buckets, updated.budget_buckets)
+    roots = {t.id for t in updated.tasks if target and t.event_id == target.event_id
+             and t.budget_category == VENDOR_CATEGORY_LABELS[target.category.value]}
+    hops = _dependent_hops(updated.tasks, roots)
+    return updated, CascadeDiff(mutated_attribute="quotation", affected_task_ids=sorted(hops),
+        affected_budget_categories=sorted(changed), node_hops=hops, violations=vendor_capacity_violations(updated),
+        summary="Saved quotations, selected vendor costs and contingency recalculated.")

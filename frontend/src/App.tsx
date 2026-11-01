@@ -26,7 +26,7 @@ const panels = {
 const ActivePanel = React.memo(({ tab }: { tab: TabId }) => React.createElement(panels[tab]));
 
 const selectedTab = (): TabId => {
-  const id = window.location.hash.replace(/^#\/?/, "") as TabId;
+  const id = window.location.hash.replace(/^#\/?/, "").split("?")[0] as TabId;
   return tabs.some((tab) => tab.id === id) ? id : "overview";
 };
 
