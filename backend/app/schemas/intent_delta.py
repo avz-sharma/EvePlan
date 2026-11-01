@@ -9,6 +9,7 @@ class PlanDelta(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     guest_count_delta: int = Field(default=0, description="Change in total guest headcount")
+    guest_count_override: int | None = Field(default=None, ge=1, le=100_000, description="Exact total guest count for the plan and all events; takes precedence over guest_count_delta")
     sub_event_filter: list[SubEventType] | None = Field(default=None, max_length=4, description="Subset of active sub-events")
     budget_cap_inr_delta: float = Field(default=0.0, description="Shift in overall budget limit in INR")
     per_plate_delta_inr: float = Field(default=0.0, description="Shift in catering per-plate rate in INR")

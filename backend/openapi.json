@@ -1623,6 +1623,20 @@
             "description": "Change in total guest headcount",
             "default": 0
           },
+          "guest_count_override": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100000.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guest Count Override",
+            "description": "Exact total guest count for the plan and all events; takes precedence over guest_count_delta"
+          },
           "sub_event_filter": {
             "anyOf": [
               {

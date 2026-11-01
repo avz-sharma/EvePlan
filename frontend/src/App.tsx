@@ -74,7 +74,7 @@ export const App: React.FC = () => {
       onDelta: ({ delta, degraded_mode }) => { planActions.patch({ lastDelta: delta }); setIsDegraded(degraded_mode); setStatusMessage(degraded_mode ? "An offline fallback was used to interpret this change." : ""); },
       onEngineDiff: ({ updated_plan, diff, tradeoff_options }) => { updatePlanWithHistory(updated_plan, { lastDiff: diff, tradeoffOptions: tradeoff_options }); },
       onRationale: ({ rationale }) => { setStreamedRationale(rationale); setIsLoading(false); },
-      onError: () => { setNaturalLanguageInput(prompt); setIsLoading(false); setIsDegraded(true); setStatusMessage("We could not apply that change."); },
+      onError: (error) => { setNaturalLanguageInput(prompt); setIsLoading(false); setIsDegraded(true); setStatusMessage(error.message || "We could not apply that change."); },
       onComplete: () => setIsLoading(false),
     }, beginRequest());
   };

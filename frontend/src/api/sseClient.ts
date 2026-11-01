@@ -45,8 +45,9 @@ export async function streamReplan(
     });
 
     if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`SSE stream failed (HTTP ${response.status}): ${errText}`);
+      const errorBody = await response.json().catch(() => null);
+      const detail = typeof errorBody?.detail === "string" ? errorBody.detail : "";
+      throw new Error(detail || `We could not apply that change (HTTP ${response.status}). Please retry.`);
     }
 
     if (!response.body) {
@@ -83,17 +84,21 @@ export async function streamReplan(
 
         if (!dataStr) continue;
 
+        let parsed;
         try {
-          const parsed = JSON.parse(dataStr);
-          if (eventType === "delta" && handlers.onDelta) {
-            handlers.onDelta(parsed);
-          } else if (eventType === "engine_diff" && handlers.onEngineDiff) {
-            handlers.onEngineDiff(parsed);
-          } else if (eventType === "rationale" && handlers.onRationale) {
-            handlers.onRationale(parsed);
-          }
-        } catch (parseErr) {
-          console.warn("Failed to parse SSE event data:", dataStr, parseErr);
+          parsed = JSON.parse(dataStr);
+        } catch {
+          throw new Error("The change response could not be read. Please retry.");
+        }
+        if (eventType === "error") {
+          throw new Error(typeof parsed.message === "string" ? parsed.message : "We could not apply that change.");
+        }
+        if (eventType === "delta" && handlers.onDelta) {
+          handlers.onDelta(parsed);
+        } else if (eventType === "engine_diff" && handlers.onEngineDiff) {
+          handlers.onEngineDiff(parsed);
+        } else if (eventType === "rationale" && handlers.onRationale) {
+          handlers.onRationale(parsed);
         }
       }
     }

@@ -6,6 +6,7 @@ You MUST NOT perform any arithmetic, compute totals, or estimate costs. The engi
 ## Output Schema (respond with JSON only, no markdown):
 {
   "guest_count_delta": int (default 0),
+  "guest_count_override": int | null (exact total for the plan and all events),
   "sub_event_filter": list[str] | null (e.g. ["HALDI", "SANGEET"]),
   "budget_cap_inr_delta": float (default 0.0),
   "per_plate_delta_inr": float (default 0.0),
@@ -19,6 +20,8 @@ You MUST NOT perform any arithmetic, compute totals, or estimate costs. The engi
 ## Rules:
 1. Extract ONLY what the user explicitly states. Do not invent or assume values.
 2. If the user says "40 extra guests" set guest_count_delta to 40.
+   If they say "only 50 guests", "50 guests", or "reduce guests to 50", set guest_count_override to 50 and guest_count_delta to 0. Do not calculate a difference from the current count.
+   If they say "remove 20 guests" or "20 fewer guests", set guest_count_delta to -20.
 3. If the user mentions rain, storm, or moving outdoors indoors, set indoor_relocation to true.
 4. If the user mentions per-plate or per-head rate increases, set per_plate_delta_inr.
 5. If the user mentions moving the date earlier by N weeks, set days_until_event_delta to -N*7.

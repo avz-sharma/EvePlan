@@ -32,3 +32,23 @@ it("cancels a replaced stream without reporting a user-facing failure", async ()
   expect(onError).not.toHaveBeenCalled();
   expect(onComplete).not.toHaveBeenCalled();
 });
+
+it("reports server validation errors without completing or updating the plan", async () => {
+  vi.stubGlobal("fetch", vi.fn(async () => new Response(
+    'event: error\ndata: {"message":"Special-diet counts cannot exceed the total guest count"}\n\n',
+  )));
+  const onError = vi.fn();
+  const onComplete = vi.fn();
+  const onEngineDiff = vi.fn();
+  await streamReplan(plan, "only 50 guests", { onError, onComplete, onEngineDiff });
+  expect(onError).toHaveBeenCalledWith(new Error("Special-diet counts cannot exceed the total guest count"));
+  expect(onComplete).not.toHaveBeenCalled();
+  expect(onEngineDiff).not.toHaveBeenCalled();
+});
+
+it("uses readable HTTP error details", async () => {
+  vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ detail: "Invalid guest count" }), { status: 422 })));
+  const onError = vi.fn();
+  await streamReplan(plan, "only 0 guests", { onError });
+  expect(onError).toHaveBeenCalledWith(new Error("Invalid guest count"));
+});

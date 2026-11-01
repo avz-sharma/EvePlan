@@ -817,6 +817,11 @@ export interface components {
              */
             guest_count_delta: number;
             /**
+             * Guest Count Override
+             * @description Exact total guest count for the plan and all events; takes precedence over guest_count_delta
+             */
+            guest_count_override?: number | null;
+            /**
              * Sub Event Filter
              * @description Subset of active sub-events
              */

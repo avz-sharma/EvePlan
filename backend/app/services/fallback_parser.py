@@ -23,6 +23,22 @@ _GUEST_PATTERNS: list[re.Pattern[str]] = [
     ),
 ]
 
+_GUEST_REDUCTION_PATTERN = re.compile(
+    r"(?:-|remove|reduce\s+by|subtract)\s*(\d+)\s*(?:guests?|people|attendees?)|"
+    r"(\d+)\s+(?:fewer|less)\s+(?:guests?|people|attendees?)",
+    re.IGNORECASE,
+)
+_GUEST_TOTAL_PATTERN = re.compile(
+    r"(?:only|inly|exactly|just|total(?:\s+of)?|set(?:\s+it)?\s+to)\s+(\d+)\s*(?:guests?|people|attendees?)|"
+    r"(?:guests?|headcount|guest\s+count)\s*(?:should\s+be|to|is|=|:)\s*(\d+)|"
+    r"(?:reduce|change|set|limit|update)\s+(?:(?:the|total|number\s+of)\s+)*(?:guests?|headcount|guest\s+count)\s+to\s+(\d+)",
+    re.IGNORECASE,
+)
+_BARE_GUEST_TOTAL_PATTERN = re.compile(
+    r"\s*(\d+)\s+guests?(?:\s+(?:only|total))?(?:\s+(?:to|for|at|in)\s+(?:all\s+|the\s+)?events?)?[.!]?\s*",
+    re.IGNORECASE,
+)
+
 _DATE_EARLIER_PATTERN = re.compile(
     r"(\d+)\s*(?:weeks?|wks?)\s*(?:earlier|sooner|before|forward)",
     re.IGNORECASE,
@@ -97,6 +113,7 @@ def parse_user_intent(user_text: str) -> tuple[PlanDelta, bool]:
         tuple[PlanDelta, bool]: (delta, was_any_field_extracted)
     """
     guest_delta = 0
+    guest_total: int | None = None
     days_delta = 0
     plate_delta = 0.0
     indoor = False
@@ -119,6 +136,18 @@ def parse_user_intent(user_text: str) -> tuple[PlanDelta, bool]:
                     break
             if guest_delta > 0:
                 break
+
+    reduction = _GUEST_REDUCTION_PATTERN.search(user_text)
+    if reduction:
+        guest_delta = -int(next(group for group in reduction.groups() if group))
+        extracted = True
+    if not guest_delta:
+        total = _GUEST_TOTAL_PATTERN.search(user_text) or _BARE_GUEST_TOTAL_PATTERN.fullmatch(user_text)
+        if total:
+            guest_total = int(next(group for group in total.groups() if group))
+            if not 1 <= guest_total <= 100_000:
+                raise ValueError("Guest count must be between 1 and 100,000.")
+            extracted = True
 
     # --- Date shifts (weeks) ---
     m = _DATE_EARLIER_PATTERN.search(user_text)
@@ -175,6 +204,7 @@ def parse_user_intent(user_text: str) -> tuple[PlanDelta, bool]:
 
     delta = PlanDelta(
         guest_count_delta=guest_delta,
+        guest_count_override=guest_total,
         days_until_event_delta=days_delta,
         per_plate_delta_inr=plate_delta,
         indoor_relocation=indoor,

@@ -25,9 +25,9 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
     mutated_attr = "general"
 
     # 1. Apply Headcount Mutations
-    if delta.guest_count_delta != 0:
+    if delta.guest_count_delta != 0 or delta.guest_count_override is not None:
         mutated_attr = "guest_count"
-        updated_plan.guest_count = max(1, updated_plan.guest_count + delta.guest_count_delta)
+        updated_plan.guest_count = delta.guest_count_override if delta.guest_count_override is not None else max(1, updated_plan.guest_count + delta.guest_count_delta)
         root_task_id = "task_catering_headcount"
         affected_tasks.add(root_task_id)
         affected_categories.add("Catering")
@@ -96,8 +96,8 @@ def apply_delta(plan: EventPlan, delta: PlanDelta) -> tuple[EventPlan, CascadeDi
             updated_plan.budget_buckets[i] = bucket.model_copy(
                 update={"allocated_min_inr": new_min, "allocated_max_inr": new_max}
             )
-        elif "Logistics" in bucket.category and delta.guest_count_delta != 0:
-            scale_ratio = updated_plan.guest_count / (updated_plan.guest_count - delta.guest_count_delta)
+        elif "Logistics" in bucket.category and updated_plan.guest_count != plan.guest_count:
+            scale_ratio = updated_plan.guest_count / plan.guest_count
             new_min = round(bucket.allocated_min_inr * scale_ratio, 2)
             new_max = round(bucket.allocated_max_inr * scale_ratio, 2)
             updated_plan.budget_buckets[i] = bucket.model_copy(
@@ -190,13 +190,13 @@ def apply_event_plan_delta(
     # cloning those derived objects here dominated the measured cascade profile.
     candidate = plan.model_copy(update={"notes": list(plan.notes)})
 
-    if delta.guest_count_delta:
+    if delta.guest_count_delta or delta.guest_count_override is not None:
         mutated = "guest_count"
-        candidate.guest_count = max(1, old_guest_total + delta.guest_count_delta)
+        candidate.guest_count = delta.guest_count_override if delta.guest_count_override is not None else max(1, old_guest_total + delta.guest_count_delta)
         for day in days:
             day.events = [
                 event.model_copy(update={"guest_count": candidate.guest_count})
-                if event.guest_count is None or event.guest_count == old_guest_total
+                if delta.guest_count_override is not None or event.guest_count is None or event.guest_count == old_guest_total
                 else event
                 for event in day.events
             ]

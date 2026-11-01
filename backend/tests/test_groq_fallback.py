@@ -9,6 +9,8 @@ Covers:
 
 from unittest.mock import patch
 
+import pytest
+
 from app.services.fallback_parser import parse_user_intent
 from app.services.groq_extractor import IntentExtractionUnavailable, is_groq_available
 from app.services.quota_guard import QuotaState
@@ -38,6 +40,27 @@ class TestFallbackParser:
         delta, extracted = parse_user_intent("+40 guests")
         assert extracted is True
         assert delta.guest_count_delta == 40
+
+    @pytest.mark.parametrize("text", [
+        "only 50 guests to the events", "inly 50 guests to the events", "50 guests",
+        "Set guest count to 50", "reduce guests to 50", "guests should be 50",
+    ])
+    def test_exact_guest_count(self, text: str) -> None:
+        delta, extracted = parse_user_intent(text)
+        assert extracted
+        assert delta.guest_count_override == 50
+        assert delta.guest_count_delta == 0
+
+    @pytest.mark.parametrize("text", ["remove 20 guests", "20 fewer guests", "-20 guests"])
+    def test_guest_reduction(self, text: str) -> None:
+        delta, extracted = parse_user_intent(text)
+        assert extracted
+        assert delta.guest_count_delta == -20
+        assert delta.guest_count_override is None
+
+    def test_exact_count_has_schema_limits(self) -> None:
+        with pytest.raises(ValueError):
+            parse_user_intent("only 0 guests")
 
     def test_rain_indoor_relocation(self) -> None:
         text = "Venue garden lost due to rain forecast — move Haldi indoors"

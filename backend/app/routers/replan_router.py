@@ -113,6 +113,22 @@ def _run_deterministic_replan(
     return updated_plan, diff, tradeoff_options
 
 
+def _extract_replan_delta(plan_json: str, prompt: str) -> tuple[PlanDelta, str, bool]:
+    """Validate provider output or interpret the request without a provider."""
+    if is_groq_available():
+        try:
+            data, cached = extract_intent_delta(plan_json, prompt)
+            delta = PlanDelta(**data)
+            if delta != PlanDelta():
+                return delta, "cache" if cached else "groq", False
+        except IntentExtractionUnavailable:
+            pass
+    delta, extracted = parse_user_intent(prompt)
+    if not extracted or delta == PlanDelta():
+        raise ValueError('Could not understand the change. Try "only 50 guests" or "add 20 guests".')
+    return delta, "fallback", True
+
+
 # ---------------------------------------------------------------------------
 # POST /api/plan/replan — synchronous deterministic endpoint
 # ---------------------------------------------------------------------------
@@ -152,35 +168,18 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
 
     async def event_generator() -> AsyncIterator[str]:
         plan_json = req.plan.model_dump_json()
-        degraded = False
 
         # ── Stage 1: Extract PlanDelta ────────────────────────────────
-        groq_available = is_groq_available()
-        delta_dict: dict = {}  # type: ignore[type-arg]
-        is_cached = False
-
-        if groq_available:
-            try:
-                delta_dict, is_cached = await run_in_threadpool(extract_intent_delta, plan_json, req.user_prompt)
-            except IntentExtractionUnavailable:
-                fallback_delta, _ = parse_user_intent(req.user_prompt)
-                delta_dict = fallback_delta.model_dump()
-                groq_available = False
-                degraded = True
-        else:
-            # Fallback to deterministic regex parser
-            fallback_delta, did_extract = parse_user_intent(req.user_prompt)
-            delta_dict = fallback_delta.model_dump()
-            degraded = not did_extract  # only mark degraded if nothing extracted
-            if not did_extract:
-                degraded = True
-
-        delta = PlanDelta(**delta_dict)
+        try:
+            delta, source, degraded = await run_in_threadpool(_extract_replan_delta, plan_json, req.user_prompt)
+        except ValueError as error:
+            yield f"event: error\ndata: {json.dumps({'message': str(error)})}\n\n"
+            return
 
         delta_payload = json.dumps(
             {
                 "delta": delta.model_dump(),
-                "source": "cache" if is_cached else ("groq" if groq_available else "fallback"),
+                "source": source,
                 "degraded_mode": degraded,
                 "remaining_quota": quota_guard.remaining_daily(),
             }
@@ -188,7 +187,11 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
         yield f"event: delta\ndata: {delta_payload}\n\n"
 
         # ── Stage 2: Deterministic Engine Diff (immediate, <10ms) ─────
-        updated_plan, diff, tradeoff_options = await run_in_threadpool(_run_deterministic_replan, req.plan, delta)
+        try:
+            updated_plan, diff, tradeoff_options = await run_in_threadpool(_run_deterministic_replan, req.plan, delta)
+        except ValueError as error:
+            yield f"event: error\ndata: {json.dumps({'message': str(error)})}\n\n"
+            return
 
         engine_payload = json.dumps(
             {
