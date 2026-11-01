@@ -202,6 +202,11 @@ test("budget recovery cards pass axe and apply from the keyboard", async ({ page
   await page.getByRole("button", { name: "Describe a change", exact: true }).press("Enter");
   const apply = page.getByRole("button", { name: "Apply Trade-Off", exact: true }).first();
   await expect(apply).toBeVisible();
+  await expect.poll(() => apply.evaluate(element => {
+    const panel = element.closest('[role="tabpanel"]');
+    const transition = panel?.firstElementChild;
+    return transition ? Number(getComputedStyle(transition).opacity) : null;
+  })).toBe(1);
   await page.evaluate(axeSource);
   const violations = await page.evaluate(async () => {
     const audit = window as typeof window & { axe: { run: (root: Document) => Promise<{ violations: { id: string; nodes: { target: string[]; failureSummary?: string }[] }[] }> } };
