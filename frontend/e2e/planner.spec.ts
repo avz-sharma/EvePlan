@@ -204,10 +204,13 @@ test("budget recovery cards pass axe and apply from the keyboard", async ({ page
   await expect(apply).toBeVisible();
   await page.evaluate(axeSource);
   const violations = await page.evaluate(async () => {
-    const audit = window as typeof window & { axe: { run: (root: Document) => Promise<{ violations: { id: string }[] }> } };
-    return (await audit.axe.run(document)).violations.map(item => item.id);
+    const audit = window as typeof window & { axe: { run: (root: Document) => Promise<{ violations: { id: string; nodes: { target: string[]; failureSummary?: string }[] }[] }> } };
+    return (await audit.axe.run(document)).violations.map(item => ({
+      id: item.id,
+      nodes: item.nodes.map(node => ({ target: node.target, summary: node.failureSummary })),
+    }));
   });
-  expect(violations).toEqual([]);
+  expect(violations, JSON.stringify(violations, null, 2)).toEqual([]);
   await apply.focus();
   await page.keyboard.press("Enter");
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("eveplan_active_plan")!).notes.some((note: string) => note.startsWith("Applied trade-off:")))).toBe(true);
