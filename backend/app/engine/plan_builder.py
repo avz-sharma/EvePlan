@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
-from typing import Any, Mapping
 
+from ..schemas.catalog import EventCatalog
 from ..schemas.plan_state import (
     EventPlan,
     PlanEvent,
@@ -21,7 +21,7 @@ from .task_builder import build_tasks
 
 def build_event_plan(
     plan: EventPlan,
-    catalog: Mapping[str, Any],
+    catalog: EventCatalog,
     today: date,
     *,
     allow_incomplete: bool = False,

@@ -1,15 +1,16 @@
 from datetime import date, timedelta
-from typing import Any, Literal
+from typing import Literal
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel, ConfigDict, Field
-from starlette.concurrency import run_in_threadpool
 
 from ..engine.event_operations import edit_event_plan
 from ..engine.plan_builder import build_event_plan
 from ..engine.quote_operations import mutate_quote
 from ..engine.scenarios import build_quick_scenario_fixtures
 from ..engine.vendor_operations import assign_vendor
+from ..operation_errors import run_plan_operation
+from ..schemas.catalog import EventCatalog
 from ..schemas.plan_state import (
     EventDay,
     EventPlan,
@@ -73,11 +74,8 @@ class QuoteMutationRequest(BaseModel):
 
 @router.post("/quotes/edit")
 async def edit_saved_quote(req: QuoteMutationRequest) -> dict[str, object]:
-    try:
-        updated, diff = await run_in_threadpool(mutate_quote, req.plan, load_event_catalog(), date.today(),
-            req.operation, req.quote, req.quote_id, req.contingency_percent)
-    except ValueError as error:
-        raise HTTPException(status_code=422, detail=str(error)) from error
+    updated, diff = await run_plan_operation(mutate_quote, req.plan, load_event_catalog(), date.today(),
+        req.operation, req.quote, req.quote_id, req.contingency_percent)
     return {"updated_plan": updated, "diff": diff}
 
 
@@ -97,7 +95,7 @@ def _today() -> date:
     return date.today()
 
 
-def _example_days(preset_id: str, catalog: dict[str, Any]) -> list[EventDay]:
+def _example_days(preset_id: str, catalog: EventCatalog) -> list[EventDay]:
     _, selection = EXAMPLE_SELECTIONS[preset_id]
     by_id = {item["id"]: item for item in catalog["events"]}
     return [
@@ -165,43 +163,31 @@ async def map_custom_event(req: CustomEventMapRequest) -> dict[str, object]:
 
 @router.post("/build", response_model=EventPlan)
 async def build_plan(req: EventPlan) -> EventPlan:
-    try:
-        return await run_in_threadpool(build_event_plan, req, load_event_catalog(), _today())
-    except ValueError as error:
-        raise HTTPException(status_code=422, detail=str(error)) from error
+    return await run_plan_operation(build_event_plan, req, load_event_catalog(), _today())
 
 
 @router.post("/scenarios")
 async def get_plan_scenario_fixtures(req: ScenarioFixtureRequest) -> list[dict[str, object]]:
-    try:
-        return await run_in_threadpool(build_quick_scenario_fixtures, req.plan, load_event_catalog(), _today())
-    except ValueError as error:
-        raise HTTPException(status_code=422, detail=str(error)) from error
+    return await run_plan_operation(build_quick_scenario_fixtures, req.plan, load_event_catalog(), _today())
 
 
 @router.post("/events/edit")
 async def edit_plan_events(req: EventEditRequest) -> dict[str, object]:
-    try:
-        updated_plan, diff = await run_in_threadpool(edit_event_plan,
-            req.plan,
-            load_event_catalog(),
-            _today(),
-            req.operation,
-            event_id=req.event_id,
-            day_number=req.day_number,
-            target_day_number=req.target_day_number,
-            event=req.event,
-            guest_count=req.guest_count,
-        )
-    except ValueError as error:
-        raise HTTPException(status_code=422, detail=str(error)) from error
+    updated_plan, diff = await run_plan_operation(edit_event_plan,
+        req.plan,
+        load_event_catalog(),
+        _today(),
+        req.operation,
+        event_id=req.event_id,
+        day_number=req.day_number,
+        target_day_number=req.target_day_number,
+        event=req.event,
+        guest_count=req.guest_count,
+    )
     return {"updated_plan": updated_plan, "diff": diff}
 
 
 @router.post("/vendors/assign")
 async def assign_plan_vendor(req: VendorAssignmentRequest) -> dict[str, object]:
-    try:
-        updated_plan, diff = await run_in_threadpool(assign_vendor, req.plan, load_event_catalog(), _today(), req.assignment)
-    except ValueError as error:
-        raise HTTPException(status_code=422, detail=str(error)) from error
+    updated_plan, diff = await run_plan_operation(assign_vendor, req.plan, load_event_catalog(), _today(), req.assignment)
     return {"updated_plan": updated_plan, "diff": diff}

@@ -1,8 +1,10 @@
+import type { CatalogResponse } from "../api/types";
+import type { PlanMutationResponse } from "../api/types";
 import { useRequestController } from "../lib/useRequestController";
 import React, { useEffect, useMemo, useState } from "react";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import type { CatalogEvent, CascadeDiff, EventPlan, PlanEvent, TimeSlot, VendorCategory } from "../api/types";
-import { apiUrl } from "../api/client";
+import { apiUrl, readResponse } from "../api/client";
 import { Button, GlassPanel } from "../components/ui";
 import { useCurrentPlan, planActions } from "../state/planStore";
 
@@ -34,7 +36,7 @@ export const EventsTab: React.FC = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-    void fetch(apiUrl("/api/plan/catalog"), { signal: controller.signal }).then((response) => response.json()).then((payload) => setCatalog(payload.events ?? [])).catch(() => !controller.signal.aborted && setError("Event catalog could not be loaded."));
+    void fetch(apiUrl("/api/plan/catalog"), { signal: controller.signal }).then((response) => readResponse<CatalogResponse>(response, "Event catalog could not be loaded.")).then((payload) => setCatalog(payload.events ?? [])).catch(() => !controller.signal.aborted && setError("Event catalog could not be loaded."));
     return () => controller.abort();
   }, []);
 
@@ -44,8 +46,7 @@ export const EventsTab: React.FC = () => {
     setBusy(true); setError("");
     try {
       const response = await fetch(apiUrl("/api/plan/events/edit"), { method: "POST", signal: beginRequest(), headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, operation, ...payload }) });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.detail || "The event change could not be applied.");
+      const result = await readResponse<PlanMutationResponse>(response, "The event change could not be applied.");
       onPlanUpdated(result.updated_plan as EventPlan, result.diff as CascadeDiff);
       setCountDrafts({});
     } catch (reason) { if (reason instanceof DOMException && reason.name === "AbortError") return; setError(reason instanceof Error ? reason.message : "The event change could not be applied."); }

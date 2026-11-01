@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from datetime import date
-from typing import Any, Mapping
 
+from ..schemas.catalog import EventCatalog
 from ..schemas.intent_delta import CascadeDiff
 from ..schemas.plan_state import (
     EventPlan,
@@ -21,7 +21,7 @@ from .plan_diff import (
 
 def edit_event_plan(
     plan: EventPlan,
-    catalog: Mapping[str, Any],
+    catalog: EventCatalog,
     today: date,
     operation: str,
     *,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Sparkles, Zap } from "lucide-react";
 import type { CascadeDiff, EventPlan } from "../api/types";
-import { apiUrl } from "../api/client";
+import { apiUrl, readResponse } from "../api/client";
 
 interface ScenarioFixture {
   id: string;
@@ -29,8 +29,7 @@ export const QuickScenarioChips: React.FC<Props> = ({ plan, onApplyFixture, isLo
       method: "POST", signal: controller.signal,
       headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan }),
     }).then(async (response) => {
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.detail || "Saved examples are unavailable.");
+      const result = await readResponse<ScenarioFixture[]>(response, "Saved examples are unavailable.");
       if (!controller.signal.aborted) setFixtures(result as ScenarioFixture[]);
     }).catch((reason) => { if (!controller.signal.aborted) setError(reason instanceof Error ? reason.message : "Saved examples are unavailable."); })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });

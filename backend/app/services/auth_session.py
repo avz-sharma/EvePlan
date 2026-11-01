@@ -1,5 +1,5 @@
 """Signed, purpose-bound expiring cookies; Google access tokens are never persisted."""
-from typing import Any
+from typing import cast
 
 from itsdangerous import BadSignature, URLSafeTimedSerializer
 
@@ -24,11 +24,11 @@ def serializer(purpose: str) -> URLSafeTimedSerializer:
     return URLSafeTimedSerializer(settings.SESSION_SECRET.get_secret_value(), salt=f"eveplan-{purpose}-v1")
 
 
-def read_cookie(value: str | None, purpose: str, max_age: int) -> dict[str, Any] | None:
+def read_cookie(value: str | None, purpose: str, max_age: int) -> dict[str, object] | None:
     if not value:
         return None
     try:
         data = serializer(purpose).loads(value, max_age=max_age)
-        return data if isinstance(data, dict) else None
+        return cast(dict[str, object], data) if isinstance(data, dict) else None
     except (BadSignature, ValueError):
         return None

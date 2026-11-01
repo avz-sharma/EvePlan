@@ -1,6 +1,7 @@
+import type { PlanMutationResponse } from "../api/types";
 import { useSyncExternalStore } from "react";
 import type { CascadeDiff, EventPlan, PlanDelta, TradeOffOption, SavedQuote, VendorAssignment } from "../api/types";
-import { apiUrl } from "../api/client";
+import { apiUrl, readResponse } from "../api/client";
 
 interface PlanState {
   plan: EventPlan | null;
@@ -120,8 +121,7 @@ export const planActions = {
     if (!plan) throw new Error("Plan is unavailable.");
     const response = await fetch(apiUrl("/api/plan/quotes/edit"), { method: "POST",
       headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, operation, ...values }) });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(typeof payload.detail === "string" ? payload.detail : "Check the quotation values.");
+    const payload = await readResponse<PlanMutationResponse>(response, "Check the quotation values.");
     if ((branch === "B" ? state.forkedPlan : state.plan) !== plan) throw new Error("Plan changed while saving. Please retry.");
     if (branch === "A") planActions.updated(payload.updated_plan, payload.diff);
     else { const history = [...state.forkHistory.slice(0, state.forkHistoryIndex + 1), payload.updated_plan as EventPlan]; patch({ forkedPlan: payload.updated_plan, lastDiff: payload.diff, forkHistory: history, forkHistoryIndex: history.length - 1 }); }
@@ -131,8 +131,7 @@ export const planActions = {
     if (!plan) return;
     const response = await fetch(apiUrl("/api/plan/vendors/assign"), { method: "POST", signal,
       headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, assignment }) });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.detail || "Vendor could not be assigned.");
+    const payload = await readResponse<PlanMutationResponse>(response, "Vendor could not be assigned.");
     patch({ lastDiff: payload.diff as CascadeDiff });
     if (branch === "A") planActions.update(payload.updated_plan as EventPlan);
     else patch({ forkedPlan: payload.updated_plan as EventPlan });

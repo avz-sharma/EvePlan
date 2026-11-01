@@ -1,6 +1,7 @@
+import type { CatalogResponse } from "../api/types";
 import { useEffect, useMemo, useState } from "react";
 import type { CatalogEvent, EventPlan, PlanEvent, TimeSlot, VendorCategory, ExampleSelection, MappingSuggestion } from "../api/types";
-import { apiUrl } from "../api/client";
+import { apiUrl, readResponse } from "../api/client";
 import { useRequestController } from "./useRequestController";
 import { blankPlan, makeId } from "./onboarding";
 
@@ -25,8 +26,8 @@ export function useOnboardingWizard(isOpen: boolean, onClose: () => void, onPlan
     if (!isOpen) return;
     const controller = new AbortController();
     void Promise.all([
-      fetch(apiUrl("/api/plan/catalog"), { signal: controller.signal }).then((response) => response.json()),
-      fetch(apiUrl("/api/plan/examples"), { signal: controller.signal }).then((response) => response.json()),
+      fetch(apiUrl("/api/plan/catalog"), { signal: controller.signal }).then((response) => readResponse<CatalogResponse>(response, "Event catalog could not be loaded.")),
+      fetch(apiUrl("/api/plan/examples"), { signal: controller.signal }).then((response) => readResponse<ExampleSelection[]>(response, "Event examples could not be loaded.")),
     ]).then(([catalogPayload, examplePayload]) => {
       setCatalog(catalogPayload.events ?? []);
       setExamples(examplePayload ?? []);
@@ -71,9 +72,12 @@ export function useOnboardingWizard(isOpen: boolean, onClose: () => void, onPlan
     if (!customName.trim()) return;
     try {
       const response = await fetch(apiUrl("/api/plan/map-custom-event"), { method: "POST", signal: beginRequest(), headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: customName.trim() }) });
-      const payload = await response.json();
+      const payload = await readResponse<{ suggestion: MappingSuggestion | null }>(response, "Catalog matching is unavailable. You can still add your own event.");
       setMappingSuggestion(payload.suggestion ?? null); setUseMappingSuggestion(false);
-    } catch { setMappingSuggestion(null); }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      setMappingSuggestion(null); setError(error instanceof Error ? error.message : "Catalog matching is unavailable.");
+    }
   };
 
   const validateStep = (): string | null => {
@@ -113,8 +117,7 @@ export function useOnboardingWizard(isOpen: boolean, onClose: () => void, onPlan
     };
     try {
       const response = await fetch(apiUrl("/api/plan/build"), { method: "POST", signal: beginRequest(), headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-      const result = await response.json();
-      if (!response.ok) throw new Error(typeof result.detail === "string" ? result.detail : "We could not build your plan. Check the entered values.");
+      const result = await readResponse<EventPlan>(response, "We could not build your plan. Check the entered values.");
       onPlanCreated(result as EventPlan); onClose(); setStep(1);
     } catch (err) { if (err instanceof DOMException && err.name === "AbortError") return; setError(err instanceof Error ? err.message : "We could not build your plan. Please retry."); }
     finally { setIsLoading(false); }

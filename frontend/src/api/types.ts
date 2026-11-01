@@ -117,5 +117,38 @@ export type TradeOffOption = components["schemas"]["TradeOffOption"];
 export type NormalizedQuote = components["schemas"]["NormalizedQuote"];
 export type QuoteComparison = components["schemas"]["QuoteComparison"];
 
+/** Engine operation output shared by edits, vendor assignments and quote changes. */
+export interface PlanMutationResponse {
+  updated_plan: EventPlan;
+  diff: CascadeDiff;
+  tradeoff_options?: TradeOffOption[];
+}
+
+/** Public catalog data excludes internal tradition tags. */
+export interface CatalogResponse { events: CatalogEvent[]; notice?: string }
+
 export interface ExampleSelection { id: string; title: string; days: EventDay[]; requires_special_diets: boolean }
 export interface MappingSuggestion { catalog_id: string; display_name: string; source: string }
+
+/** Callbacks for the ordered replanning stream. */
+export interface SSEReplanHandlers {
+  onDelta?: (data: {
+    delta: PlanDelta;
+    source: string;
+    degraded_mode: boolean;
+    remaining_quota: number;
+  }) => void;
+  onEngineDiff?: (data: {
+    updated_plan: EventPlan;
+    diff: CascadeDiff;
+    tradeoff_options: TradeOffOption[];
+  }) => void;
+  onRationale?: (data: {
+    rationale: string;
+    source: string;
+    degraded_mode: boolean;
+  }) => void;
+  onError?: (error: Error) => void;
+  onComplete?: () => void;
+}
+

@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Any, Mapping
+from typing import Mapping
 
+from ..schemas.catalog import EventCatalog, EventCatalogEntry
 from ..schemas.plan_state import (
     EventPlan,
     PlanEvent,
@@ -20,13 +21,13 @@ VENDOR_CATEGORY_LABELS = {
 }
 
 
-def index_catalog(catalog: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
-    return {str(item["id"]): dict(item) for item in catalog.get("events", [])}
+def index_catalog(catalog: EventCatalog) -> dict[str, EventCatalogEntry]:
+    return {str(item["id"]): item.copy() for item in catalog.get("events", [])}
 
 
 def event_metadata(
-    event: PlanEvent, catalog: Mapping[str, Any], index: Mapping[str, dict[str, Any]]
-) -> dict[str, Any]:
+    event: PlanEvent, catalog: EventCatalog, index: Mapping[str, EventCatalogEntry]
+) -> EventCatalogEntry:
     if event.catalog_id:
         if event.catalog_id not in index:
             raise ValueError(f"Unknown catalog event: {event.catalog_id}")
@@ -45,7 +46,7 @@ def event_metadata(
 
 
 def build_hints(
-    plan: EventPlan, catalog: Mapping[str, Any], index: Mapping[str, dict[str, Any]]
+    plan: EventPlan, catalog: EventCatalog, index: Mapping[str, EventCatalogEntry]
 ) -> dict[str, list[str]]:
     tags = {
         tag

@@ -1,8 +1,8 @@
 """Event-aware replanning orchestration and legacy entry point."""
 
 from datetime import date
-from typing import Any, Mapping
 
+from ..schemas.catalog import EventCatalog
 from ..schemas.intent_delta import CascadeDiff, PlanDelta
 from ..schemas.plan_state import EventPlan
 from .event_delta import EventDelta
@@ -14,7 +14,7 @@ from .plan_diff import changed_budget_categories, dependent_hops, vendor_capacit
 def apply_event_plan_delta(
     plan: EventPlan,
     delta: PlanDelta,
-    catalog: Mapping[str, Any],
+    catalog: EventCatalog,
     today: date,
 ) -> tuple[EventPlan, CascadeDiff]:
     """Apply legacy intent fields to selected events and rebuild their derived state."""

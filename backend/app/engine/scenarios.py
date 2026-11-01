@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
-from typing import Any, Mapping
 
+from ..schemas.catalog import EventCatalog
 from ..schemas.intent_delta import CascadeDiff
 from ..schemas.plan_state import (
     EventPlan,
@@ -20,11 +20,11 @@ from .planning_heuristics import GUEST_SURGE_SCENARIO_SHARE
 
 def build_quick_scenario_fixtures(
     plan: EventPlan,
-    catalog: Mapping[str, Any],
+    catalog: EventCatalog,
     today: date,
-) -> list[dict[str, Any]]:
+) -> list[dict[str, object]]:
     """Create validated example outcomes relative to the user's current plan."""
-    fixtures: list[dict[str, Any]] = []
+    fixtures: list[dict[str, object]] = []
     events = [(day.day_number, event) for day in plan.days for event in day.events]
     if events:
         _, target = max(events, key=lambda row: row[1].guest_count or plan.guest_count)

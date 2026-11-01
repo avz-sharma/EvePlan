@@ -65,7 +65,7 @@ def validate_quote_upload(content: bytes, filename: str = "quote") -> tuple[str,
         try:
             reader = pypdf.PdfReader(io.BytesIO(content))
             pages = len(reader.pages)
-        except Exception as e:
+        except (pypdf.errors.PdfReadError, OSError, ValueError) as e:
             raise FileValidationError(f"Corrupt or unreadable PDF: {e}") from e
 
         if pages > MAX_PDF_PAGES:

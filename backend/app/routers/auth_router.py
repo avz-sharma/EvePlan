@@ -2,7 +2,6 @@ import hashlib
 import logging
 import secrets
 from base64 import urlsafe_b64encode
-from typing import Any
 from urllib.parse import urlencode
 
 import httpx
@@ -48,7 +47,7 @@ async def login() -> Response:
     return response
 
 
-async def google_identity(code: str, verifier: str) -> dict[str, Any]:
+async def google_identity(code: str, verifier: str) -> dict[str, str]:
     assert settings.GOOGLE_OAUTH_CLIENT_SECRET is not None
     async with httpx.AsyncClient(timeout=10, follow_redirects=False) as client:
         token = await client.post("https://oauth2.googleapis.com/token", data={
@@ -60,23 +59,25 @@ async def google_identity(code: str, verifier: str) -> dict[str, Any]:
         access = token.json()["access_token"]
         profile = await client.get("https://openidconnect.googleapis.com/v1/userinfo", headers={"Authorization": f"Bearer {access}"})
         profile.raise_for_status()
-        data: dict[str, Any] = profile.json()
-        if not isinstance(data.get("sub"), str) or not data["sub"] or data.get("email_verified") is not True:
+        data: dict[str, object] = profile.json()
+        subject = data.get("sub")
+        if not isinstance(subject, str) or not subject or data.get("email_verified") is not True:
             raise ValueError("Google identity is not verified")
-        return {"id": data["sub"], "name": str(data.get("name", "Guest"))[:120]}
+        return {"id": subject, "name": str(data.get("name", "Guest"))[:120]}
 
 
 @router.get("/callback")
 async def callback(request: Request, code: str = "", state: str = "", error: str = "") -> Response:
     flow = read_cookie(request.cookies.get(FLOW_COOKIE), "flow", 600)
+    verifier = flow.get("verifier") if flow else None
     reason = "cancelled" if error == "access_denied" else "session_expired" if not flow else "state_mismatch"
     response = RedirectResponse(settings.APP_ORIGIN + "/?auth_error=" + reason, status_code=303)
-    if configured() and not error and code and len(code) <= 4096 and flow and secrets.compare_digest(str(flow.get("state", "")), state) and state:
+    if configured() and not error and code and len(code) <= 4096 and flow and isinstance(verifier, str) and secrets.compare_digest(str(flow.get("state", "")), state) and state:
         try:
-            user = await google_identity(code, flow["verifier"])
+            user = await google_identity(code, verifier)
             response = RedirectResponse(settings.APP_ORIGIN + "/", status_code=303)
             cookie(response, SESSION_COOKIE, serializer("session").dumps(user), 28800)
-        except (httpx.HTTPError, ValueError, KeyError) as failure:
+        except (httpx.HTTPError, ValueError, KeyError, TypeError) as failure:
             reason = "provider_unavailable"
             if isinstance(failure, httpx.HTTPStatusError):
                 reason = "provider_rejected"
@@ -85,7 +86,7 @@ async def callback(request: Request, code: str = "", state: str = "", error: str
                     if provider_error in {"invalid_client", "invalid_grant", "unauthorized_client"}:
                         reason = provider_error
                 except (ValueError, AttributeError, TypeError):
-                    pass
+                    logging.getLogger(__name__).debug("OAuth provider returned an unreadable error body")
             logging.getLogger(__name__).warning("OAuth callback failed: %s", reason)
             response = RedirectResponse(settings.APP_ORIGIN + "/?auth_error=" + reason, status_code=303)
     if "auth_error=" in response.headers["location"]:

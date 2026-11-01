@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import Any, Mapping
+from typing import Mapping
 
+from ..schemas.catalog import EventCatalog, EventCatalogEntry
 from ..schemas.plan_state import (
     BudgetBucket,
     EventPlan,
@@ -17,7 +18,7 @@ from .quote_selection import effective_assignments
 
 
 def build_budgets(
-    plan: EventPlan, catalog: Mapping[str, Any], index: Mapping[str, dict[str, Any]]
+    plan: EventPlan, catalog: EventCatalog, index: Mapping[str, EventCatalogEntry]
 ) -> list[BudgetBucket]:
     plan = plan.model_copy(update={"vendor_assignments": effective_assignments(plan)})
     guest_counts: dict[str, int] = defaultdict(int)

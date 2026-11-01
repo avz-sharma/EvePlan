@@ -13,13 +13,14 @@ import logging
 from collections.abc import AsyncIterator
 from datetime import date
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConfigDict, Field
 from starlette.concurrency import run_in_threadpool
 
 from ..engine.budget_tradeoffs import evaluate_budget_tradeoffs
 from ..engine.cascade_replanner import apply_delta, apply_event_plan_delta
+from ..operation_errors import run_plan_operation
 from ..schemas.intent_delta import CascadeDiff, PlanDelta, TradeOffOption
 from ..schemas.plan_state import EventPlan
 from ..services.event_catalog import load_event_catalog
@@ -118,7 +119,7 @@ def _extract_replan_delta(plan_json: str, prompt: str) -> tuple[PlanDelta, str, 
     if is_groq_available():
         try:
             data, cached = extract_intent_delta(plan_json, prompt)
-            delta = PlanDelta(**data)
+            delta = PlanDelta.model_validate(data)
             if delta != PlanDelta():
                 return delta, "cache" if cached else "groq", False
         except IntentExtractionUnavailable:
@@ -137,10 +138,7 @@ def _extract_replan_delta(plan_json: str, prompt: str) -> tuple[PlanDelta, str, 
 @router.post("/replan", response_model=ReplanResponse)
 async def replan_event(req: ReplanRequest) -> ReplanResponse:
     """Pure deterministic replanning endpoint complying with LAW-01 & Free-Tier guidelines."""
-    try:
-        updated_plan, diff, tradeoff_options = await run_in_threadpool(_run_deterministic_replan, req.plan, req.delta)
-    except ValueError as error:
-        raise HTTPException(status_code=422, detail=str(error)) from error
+    updated_plan, diff, tradeoff_options = await run_plan_operation(_run_deterministic_replan, req.plan, req.delta)
 
     return ReplanResponse(
         updated_plan=updated_plan,

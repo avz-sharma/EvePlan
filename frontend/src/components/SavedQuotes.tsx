@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { EventPlan, SavedQuote, VendorCategory } from "../api/types";
 import { useCurrentPlan, usePlanStore, planActions } from "../state/planStore";
 import { Button, Dialog, GlassPanel } from "./ui";
-import { apiUrl } from "../api/client";
+import { apiUrl, readResponse } from "../api/client";
 import { formatMoney } from "../lib/format";
 
 const categories: Record<VendorCategory, string> = { venue: "Venue", caterer: "Catering", decorator: "Décor", photographer: "Photography", makeup: "Makeup", music: "Music", transport: "Transport" };
@@ -60,7 +60,7 @@ function QuoteWorkspace({ plan, branch, comparison }: { plan: EventPlan; branch:
     try {
       const res = await fetch(apiUrl("/api/vendor/analyze-saved"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, quote_ids: chosen.map(q => q.id) }) });
       if (!res.ok) throw new Error("AI analysis could not be completed.");
-      const data = await res.json(); setAnalysis({ fingerprint, result: data.analysis, message: data.message });
+      const data = await readResponse<{ analysis: Analysis | null; message: string }>(res, "AI analysis could not be completed."); setAnalysis({ fingerprint, result: data.analysis, message: data.message });
     } catch (e) { setStatus(e instanceof Error ? e.message : "AI unavailable."); } finally { setBusy(false); }
   };
   return <GlassPanel className="space-y-4">

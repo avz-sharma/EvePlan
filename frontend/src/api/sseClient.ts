@@ -1,114 +1,62 @@
-import type { CascadeDiff, EventPlan, PlanDelta, TradeOffOption } from "./types";
+import type { EventPlan, SSEReplanHandlers } from "./types";
 import { apiUrl } from "./client";
 
-export interface SSEReplanHandlers {
-  onDelta?: (data: {
-    delta: PlanDelta;
-    source: string;
-    degraded_mode: boolean;
-    remaining_quota: number;
-  }) => void;
-  onEngineDiff?: (data: {
-    updated_plan: EventPlan;
-    diff: CascadeDiff;
-    tradeoff_options: TradeOffOption[];
-  }) => void;
-  onRationale?: (data: {
-    rationale: string;
-    source: string;
-    degraded_mode: boolean;
-  }) => void;
-  onError?: (error: Error) => void;
-  onComplete?: () => void;
+function dispatchEvent(block: string, handlers: SSEReplanHandlers): void {
+  const lines = block.split("\n");
+  const event = lines.find(line => line.startsWith("event:"))?.slice(6).trim();
+  const data = lines.filter(line => line.startsWith("data:")).map(line => line.slice(5).trim()).join("\n");
+  if (!data) return;
+  let parsed: unknown;
+  try { parsed = JSON.parse(data); }
+  catch { throw new Error("The change response could not be read. Please retry."); }
+  if (event === "error") {
+    const message = parsed && typeof parsed === "object" && "message" in parsed ? parsed.message : null;
+    throw new Error(typeof message === "string" ? message : "We could not apply that change.");
+  }
+  // The API validates these payloads; keep the JSON boundary typed without implicit any.
+  switch (event) {
+    case "delta": handlers.onDelta?.(parsed as Parameters<NonNullable<SSEReplanHandlers["onDelta"]>>[0]); break;
+    case "engine_diff": handlers.onEngineDiff?.(parsed as Parameters<NonNullable<SSEReplanHandlers["onEngineDiff"]>>[0]); break;
+    case "rationale": handlers.onRationale?.(parsed as Parameters<NonNullable<SSEReplanHandlers["onRationale"]>>[0]); break;
+  }
 }
 
-export async function streamReplan(
-  plan: EventPlan,
-  userPrompt: string,
-  handlers: SSEReplanHandlers,
-  signal?: AbortSignal,
-): Promise<void> {
-  const url = apiUrl("/api/plan/replan/stream");
+async function consumeEvents(reader: ReadableStreamDefaultReader<Uint8Array>, handlers: SSEReplanHandlers): Promise<void> {
+  const decoder = new TextDecoder();
+  let buffer = "";
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) return;
+    buffer = (buffer + decoder.decode(value, { stream: true })).replace(/\r\n/g, "\n");
+    const blocks = buffer.split("\n\n");
+    buffer = blocks.pop() ?? "";
+    for (const block of blocks) dispatchEvent(block, handlers);
+  }
+}
+
+/** Stream validated intent, engine effects and rationale; release the reader on every exit. */
+export async function streamReplan(plan: EventPlan, userPrompt: string, handlers: SSEReplanHandlers, signal?: AbortSignal): Promise<void> {
   let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
-
   try {
-    const response = await fetch(url, {
-      signal,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        plan,
-        user_prompt: userPrompt,
-      }),
+    const response = await fetch(apiUrl("/api/plan/replan/stream"), {
+      signal, method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plan, user_prompt: userPrompt }),
     });
-
     if (!response.ok) {
-      const errorBody = await response.json().catch(() => null);
-      const detail = typeof errorBody?.detail === "string" ? errorBody.detail : "";
-      throw new Error(detail || `We could not apply that change (HTTP ${response.status}). Please retry.`);
+      const body: unknown = await response.json().catch(() => null);
+      const detail = body && typeof body === "object" && "detail" in body ? body.detail : null;
+      throw new Error(typeof detail === "string" && detail || `We could not apply that change (HTTP ${response.status}). Please retry.`);
     }
-
-    if (!response.body) {
-      throw new Error("No response body received from SSE stream");
-    }
-
+    if (!response.body) throw new Error("No response body received from SSE stream");
     reader = response.body.getReader();
-    const decoder = new TextDecoder("utf-8");
-    let buffer = "";
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split("\n\n");
-      // Keep unfinished segment in buffer
-      buffer = lines.pop() || "";
-
-      for (const block of lines) {
-        if (!block.trim()) continue;
-
-        let eventType = "message";
-        let dataStr = "";
-
-        const subLines = block.split("\n");
-        for (const line of subLines) {
-          if (line.startsWith("event:")) {
-            eventType = line.slice(6).trim();
-          } else if (line.startsWith("data:")) {
-            dataStr = line.slice(5).trim();
-          }
-        }
-
-        if (!dataStr) continue;
-
-        let parsed;
-        try {
-          parsed = JSON.parse(dataStr);
-        } catch {
-          throw new Error("The change response could not be read. Please retry.");
-        }
-        if (eventType === "error") {
-          throw new Error(typeof parsed.message === "string" ? parsed.message : "We could not apply that change.");
-        }
-        if (eventType === "delta" && handlers.onDelta) {
-          handlers.onDelta(parsed);
-        } else if (eventType === "engine_diff" && handlers.onEngineDiff) {
-          handlers.onEngineDiff(parsed);
-        } else if (eventType === "rationale" && handlers.onRationale) {
-          handlers.onRationale(parsed);
-        }
-      }
-    }
-
+    await consumeEvents(reader, handlers);
     if (!signal?.aborted) handlers.onComplete?.();
-  } catch (err) {
-    if (!signal?.aborted) handlers.onError?.(err instanceof Error ? err : new Error(String(err)));
+  } catch (error) {
+    if (!signal?.aborted) handlers.onError?.(error instanceof Error ? error : new Error(String(error)));
   } finally {
     if (reader) {
-      await reader.cancel().catch(() => {});
+      // A disconnected stream can reject cancellation; the lock must still be released.
+      try { await reader.cancel(); } catch { /* No active operation remains to recover. */ }
       reader.releaseLock();
     }
   }

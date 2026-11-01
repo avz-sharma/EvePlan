@@ -1,8 +1,9 @@
+import type { PlanMutationResponse } from "./api/types";
 import React, { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Eye, GitFork, Redo2, Undo2, Menu, PlusCircle, RefreshCw } from "lucide-react";
 import type { PlanDelta } from "./api/types";
-import { apiUrl } from "./api/client";
+import { apiUrl, readResponse } from "./api/client";
 import { streamReplan } from "./api/sseClient";
 import { tabs, type TabId } from "./tabs.config";
 import { Tabs } from "./components/ui/Tabs";
@@ -83,8 +84,7 @@ export const App: React.FC = () => {
     if (!plan || isLoading) return; setRetryScenario(null); setIsDegraded(false); setStatusMessage(""); setIsLoading(true);
     try {
       const response = await fetch(apiUrl("/api/plan/replan"), { method: "POST", signal: beginRequest(), headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plan, delta: scenario.delta }) });
-      if (!response.ok) throw new Error();
-      const result = await response.json(); updatePlanWithHistory(result.updated_plan, { lastDelta: scenario.delta, lastDiff: result.diff, tradeoffOptions: result.tradeoff_options || [] }); setStatusMessage("");
+      const result = await readResponse<PlanMutationResponse>(response, "We could not apply that change."); updatePlanWithHistory(result.updated_plan, { lastDelta: scenario.delta, lastDiff: result.diff, tradeoffOptions: result.tradeoff_options || [] }); setStatusMessage("");
     } catch { setRetryScenario(scenario); setIsDegraded(true); setStatusMessage("We could not apply that change."); }
     finally { setIsLoading(false); }
   };

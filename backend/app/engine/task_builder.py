@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
-from typing import Any, Mapping
+from typing import Mapping
 
+from ..schemas.catalog import EventCatalog, EventCatalogEntry, TaskTemplate
 from ..schemas.plan_state import (
     EventPlan,
     PlanEvent,
@@ -15,10 +16,10 @@ from .event_metadata import event_metadata
 
 
 def build_tasks(
-    plan: EventPlan, catalog: Mapping[str, Any], index: Mapping[str, dict[str, Any]]
+    plan: EventPlan, catalog: EventCatalog, index: Mapping[str, EventCatalogEntry]
 ) -> list[TaskNode]:
-    event_context: dict[str, tuple[PlanEvent, date, dict[str, Any]]] = {}
-    templates_by_event: dict[str, list[dict[str, Any]]] = {}
+    event_context: dict[str, tuple[PlanEvent, date, EventCatalogEntry]] = {}
+    templates_by_event: dict[str, list[TaskTemplate]] = {}
     for day in plan.days:
         event_date = day.date
         if event_date is None:

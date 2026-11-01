@@ -1,6 +1,7 @@
+import type { CatalogResponse } from "../api/types";
 import React, { useEffect, useMemo, useState } from "react";
 import type { CatalogEvent, PlanEvent, VendorCategory } from "../api/types";
-import { apiUrl } from "../api/client";
+import { apiUrl, readResponse } from "../api/client";
 import { Button, GlassPanel } from "../components/ui";
 import { SavedQuotes } from "../components/SavedQuotes";
 import { VendorDiscovery } from "../components/VendorDiscovery";
@@ -35,7 +36,7 @@ export const VendorsTab: React.FC = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-    void fetch(apiUrl("/api/plan/catalog"), { signal: controller.signal }).then((result) => result.json()).then((payload) => setCatalog(payload.events ?? [])).catch(() => !controller.signal.aborted && setStatus("Catalog needs could not be loaded."));
+    void fetch(apiUrl("/api/plan/catalog"), { signal: controller.signal }).then((result) => readResponse<CatalogResponse>(result, "Event catalog could not be loaded.")).then((payload) => setCatalog(payload.events ?? [])).catch(() => !controller.signal.aborted && setStatus("Catalog needs could not be loaded."));
     return () => controller.abort();
   }, []);
   useEffect(() => {

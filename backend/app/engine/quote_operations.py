@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from datetime import date
-from typing import Any, Mapping
 
+from ..schemas.catalog import EventCatalog
 from ..schemas.intent_delta import CascadeDiff
 from ..schemas.plan_state import (
     EventPlan,
@@ -24,7 +24,7 @@ from .quote_selection import effective_assignments
 
 def mutate_quote(
     plan: EventPlan,
-    catalog: Mapping[str, Any],
+    catalog: EventCatalog,
     today: date,
     operation: str,
     quote: SavedQuote | None = None,

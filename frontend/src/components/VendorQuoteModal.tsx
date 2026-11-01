@@ -1,7 +1,7 @@
 import { useRequestController } from "../lib/useRequestController";
 import React, { useEffect, useState } from "react";
 import type { NormalizedQuote, QuoteComparison } from "../api/types";
-import { apiUrl } from "../api/client";
+import { apiUrl, readResponse } from "../api/client";
 import { Dialog, Button } from "./ui";
 import { QuoteResults } from "./QuoteResults";
 import { X } from "lucide-react";
@@ -52,8 +52,7 @@ export const VendorQuoteModal: React.FC<Props> = ({ isOpen, onClose, allocatedCa
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ quote, allocated_budget_max_inr: effectiveBudgetCap, guest_count: guestCount }),
       });
-      const payload = await response.json();
-      if (!response.ok) throw new Error(payload.detail || "We could not compare this quote. Please try again.");
+      const payload = await readResponse<QuoteComparison>(response, "We could not compare this quote. Please try again.");
       setComparison(payload as QuoteComparison);
     } catch (cause) { if (cause instanceof DOMException && cause.name === "AbortError") return; setError(cause instanceof Error ? cause.message : "We could not compare this quote."); }
     finally { setUploading(false); }

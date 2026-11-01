@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import logging
 from collections import OrderedDict
 from typing import Literal
 
@@ -102,7 +103,8 @@ def analyze_quotes(plan: EventPlan, quote_ids: list[str]) -> QuoteAnalysis | Non
         assessed_ids = [item.quote_id for item in result.vendor_assessments]
         if result.winner_quote_id not in requested_ids or set(assessed_ids) != requested_ids or len(assessed_ids) != len(requested_ids):
             return None
-    except Exception:
+    except (httpx.HTTPError, ValueError, KeyError, IndexError, TypeError) as error:
+        logging.getLogger(__name__).warning("Groq quote analysis unavailable (%s)", type(error).__name__)
         return None
 
     _cache[key] = result
