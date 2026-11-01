@@ -4,12 +4,10 @@ import pytest
 
 from app.engine.cascade_replanner import apply_event_plan_delta
 from app.engine.dependency_scheduler import topological_sort_tasks
-from app.engine.plan_builder import (
-    assign_vendor,
-    build_event_plan,
-    build_quick_scenario_fixtures,
-    edit_event_plan,
-)
+from app.engine.event_operations import edit_event_plan
+from app.engine.plan_builder import build_event_plan
+from app.engine.scenarios import build_quick_scenario_fixtures
+from app.engine.vendor_operations import assign_vendor
 from app.routers.onboarding_router import EXAMPLE_SELECTIONS, _example_days
 from app.schemas.intent_delta import PlanDelta
 from app.schemas.plan_state import EventPlan, PlanEvent, VendorAssignment

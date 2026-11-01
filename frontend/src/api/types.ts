@@ -14,7 +14,7 @@ export interface PlanEvent {
   vendor_categories: VendorCategory[];
 }
 
-export interface EventDay {
+interface EventDay {
   day_number: number;
   date: string | null;
   events: PlanEvent[];
@@ -116,3 +116,6 @@ export type CascadeDiff = components["schemas"]["CascadeDiff"];
 export type TradeOffOption = components["schemas"]["TradeOffOption"];
 export type NormalizedQuote = components["schemas"]["NormalizedQuote"];
 export type QuoteComparison = components["schemas"]["QuoteComparison"];
+
+export interface ExampleSelection { id: string; title: string; days: EventDay[]; requires_special_diets: boolean }
+export interface MappingSuggestion { catalog_id: string; display_name: string; source: string }

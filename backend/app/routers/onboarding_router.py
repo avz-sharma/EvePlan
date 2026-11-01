@@ -5,13 +5,11 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 from starlette.concurrency import run_in_threadpool
 
-from ..engine.plan_builder import (
-    assign_vendor,
-    build_event_plan,
-    build_quick_scenario_fixtures,
-    edit_event_plan,
-    mutate_quote,
-)
+from ..engine.event_operations import edit_event_plan
+from ..engine.plan_builder import build_event_plan
+from ..engine.quote_operations import mutate_quote
+from ..engine.scenarios import build_quick_scenario_fixtures
+from ..engine.vendor_operations import assign_vendor
 from ..schemas.plan_state import (
     EventDay,
     EventPlan,

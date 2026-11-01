@@ -6,7 +6,10 @@ import pytest
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
-from app.engine.plan_builder import assign_vendor, build_event_plan, edit_event_plan, mutate_quote
+from app.engine.event_operations import edit_event_plan
+from app.engine.plan_builder import build_event_plan
+from app.engine.quote_operations import mutate_quote
+from app.engine.vendor_operations import assign_vendor
 from app.main import app
 from app.schemas.plan_state import SavedQuote, VendorAssignment, VendorCategory
 from app.services import quote_analysis
