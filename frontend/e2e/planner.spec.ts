@@ -150,10 +150,12 @@ for (const width of [390, 1280]) test(`soothing overview theme and budget at ${w
   await expect(page.locator("canvas[aria-hidden=true]")).toBeVisible();
   await page.mouse.move(250, 300);
   await expect(page.locator(".cursor-halo")).toHaveCSS("opacity", "1");
+  await expect(page.locator("body")).toHaveCSS("cursor", "none");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.screenshot({ path: `test-results/overview-${width}.png`, fullPage: true });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator(".cursor-halo")).toHaveCSS("display", "none");
+  await expect(page.locator("html")).not.toHaveClass(/custom-cursor-active/);
   await page.getByRole("tab", { name: "Vendors", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Manual vendor entry", exact: true })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Compare Saved Quotes", exact: true })).toBeVisible();

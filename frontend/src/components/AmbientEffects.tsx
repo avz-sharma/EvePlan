@@ -45,6 +45,13 @@ export function Particles() {
 export function SmoothCursor() {
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => document.documentElement.classList.toggle("custom-cursor-active", visible && !media.matches && !reduced);
+    sync();
+    media.addEventListener?.("change", sync);
+    return () => { media.removeEventListener?.("change", sync); document.documentElement.classList.remove("custom-cursor-active"); };
+  }, [visible, reduced]);
   const x = useMotionValue(-100), y = useMotionValue(-100);
   const smoothX = useSpring(x, { stiffness: 420, damping: 35 }), smoothY = useSpring(y, { stiffness: 420, damping: 35 });
   useEffect(() => {
