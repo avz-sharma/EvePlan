@@ -1,0 +1,166 @@
+{
+  "baseline_revision": "499cb8f",
+  "source_revision": "e1b9942",
+  "python": "3.13.9",
+  "node": "v26.4.0",
+  "checks_passed": 14,
+  "backend_tests": 178,
+  "frontend_tests": 61,
+  "browser_tests": 10,
+  "backend_coverage": {
+    "covered_lines": 1842,
+    "num_statements": 1978,
+    "percent_covered": 93.12436804853387,
+    "percent_covered_display": "93",
+    "missing_lines": 136,
+    "excluded_lines": 0,
+    "percent_statements_covered": 93.12436804853387,
+    "percent_statements_covered_display": "93"
+  },
+  "frontend_coverage": {
+    "lines": {
+      "total": 855,
+      "covered": 677,
+      "skipped": 0,
+      "pct": 79.18
+    },
+    "statements": {
+      "total": 1390,
+      "covered": 968,
+      "skipped": 0,
+      "pct": 69.64
+    },
+    "functions": {
+      "total": 520,
+      "covered": 344,
+      "skipped": 0,
+      "pct": 66.15
+    },
+    "branches": {
+      "total": 1059,
+      "covered": 642,
+      "skipped": 0,
+      "pct": 60.62
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "javascript": {
+    "before_bytes": 381961,
+    "after_bytes": 340626,
+    "before_gzip_bytes": 127749,
+    "after_gzip_bytes": 116338
+  },
+  "paired_performance": {
+    "before": {
+      "dag": {
+        "p50_ms": 2.8616999998121173,
+        "p95_ms": 3.6588000002666377
+      },
+      "cascade": {
+        "p50_ms": 10.35425000009127,
+        "p95_ms": 19.6682999994664
+      },
+      "api_replan": {
+        "p50_ms": 31.401650000589143,
+        "p95_ms": 44.069899999158224
+      }
+    },
+    "after": {
+      "dag": {
+        "p50_ms": 2.706400000533904,
+        "p95_ms": 3.8626000005024252
+      },
+      "cascade": {
+        "p50_ms": 8.950649999860616,
+        "p95_ms": 17.506799998955103
+      },
+      "api_replan": {
+        "p50_ms": 30.475850000584614,
+        "p95_ms": 43.06670000005397
+      }
+    }
+  },
+  "lighthouse": [
+    {
+      "tab": "overview",
+      "axe_violations": [],
+      "performance": 100,
+      "accessibility": 100,
+      "lcp_ms": 1007.0821086547851,
+      "tbt_ms": 0
+    },
+    {
+      "tab": "events",
+      "axe_violations": [],
+      "performance": 100,
+      "accessibility": 100,
+      "lcp_ms": 1012.7620188537599,
+      "tbt_ms": 0
+    },
+    {
+      "tab": "budget",
+      "axe_violations": [],
+      "performance": 100,
+      "accessibility": 100,
+      "lcp_ms": 934.0877363952636,
+      "tbt_ms": 51
+    },
+    {
+      "tab": "timeline",
+      "axe_violations": [],
+      "performance": 100,
+      "accessibility": 100,
+      "lcp_ms": 932.8744363952637,
+      "tbt_ms": 31
+    },
+    {
+      "tab": "vendors",
+      "axe_violations": [],
+      "performance": 100,
+      "accessibility": 100,
+      "lcp_ms": 1052.231997290039,
+      "tbt_ms": 10
+    },
+    {
+      "tab": "scenarios",
+      "axe_violations": [],
+      "performance": 100,
+      "accessibility": 100,
+      "lcp_ms": 932.7495363952637,
+      "tbt_ms": 0
+    },
+    {
+      "tab": "quotes",
+      "axe_violations": [],
+      "performance": 100,
+      "accessibility": 100,
+      "lcp_ms": 933.7570363952636,
+      "tbt_ms": 0
+    },
+    {
+      "tab": "how-it-works",
+      "axe_violations": [],
+      "performance": 100,
+      "accessibility": 100,
+      "lcp_ms": 937.2574363952638,
+      "tbt_ms": 8
+    }
+  ],
+  "missing_python_docs": 0,
+  "missing_frontend_docs": 0,
+  "max_file_lines": 294,
+  "authored_source_lines": 6502,
+  "exact_clone_percent": 0.0,
+  "security": {
+    "bandit_findings": 0,
+    "pip_audit_runtime_findings": 0,
+    "pip_audit_dev_findings": 0,
+    "pnpm_audit_findings": 0,
+    "gitleaks_findings": 0
+  }
+}

@@ -1,0 +1,4166 @@
+{
+  "functions": [
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 17,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 17,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 18,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 18,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 19,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 19,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 20,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 20,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 21,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 21,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 22,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 22,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 23,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 23,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 24,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 24,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 27,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "selectedTab",
+      "line": 29,
+      "lines": 4,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 31,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "App",
+      "line": 35,
+      "lines": 95,
+      "complexity": 16,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 38,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 39,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 43,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "setIsLoading",
+      "line": 44,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 48,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 50,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 54,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 55,
+      "lines": 4,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "sync",
+      "line": 57,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 57,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "selectTab",
+      "line": 59,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 62,
+      "lines": 6,
+      "complexity": 4,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 68,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "handleNaturalLanguageSubmit",
+      "line": 72,
+      "lines": 11,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "onDelta",
+      "line": 76,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "onEngineDiff",
+      "line": 77,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "onRationale",
+      "line": 78,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "onError",
+      "line": 79,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "onComplete",
+      "line": 80,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "handleTriggerScenario",
+      "line": 84,
+      "lines": 8,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 93,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 93,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 94,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 103,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 104,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 105,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 106,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 108,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 108,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 108,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 108,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 111,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 112,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 117,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 118,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 119,
+      "lines": 5,
+      "complexity": 7,
+      "nesting": 3
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 122,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 122,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 125,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 126,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "name": "<callback>",
+      "line": 126,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/api/client.ts",
+      "name": "apiUrl",
+      "line": 4,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/api/client.ts",
+      "name": "readResponse",
+      "line": 7,
+      "lines": 8,
+      "complexity": 6,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/api/sseClient.ts",
+      "name": "dispatchEvent",
+      "line": 4,
+      "lines": 19,
+      "complexity": 11,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/api/sseClient.ts",
+      "name": "<callback>",
+      "line": 6,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/api/sseClient.ts",
+      "name": "<callback>",
+      "line": 7,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/api/sseClient.ts",
+      "name": "<callback>",
+      "line": 7,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/api/sseClient.ts",
+      "name": "consumeEvents",
+      "line": 24,
+      "lines": 12,
+      "complexity": 5,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/api/sseClient.ts",
+      "name": "streamReplan",
+      "line": 38,
+      "lines": 26,
+      "complexity": 14,
+      "nesting": 3
+    },
+    {
+      "file": "frontend/src/api/sseClient.ts",
+      "name": "<callback>",
+      "line": 46,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "Particles",
+      "line": 5,
+      "lines": 39,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "<callback>",
+      "line": 8,
+      "lines": 34,
+      "complexity": 6,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "<callback>",
+      "line": 15,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "resize",
+      "line": 16,
+      "lines": 6,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "draw",
+      "line": 22,
+      "lines": 12,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "<callback>",
+      "line": 27,
+      "lines": 4,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "resume",
+      "line": 34,
+      "lines": 1,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "move",
+      "line": 35,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "<callback>",
+      "line": 37,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "SmoothCursor",
+      "line": 46,
+      "lines": 21,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "<callback>",
+      "line": 49,
+      "lines": 7,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "sync",
+      "line": 51,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "<callback>",
+      "line": 54,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "<callback>",
+      "line": 58,
+      "lines": 7,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "move",
+      "line": 60,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "hide",
+      "line": 61,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "name": "<callback>",
+      "line": 63,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AuditDeltaDrawer.tsx",
+      "name": "AuditDeltaDrawer",
+      "line": 11,
+      "lines": 56,
+      "complexity": 6,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AuditDeltaDrawer.tsx",
+      "name": "<callback>",
+      "line": 20,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "name": "loginError",
+      "line": 14,
+      "lines": 4,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "name": "AuthGate",
+      "line": 23,
+      "lines": 40,
+      "complexity": 11,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "name": "<callback>",
+      "line": 27,
+      "lines": 14,
+      "complexity": 10,
+      "nesting": 3
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "name": "<callback>",
+      "line": 41,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "name": "<callback>",
+      "line": 41,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "name": "logout",
+      "line": 42,
+      "lines": 7,
+      "complexity": 4,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "name": "<callback>",
+      "line": 46,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "name": "<callback>",
+      "line": 50,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "name": "<callback>",
+      "line": 59,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/BudgetAllocationBars.tsx",
+      "name": "BudgetAllocationBars",
+      "line": 14,
+      "lines": 31,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/BudgetAllocationBars.tsx",
+      "name": "percent",
+      "line": 16,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/BudgetAllocationBars.tsx",
+      "name": "<callback>",
+      "line": 17,
+      "lines": 7,
+      "complexity": 4,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/BudgetAllocationBars.tsx",
+      "name": "<callback>",
+      "line": 21,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/BudgetAllocationBars.tsx",
+      "name": "<callback>",
+      "line": 31,
+      "lines": 10,
+      "complexity": 9,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/BudgetAllocationBars.tsx",
+      "name": "<callback>",
+      "line": 39,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/BudgetAllocationBars.tsx",
+      "name": "<callback>",
+      "line": 42,
+      "lines": 1,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/BudgetProgress.tsx",
+      "name": "AnimatedCircularProgressBar",
+      "line": 5,
+      "lines": 8,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/BudgetProgress.tsx",
+      "name": "BudgetProgress",
+      "line": 15,
+      "lines": 4,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/CascadeGraphView.tsx",
+      "name": "CascadeGraphView",
+      "line": 10,
+      "lines": 34,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/CascadeGraphView.tsx",
+      "name": "<callback>",
+      "line": 11,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/CascadeGraphView.tsx",
+      "name": "<callback>",
+      "line": 22,
+      "lines": 8,
+      "complexity": 8,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/CascadeGraphView.tsx",
+      "name": "<callback>",
+      "line": 30,
+      "lines": 9,
+      "complexity": 10,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "layoutDag",
+      "line": 14,
+      "lines": 14,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "computeLayout",
+      "line": 30,
+      "lines": 29,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 31,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "depth",
+      "line": 34,
+      "lines": 10,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 39,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 44,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 46,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 47,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 49,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 49,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 52,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 53,
+      "lines": 4,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "name": "<callback>",
+      "line": 53,
+      "lines": 4,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/LazyDialogs.tsx",
+      "name": "<callback>",
+      "line": 4,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/LazyDialogs.tsx",
+      "name": "<callback>",
+      "line": 4,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/LazyDialogs.tsx",
+      "name": "<callback>",
+      "line": 5,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/LazyDialogs.tsx",
+      "name": "<callback>",
+      "line": 5,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/LazyDialogs.tsx",
+      "name": "useVisited",
+      "line": 8,
+      "lines": 5,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/LazyDialogs.tsx",
+      "name": "<callback>",
+      "line": 10,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/LazyDialogs.tsx",
+      "name": "LazyWizard",
+      "line": 15,
+      "lines": 4,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/LazyDialogs.tsx",
+      "name": "LazyQuoteModal",
+      "line": 21,
+      "lines": 4,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "OnboardingWizard",
+      "line": 10,
+      "lines": 70,
+      "complexity": 24,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "field",
+      "line": 17,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 18,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 27,
+      "lines": 1,
+      "complexity": 4,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 33,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 33,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 34,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 34,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 39,
+      "lines": 14,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 4,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 4,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 41,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 42,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 45,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 46,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 46,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 47,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 47,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 48,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 48,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 48,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 48,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 49,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 50,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 51,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 51,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 56,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 56,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 57,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 57,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 57,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 57,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 58,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 58,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 58,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 58,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 60,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 60,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 64,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 64,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 64,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 66,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 66,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 66,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 66,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 70,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 70,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "name": "<callback>",
+      "line": 70,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/QuickScenarioChips.tsx",
+      "name": "QuickScenarioChips",
+      "line": 21,
+      "lines": 29,
+      "complexity": 6,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/QuickScenarioChips.tsx",
+      "name": "<callback>",
+      "line": 26,
+      "lines": 13,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/QuickScenarioChips.tsx",
+      "name": "<callback>",
+      "line": 32,
+      "lines": 4,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/QuickScenarioChips.tsx",
+      "name": "<callback>",
+      "line": 35,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/QuickScenarioChips.tsx",
+      "name": "<callback>",
+      "line": 36,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/QuickScenarioChips.tsx",
+      "name": "<callback>",
+      "line": 37,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/QuickScenarioChips.tsx",
+      "name": "<callback>",
+      "line": 45,
+      "lines": 3,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/QuickScenarioChips.tsx",
+      "name": "<callback>",
+      "line": 45,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/QuoteResults.tsx",
+      "name": "QuoteResults",
+      "line": 10,
+      "lines": 12,
+      "complexity": 7,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/QuoteResults.tsx",
+      "name": "<callback>",
+      "line": 17,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/QuoteResults.tsx",
+      "name": "<callback>",
+      "line": 19,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "emptyQuote",
+      "line": 9,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "label",
+      "line": 10,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 10,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 10,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 10,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "money",
+      "line": 11,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "SavedQuotes",
+      "line": 24,
+      "lines": 7,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 26,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 27,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 29,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 29,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "QuoteWorkspace",
+      "line": 32,
+      "lines": 71,
+      "complexity": 36,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 35,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 35,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 37,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 46,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 47,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 48,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "run",
+      "line": 49,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "save",
+      "line": 50,
+      "lines": 9,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 52,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 53,
+      "lines": 5,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 56,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "analyze",
+      "line": 59,
+      "lines": 8,
+      "complexity": 4,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 62,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 70,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 70,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 70,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 71,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 71,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 72,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 72,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 75,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 76,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 77,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 77,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 77,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 77,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 77,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 78,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 78,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 79,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 80,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 81,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 82,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 82,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 83,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 83,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 87,
+      "lines": 7,
+      "complexity": 15,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 88,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 88,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 92,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 92,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 92,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 92,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 92,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 94,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 95,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 95,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 96,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 96,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 96,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 96,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 97,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 100,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 100,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "name": "<callback>",
+      "line": 100,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "name": "projected",
+      "line": 19,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "name": "<callback>",
+      "line": 19,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "name": "venueFit",
+      "line": 20,
+      "lines": 4,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "name": "<callback>",
+      "line": 20,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "name": "<callback>",
+      "line": 20,
+      "lines": 4,
+      "complexity": 4,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "name": "<callback>",
+      "line": 21,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "name": "<callback>",
+      "line": 21,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "name": "ScenarioBranchCompare",
+      "line": 26,
+      "lines": 12,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "name": "planCard",
+      "line": 27,
+      "lines": 5,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/TimelineChecklist.tsx",
+      "name": "TimelineChecklist",
+      "line": 9,
+      "lines": 8,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/TimelineChecklist.tsx",
+      "name": "<callback>",
+      "line": 11,
+      "lines": 5,
+      "complexity": 9,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/TradeOffCards.tsx",
+      "name": "TradeOffCards",
+      "line": 14,
+      "lines": 94,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/TradeOffCards.tsx",
+      "name": "getImpactBadge",
+      "line": 25,
+      "lines": 12,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/TradeOffCards.tsx",
+      "name": "<callback>",
+      "line": 53,
+      "lines": 51,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/TradeOffCards.tsx",
+      "name": "<callback>",
+      "line": 60,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/TradeOffCards.tsx",
+      "name": "<callback>",
+      "line": 61,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/TradeOffCards.tsx",
+      "name": "<callback>",
+      "line": 62,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/TradeOffCards.tsx",
+      "name": "<callback>",
+      "line": 63,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/TradeOffCards.tsx",
+      "name": "<callback>",
+      "line": 96,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "VendorDiscovery",
+      "line": 8,
+      "lines": 39,
+      "complexity": 11,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "<callback>",
+      "line": 18,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "<callback>",
+      "line": 19,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "<callback>",
+      "line": 25,
+      "lines": 5,
+      "complexity": 3,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "<callback>",
+      "line": 30,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "<callback>",
+      "line": 31,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "<callback>",
+      "line": 31,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "<callback>",
+      "line": 32,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "<callback>",
+      "line": 33,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "name": "<callback>",
+      "line": 42,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "inclusionValue",
+      "line": 11,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "VendorQuoteModal",
+      "line": 14,
+      "lines": 73,
+      "complexity": 11,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "<callback>",
+      "line": 29,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "compare",
+      "line": 32,
+      "lines": 29,
+      "complexity": 10,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "copyMessage",
+      "line": 61,
+      "lines": 5,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "<callback>",
+      "line": 63,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "reset",
+      "line": 66,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "inclusion",
+      "line": 67,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "<callback>",
+      "line": 67,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "<callback>",
+      "line": 71,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "<callback>",
+      "line": 74,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "<callback>",
+      "line": 75,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "<callback>",
+      "line": 76,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "<callback>",
+      "line": 77,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "name": "<callback>",
+      "line": 84,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/format.ts",
+      "name": "formatNumber",
+      "line": 6,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/format.ts",
+      "name": "formatMoney",
+      "line": 8,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/format.ts",
+      "name": "formatCompactMoney",
+      "line": 10,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/googleMapsUrl.ts",
+      "name": "normalize",
+      "line": 1,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/googleMapsUrl.ts",
+      "name": "generateGoogleMapsSearchUrl",
+      "line": 3,
+      "lines": 19,
+      "complexity": 6,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/googleMapsUrl.ts",
+      "name": "<callback>",
+      "line": 6,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/googleMapsUrl.ts",
+      "name": "<callback>",
+      "line": 12,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/googleMapsUrl.ts",
+      "name": "<callback>",
+      "line": 12,
+      "lines": 5,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/onboarding.ts",
+      "name": "blankPlan",
+      "line": 11,
+      "lines": 9,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/onboarding.ts",
+      "name": "makeId",
+      "line": 22,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "useOnboardingWizard",
+      "line": 9,
+      "lines": 124,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 25,
+      "lines": 13,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 29,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 30,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 31,
+      "lines": 5,
+      "complexity": 4,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 35,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 36,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 39,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 39,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "updateDayCount",
+      "line": 40,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 42,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 43,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "applyExample",
+      "line": 46,
+      "lines": 5,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 47,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 47,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "toggleEvent",
+      "line": 52,
+      "lines": 10,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 52,
+      "lines": 10,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 54,
+      "lines": 7,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 56,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 58,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "addCustomEvent",
+      "line": 63,
+      "lines": 7,
+      "complexity": 8,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 67,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 67,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "checkCustomMapping",
+      "line": 71,
+      "lines": 11,
+      "complexity": 7,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "validateStep",
+      "line": 83,
+      "lines": 15,
+      "complexity": 18,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "next",
+      "line": 99,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 99,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "back",
+      "line": 100,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 100,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "submit",
+      "line": 102,
+      "lines": 23,
+      "complexity": 7,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 106,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 115,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 115,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "name": "<callback>",
+      "line": 126,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/lib/useRequestController.ts",
+      "name": "useRequestController",
+      "line": 4,
+      "lines": 11,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useRequestController.ts",
+      "name": "<callback>",
+      "line": 6,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useRequestController.ts",
+      "name": "<callback>",
+      "line": 7,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/lib/useRequestController.ts",
+      "name": "<callback>",
+      "line": 12,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "storageKey",
+      "line": 31,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "persist",
+      "line": 33,
+      "lines": 8,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "reducer",
+      "line": 43,
+      "lines": 5,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "dispatch",
+      "line": 49,
+      "lines": 7,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "<callback>",
+      "line": 54,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "patch",
+      "line": 56,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "subscribe",
+      "line": 57,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "<callback>",
+      "line": 57,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "usePlanStore",
+      "line": 60,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "<callback>",
+      "line": 61,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "<callback>",
+      "line": 61,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "useCurrentPlan",
+      "line": 64,
+      "lines": 5,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "notify",
+      "line": 70,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "<callback>",
+      "line": 73,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "historyStep",
+      "line": 75,
+      "lines": 6,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "setOwner",
+      "line": 85,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "<callback>",
+      "line": 85,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "update",
+      "line": 86,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "updated",
+      "line": 87,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "restore",
+      "line": 90,
+      "lines": 19,
+      "complexity": 11,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "undo",
+      "line": 109,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "redo",
+      "line": 109,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "fork",
+      "line": 110,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "switchFork",
+      "line": 111,
+      "lines": 4,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "clearFork",
+      "line": 115,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "openQuotes",
+      "line": 116,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "preview",
+      "line": 117,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "applyTradeOff",
+      "line": 118,
+      "lines": 10,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "<callback>",
+      "line": 121,
+      "lines": 2,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "<callback>",
+      "line": 125,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "mutateQuote",
+      "line": 128,
+      "lines": 10,
+      "complexity": 6,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "name": "assignVendor",
+      "line": 138,
+      "lines": 11,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "BudgetTab",
+      "line": 11,
+      "lines": 21,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 15,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 16,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 20,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 26,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 26,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 26,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 26,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 27,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 27,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "name": "<callback>",
+      "line": 27,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "makeId",
+      "line": 12,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "VenueTypeField",
+      "line": 14,
+      "lines": 7,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 16,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 18,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 19,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "EventsTab",
+      "line": 23,
+      "lines": 69,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 37,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 39,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 39,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 39,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 43,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 43,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 43,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "apply",
+      "line": 45,
+      "lines": 10,
+      "complexity": 5,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "addCatalogEvent",
+      "line": 56,
+      "lines": 7,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 57,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "addCustomEvent",
+      "line": 64,
+      "lines": 6,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 75,
+      "lines": 12,
+      "complexity": 6,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 76,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 76,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 76,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 77,
+      "lines": 8,
+      "complexity": 8,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 79,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 80,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 81,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 81,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 81,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 81,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 81,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 82,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 82,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 82,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 85,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 85,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 85,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 87,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 87,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 87,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 87,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 87,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 87,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 87,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 88,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "name": "<callback>",
+      "line": 88,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/HowItWorksTab.tsx",
+      "name": "HowItWorksTab",
+      "line": 7,
+      "lines": 9,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/HowItWorksTab.tsx",
+      "name": "<callback>",
+      "line": 8,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/HowItWorksTab.tsx",
+      "name": "<callback>",
+      "line": 9,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/HowItWorksTab.tsx",
+      "name": "<callback>",
+      "line": 12,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/OverviewTab.tsx",
+      "name": "OverviewTab",
+      "line": 11,
+      "lines": 20,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/OverviewTab.tsx",
+      "name": "<callback>",
+      "line": 14,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/OverviewTab.tsx",
+      "name": "<callback>",
+      "line": 16,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/OverviewTab.tsx",
+      "name": "<callback>",
+      "line": 16,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/OverviewTab.tsx",
+      "name": "<callback>",
+      "line": 17,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/OverviewTab.tsx",
+      "name": "<callback>",
+      "line": 25,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/OverviewTab.tsx",
+      "name": "<callback>",
+      "line": 27,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/QuotesTab.tsx",
+      "name": "QuotesTab",
+      "line": 5,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/ScenariosTab.tsx",
+      "name": "ScenariosTab",
+      "line": 7,
+      "lines": 12,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/ScenariosTab.tsx",
+      "name": "<callback>",
+      "line": 9,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/ScenariosTab.tsx",
+      "name": "<callback>",
+      "line": 10,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/ScenariosTab.tsx",
+      "name": "<callback>",
+      "line": 11,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/ScenariosTab.tsx",
+      "name": "<callback>",
+      "line": 16,
+      "lines": 1,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/TimelineTab.tsx",
+      "name": "TimelineTab",
+      "line": 8,
+      "lines": 12,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/TimelineTab.tsx",
+      "name": "<callback>",
+      "line": 10,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/TimelineTab.tsx",
+      "name": "<callback>",
+      "line": 15,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/TimelineTab.tsx",
+      "name": "<callback>",
+      "line": 15,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "VendorsTab",
+      "line": 22,
+      "lines": 53,
+      "complexity": 18,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 24,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 28,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 28,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 28,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 34,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 35,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 38,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 40,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 41,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 43,
+      "lines": 3,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 44,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 46,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 47,
+      "lines": 3,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "eventLabel",
+      "line": 51,
+      "lines": 1,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 51,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 57,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 63,
+      "lines": 1,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 63,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 64,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 64,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 65,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 67,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "name": "<callback>",
+      "line": 67,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "GlassPanel",
+      "line": 5,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "Button",
+      "line": 10,
+      "lines": 8,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "IconButton",
+      "line": 20,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "Chip",
+      "line": 25,
+      "lines": 9,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "Stat",
+      "line": 36,
+      "lines": 7,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "Banner",
+      "line": 45,
+      "lines": 8,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "Skeleton",
+      "line": 55,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "EmptyState",
+      "line": 58,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "Dialog",
+      "line": 66,
+      "lines": 24,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "<callback>",
+      "line": 68,
+      "lines": 17,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "focusables",
+      "line": 71,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "handleKey",
+      "line": 73,
+      "lines": 9,
+      "complexity": 10,
+      "nesting": 2
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "<callback>",
+      "line": 83,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "<callback>",
+      "line": 86,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "name": "Toast",
+      "line": 92,
+      "lines": 1,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/ui/Tabs.tsx",
+      "name": "Tabs",
+      "line": 8,
+      "lines": 23,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/Tabs.tsx",
+      "name": "focusAt",
+      "line": 10,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/Tabs.tsx",
+      "name": "handleKeyDown",
+      "line": 15,
+      "lines": 7,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/ui/Tabs.tsx",
+      "name": "<callback>",
+      "line": 16,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "frontend/src/components/ui/Tabs.tsx",
+      "name": "<callback>",
+      "line": 23,
+      "lines": 3,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/ui/Tabs.tsx",
+      "name": "<callback>",
+      "line": 26,
+      "lines": 3,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "frontend/src/components/ui/Tabs.tsx",
+      "name": "<callback>",
+      "line": 26,
+      "lines": 1,
+      "complexity": 1,
+      "nesting": 0
+    }
+  ],
+  "missing_docs": [],
+  "suppressions": []
+}

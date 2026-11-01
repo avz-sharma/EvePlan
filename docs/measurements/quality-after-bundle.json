@@ -1,0 +1,77 @@
+[
+  {
+    "file": "BudgetProgress-BU3ed-hC.js",
+    "bytes": 3122,
+    "gzip_bytes": 1314
+  },
+  {
+    "file": "BudgetTab-J40liGgG.js",
+    "bytes": 9705,
+    "gzip_bytes": 3544
+  },
+  {
+    "file": "EventsTab-B96ufaW_.js",
+    "bytes": 9197,
+    "gzip_bytes": 3087
+  },
+  {
+    "file": "HowItWorksTab-Bg0QU-Ur.js",
+    "bytes": 4591,
+    "gzip_bytes": 1573
+  },
+  {
+    "file": "index-CIOXnOZn.js",
+    "bytes": 247167,
+    "gzip_bytes": 82482
+  },
+  {
+    "file": "onboarding-BLuKSK0_.js",
+    "bytes": 916,
+    "gzip_bytes": 560
+  },
+  {
+    "file": "OnboardingWizard-BHNCY-Ut.js",
+    "bytes": 14994,
+    "gzip_bytes": 4862
+  },
+  {
+    "file": "OverviewTab-BkkBCWSr.js",
+    "bytes": 5923,
+    "gzip_bytes": 2327
+  },
+  {
+    "file": "QuotesTab-CqQ1HdwR.js",
+    "bytes": 416,
+    "gzip_bytes": 290
+  },
+  {
+    "file": "SavedQuotes-DnMXkk51.js",
+    "bytes": 11402,
+    "gzip_bytes": 3900
+  },
+  {
+    "file": "ScenariosTab-C72mAgVN.js",
+    "bytes": 4161,
+    "gzip_bytes": 1693
+  },
+  {
+    "file": "TimelineTab-D6PWBwE9.js",
+    "bytes": 8388,
+    "gzip_bytes": 3016
+  },
+  {
+    "file": "triangle-alert-BaRT31Do.js",
+    "bytes": 433,
+    "gzip_bytes": 313
+  },
+  {
+    "file": "VendorQuoteModal-XgntcA23.js",
+    "bytes": 10559,
+    "gzip_bytes": 3420
+  },
+  {
+    "file": "VendorsTab-DEAV521R.js",
+    "bytes": 9652,
+    "gzip_bytes": 3957
+  }
+]

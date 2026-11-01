@@ -1,0 +1,66 @@
+[
+  {
+    "tab": "overview",
+    "axe_violations": [],
+    "performance": 100,
+    "accessibility": 100,
+    "lcp_ms": 1007.0821086547851,
+    "tbt_ms": 0
+  },
+  {
+    "tab": "events",
+    "axe_violations": [],
+    "performance": 100,
+    "accessibility": 100,
+    "lcp_ms": 1012.7620188537599,
+    "tbt_ms": 0
+  },
+  {
+    "tab": "budget",
+    "axe_violations": [],
+    "performance": 100,
+    "accessibility": 100,
+    "lcp_ms": 934.0877363952636,
+    "tbt_ms": 51
+  },
+  {
+    "tab": "timeline",
+    "axe_violations": [],
+    "performance": 100,
+    "accessibility": 100,
+    "lcp_ms": 932.8744363952637,
+    "tbt_ms": 31
+  },
+  {
+    "tab": "vendors",
+    "axe_violations": [],
+    "performance": 100,
+    "accessibility": 100,
+    "lcp_ms": 1052.231997290039,
+    "tbt_ms": 10
+  },
+  {
+    "tab": "scenarios",
+    "axe_violations": [],
+    "performance": 100,
+    "accessibility": 100,
+    "lcp_ms": 932.7495363952637,
+    "tbt_ms": 0
+  },
+  {
+    "tab": "quotes",
+    "axe_violations": [],
+    "performance": 100,
+    "accessibility": 100,
+    "lcp_ms": 933.7570363952636,
+    "tbt_ms": 0
+  },
+  {
+    "tab": "how-it-works",
+    "axe_violations": [],
+    "performance": 100,
+    "accessibility": 100,
+    "lcp_ms": 937.2574363952638,
+    "tbt_ms": 8
+  }
+]

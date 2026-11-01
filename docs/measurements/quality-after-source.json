@@ -1,0 +1,1330 @@
+{
+  "files": [
+    {
+      "file": "backend/app/__init__.py",
+      "lines": 1
+    },
+    {
+      "file": "backend/app/api_docs.py",
+      "lines": 44
+    },
+    {
+      "file": "backend/app/config.py",
+      "lines": 76
+    },
+    {
+      "file": "backend/app/engine/__init__.py",
+      "lines": 21
+    },
+    {
+      "file": "backend/app/engine/budget_builder.py",
+      "lines": 96
+    },
+    {
+      "file": "backend/app/engine/budget_tradeoffs.py",
+      "lines": 167
+    },
+    {
+      "file": "backend/app/engine/cascade_replanner.py",
+      "lines": 61
+    },
+    {
+      "file": "backend/app/engine/conflict_rules.py",
+      "lines": 71
+    },
+    {
+      "file": "backend/app/engine/dependency_scheduler.py",
+      "lines": 94
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "lines": 148
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "lines": 137
+    },
+    {
+      "file": "backend/app/engine/event_metadata.py",
+      "lines": 108
+    },
+    {
+      "file": "backend/app/engine/event_operations.py",
+      "lines": 80
+    },
+    {
+      "file": "backend/app/engine/legacy_replanner.py",
+      "lines": 175
+    },
+    {
+      "file": "backend/app/engine/plan_builder.py",
+      "lines": 107
+    },
+    {
+      "file": "backend/app/engine/plan_diff.py",
+      "lines": 57
+    },
+    {
+      "file": "backend/app/engine/planning_heuristics.py",
+      "lines": 15
+    },
+    {
+      "file": "backend/app/engine/quote_operations.py",
+      "lines": 111
+    },
+    {
+      "file": "backend/app/engine/quote_selection.py",
+      "lines": 41
+    },
+    {
+      "file": "backend/app/engine/scenarios.py",
+      "lines": 103
+    },
+    {
+      "file": "backend/app/engine/task_builder.py",
+      "lines": 113
+    },
+    {
+      "file": "backend/app/engine/vendor_comparator.py",
+      "lines": 66
+    },
+    {
+      "file": "backend/app/engine/vendor_operations.py",
+      "lines": 88
+    },
+    {
+      "file": "backend/app/fixtures/__init__.py",
+      "lines": 1
+    },
+    {
+      "file": "backend/app/main.py",
+      "lines": 53
+    },
+    {
+      "file": "backend/app/middleware/__init__.py",
+      "lines": 1
+    },
+    {
+      "file": "backend/app/middleware/auth.py",
+      "lines": 43
+    },
+    {
+      "file": "backend/app/middleware/compression.py",
+      "lines": 17
+    },
+    {
+      "file": "backend/app/middleware/security.py",
+      "lines": 110
+    },
+    {
+      "file": "backend/app/operation_errors.py",
+      "lines": 46
+    },
+    {
+      "file": "backend/app/routers/__init__.py",
+      "lines": 8
+    },
+    {
+      "file": "backend/app/routers/auth_router.py",
+      "lines": 185
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "lines": 264
+    },
+    {
+      "file": "backend/app/routers/replan_router.py",
+      "lines": 242
+    },
+    {
+      "file": "backend/app/routers/vendor_router.py",
+      "lines": 101
+    },
+    {
+      "file": "backend/app/routers/vendor_search_router.py",
+      "lines": 45
+    },
+    {
+      "file": "backend/app/schemas/__init__.py",
+      "lines": 43
+    },
+    {
+      "file": "backend/app/schemas/catalog.py",
+      "lines": 43
+    },
+    {
+      "file": "backend/app/schemas/intent_delta.py",
+      "lines": 88
+    },
+    {
+      "file": "backend/app/schemas/plan_state.py",
+      "lines": 294
+    },
+    {
+      "file": "backend/app/schemas/vendor_quote.py",
+      "lines": 95
+    },
+    {
+      "file": "backend/app/services/__init__.py",
+      "lines": 23
+    },
+    {
+      "file": "backend/app/services/auth_session.py",
+      "lines": 51
+    },
+    {
+      "file": "backend/app/services/custom_event_mapper.py",
+      "lines": 32
+    },
+    {
+      "file": "backend/app/services/event_catalog.py",
+      "lines": 15
+    },
+    {
+      "file": "backend/app/services/fallback_parser.py",
+      "lines": 212
+    },
+    {
+      "file": "backend/app/services/groq_extractor.py",
+      "lines": 86
+    },
+    {
+      "file": "backend/app/services/quota_guard.py",
+      "lines": 79
+    },
+    {
+      "file": "backend/app/services/quote_analysis.py",
+      "lines": 148
+    },
+    {
+      "file": "backend/app/services/upload_validator.py",
+      "lines": 87
+    },
+    {
+      "file": "backend/app/services/vendor_search.py",
+      "lines": 12
+    },
+    {
+      "file": "frontend/src/api/client.ts",
+      "lines": 14
+    },
+    {
+      "file": "frontend/src/api/sseClient.ts",
+      "lines": 63
+    },
+    {
+      "file": "frontend/src/api/types.ts",
+      "lines": 170
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "lines": 129
+    },
+    {
+      "file": "frontend/src/components/AmbientEffects.tsx",
+      "lines": 66
+    },
+    {
+      "file": "frontend/src/components/AuditDeltaDrawer.tsx",
+      "lines": 67
+    },
+    {
+      "file": "frontend/src/components/AuthGate.tsx",
+      "lines": 62
+    },
+    {
+      "file": "frontend/src/components/BudgetAllocationBars.tsx",
+      "lines": 44
+    },
+    {
+      "file": "frontend/src/components/BudgetProgress.tsx",
+      "lines": 18
+    },
+    {
+      "file": "frontend/src/components/CascadeGraphView.tsx",
+      "lines": 43
+    },
+    {
+      "file": "frontend/src/components/layoutDag.ts",
+      "lines": 58
+    },
+    {
+      "file": "frontend/src/components/LazyDialogs.tsx",
+      "lines": 24
+    },
+    {
+      "file": "frontend/src/components/OnboardingWizard.tsx",
+      "lines": 79
+    },
+    {
+      "file": "frontend/src/components/QuickScenarioChips.tsx",
+      "lines": 49
+    },
+    {
+      "file": "frontend/src/components/QuoteResults.tsx",
+      "lines": 21
+    },
+    {
+      "file": "frontend/src/components/SavedQuotes.tsx",
+      "lines": 102
+    },
+    {
+      "file": "frontend/src/components/ScenarioBranchCompare.tsx",
+      "lines": 37
+    },
+    {
+      "file": "frontend/src/components/TimelineChecklist.tsx",
+      "lines": 16
+    },
+    {
+      "file": "frontend/src/components/TradeOffCards.tsx",
+      "lines": 108
+    },
+    {
+      "file": "frontend/src/components/ui/index.tsx",
+      "lines": 92
+    },
+    {
+      "file": "frontend/src/components/ui/Tabs.tsx",
+      "lines": 30
+    },
+    {
+      "file": "frontend/src/components/VendorDiscovery.tsx",
+      "lines": 46
+    },
+    {
+      "file": "frontend/src/components/VendorQuoteModal.tsx",
+      "lines": 86
+    },
+    {
+      "file": "frontend/src/lib/format.ts",
+      "lines": 10
+    },
+    {
+      "file": "frontend/src/lib/googleMapsUrl.ts",
+      "lines": 21
+    },
+    {
+      "file": "frontend/src/lib/onboarding.ts",
+      "lines": 23
+    },
+    {
+      "file": "frontend/src/lib/useOnboardingWizard.ts",
+      "lines": 132
+    },
+    {
+      "file": "frontend/src/lib/useRequestController.ts",
+      "lines": 14
+    },
+    {
+      "file": "frontend/src/lib/vendorDiscoveryCategories.ts",
+      "lines": 12
+    },
+    {
+      "file": "frontend/src/main.tsx",
+      "lines": 16
+    },
+    {
+      "file": "frontend/src/state/planStore.ts",
+      "lines": 149
+    },
+    {
+      "file": "frontend/src/tabs.config.ts",
+      "lines": 14
+    },
+    {
+      "file": "frontend/src/views/BudgetTab.tsx",
+      "lines": 31
+    },
+    {
+      "file": "frontend/src/views/EventsTab.tsx",
+      "lines": 91
+    },
+    {
+      "file": "frontend/src/views/HowItWorksTab.tsx",
+      "lines": 15
+    },
+    {
+      "file": "frontend/src/views/OverviewTab.tsx",
+      "lines": 30
+    },
+    {
+      "file": "frontend/src/views/QuotesTab.tsx",
+      "lines": 5
+    },
+    {
+      "file": "frontend/src/views/ScenariosTab.tsx",
+      "lines": 18
+    },
+    {
+      "file": "frontend/src/views/TimelineTab.tsx",
+      "lines": 19
+    },
+    {
+      "file": "frontend/src/views/VendorsTab.tsx",
+      "lines": 74
+    }
+  ],
+  "functions": [
+    {
+      "file": "backend/app/api_docs.py",
+      "name": "configure_docs",
+      "line": 12,
+      "lines": 33,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/api_docs.py",
+      "name": "swagger",
+      "line": 18,
+      "lines": 16,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/api_docs.py",
+      "name": "redoc",
+      "line": 36,
+      "lines": 9,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/config.py",
+      "name": "valid_app_origin",
+      "line": 28,
+      "lines": 15,
+      "complexity": 9,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/config.py",
+      "name": "exact_origins",
+      "line": 57,
+      "lines": 17,
+      "complexity": 9,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/engine/budget_builder.py",
+      "name": "build_budgets",
+      "line": 20,
+      "lines": 77,
+      "complexity": 28,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/budget_tradeoffs.py",
+      "name": "compute_contingency_buffer",
+      "line": 22,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/budget_tradeoffs.py",
+      "name": "evaluate_budget_tradeoffs",
+      "line": 29,
+      "lines": 139,
+      "complexity": 12,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/cascade_replanner.py",
+      "name": "apply_event_plan_delta",
+      "line": 14,
+      "lines": 48,
+      "complexity": 16,
+      "nesting": 4
+    },
+    {
+      "file": "backend/app/engine/conflict_rules.py",
+      "name": "evaluate_conflicts",
+      "line": 8,
+      "lines": 64,
+      "complexity": 13,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/dependency_scheduler.py",
+      "name": "topological_sort_tasks",
+      "line": 15,
+      "lines": 33,
+      "complexity": 13,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/dependency_scheduler.py",
+      "name": "compute_cpm_schedule",
+      "line": 50,
+      "lines": 45,
+      "complexity": 13,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "old_guest_total",
+      "line": 25,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "apply",
+      "line": 29,
+      "lines": 17,
+      "complexity": 9,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "_guest_count",
+      "line": 47,
+      "lines": 26,
+      "complexity": 11,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "_per_plate",
+      "line": 74,
+      "lines": 13,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "_date",
+      "line": 88,
+      "lines": 6,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "_venue",
+      "line": 95,
+      "lines": 6,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "_indoor",
+      "line": 102,
+      "lines": 23,
+      "complexity": 9,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "_diet",
+      "line": 126,
+      "lines": 10,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "_budget",
+      "line": 137,
+      "lines": 8,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_delta.py",
+      "name": "_first_date",
+      "line": 146,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "apply",
+      "line": 22,
+      "lines": 15,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_event_exists",
+      "line": 38,
+      "lines": 2,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_task_ids",
+      "line": 41,
+      "lines": 2,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_renumber",
+      "line": 44,
+      "lines": 3,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_add_event",
+      "line": 48,
+      "lines": 13,
+      "complexity": 7,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_add_day",
+      "line": 62,
+      "lines": 5,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_remove_day",
+      "line": 68,
+      "lines": 10,
+      "complexity": 6,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_remove_event",
+      "line": 79,
+      "lines": 6,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_set_guest_count",
+      "line": 86,
+      "lines": 11,
+      "complexity": 7,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_move_event",
+      "line": 98,
+      "lines": 13,
+      "complexity": 9,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_reorder_days",
+      "line": 112,
+      "lines": 9,
+      "complexity": 6,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_edits.py",
+      "name": "_update_event",
+      "line": 122,
+      "lines": 16,
+      "complexity": 9,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/event_metadata.py",
+      "name": "index_catalog",
+      "line": 24,
+      "lines": 3,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/event_metadata.py",
+      "name": "event_metadata",
+      "line": 29,
+      "lines": 19,
+      "complexity": 5,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/engine/event_metadata.py",
+      "name": "build_hints",
+      "line": 50,
+      "lines": 59,
+      "complexity": 20,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/engine/event_operations.py",
+      "name": "edit_event_plan",
+      "line": 22,
+      "lines": 59,
+      "complexity": 13,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/engine/legacy_replanner.py",
+      "name": "apply_delta",
+      "line": 12,
+      "lines": 164,
+      "complexity": 34,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/plan_builder.py",
+      "name": "build_event_plan",
+      "line": 23,
+      "lines": 70,
+      "complexity": 23,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/plan_builder.py",
+      "name": "copy_event_days",
+      "line": 95,
+      "lines": 13,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/plan_diff.py",
+      "name": "changed_budget_categories",
+      "line": 9,
+      "lines": 13,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/plan_diff.py",
+      "name": "event_guest_counts",
+      "line": 24,
+      "lines": 4,
+      "complexity": 4,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/plan_diff.py",
+      "name": "vendor_capacity_violations",
+      "line": 30,
+      "lines": 8,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/plan_diff.py",
+      "name": "dependent_hops",
+      "line": 40,
+      "lines": 18,
+      "complexity": 10,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/quote_operations.py",
+      "name": "mutate_quote",
+      "line": 25,
+      "lines": 87,
+      "complexity": 28,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/quote_selection.py",
+      "name": "validate_quotes",
+      "line": 11,
+      "lines": 14,
+      "complexity": 9,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/engine/quote_selection.py",
+      "name": "effective_assignments",
+      "line": 27,
+      "lines": 15,
+      "complexity": 5,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/engine/scenarios.py",
+      "name": "build_quick_scenario_fixtures",
+      "line": 21,
+      "lines": 83,
+      "complexity": 13,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/engine/task_builder.py",
+      "name": "build_tasks",
+      "line": 18,
+      "lines": 96,
+      "complexity": 23,
+      "nesting": 5
+    },
+    {
+      "file": "backend/app/engine/vendor_comparator.py",
+      "name": "compare_vendor_quote",
+      "line": 6,
+      "lines": 61,
+      "complexity": 5,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/engine/vendor_operations.py",
+      "name": "assign_vendor",
+      "line": 23,
+      "lines": 66,
+      "complexity": 17,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/main.py",
+      "name": "health_check",
+      "line": 51,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/middleware/auth.py",
+      "name": "__init__",
+      "line": 14,
+      "lines": 2,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/middleware/auth.py",
+      "name": "__call__",
+      "line": 17,
+      "lines": 27,
+      "complexity": 10,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/middleware/compression.py",
+      "name": "__init__",
+      "line": 10,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/middleware/compression.py",
+      "name": "__call__",
+      "line": 14,
+      "lines": 4,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/middleware/security.py",
+      "name": "__init__",
+      "line": 31,
+      "lines": 7,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/middleware/security.py",
+      "name": "__call__",
+      "line": 39,
+      "lines": 72,
+      "complexity": 17,
+      "nesting": 4
+    },
+    {
+      "file": "backend/app/middleware/security.py",
+      "name": "secured_send",
+      "line": 45,
+      "lines": 6,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/middleware/security.py",
+      "name": "replay",
+      "line": 100,
+      "lines": 7,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/operation_errors.py",
+      "name": "_json_number",
+      "line": 17,
+      "lines": 2,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/operation_errors.py",
+      "name": "configure_error_handlers",
+      "line": 21,
+      "lines": 12,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/operation_errors.py",
+      "name": "run_plan_operation",
+      "line": 35,
+      "lines": 12,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/operation_errors.py",
+      "name": "validation_error",
+      "line": 25,
+      "lines": 8,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/auth_router.py",
+      "name": "cookie",
+      "line": 28,
+      "lines": 12,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/auth_router.py",
+      "name": "session",
+      "line": 43,
+      "lines": 7,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/auth_router.py",
+      "name": "login",
+      "line": 53,
+      "lines": 28,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/routers/auth_router.py",
+      "name": "google_identity",
+      "line": 83,
+      "lines": 29,
+      "complexity": 5,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/routers/auth_router.py",
+      "name": "callback",
+      "line": 115,
+      "lines": 55,
+      "complexity": 17,
+      "nesting": 5
+    },
+    {
+      "file": "backend/app/routers/auth_router.py",
+      "name": "logout",
+      "line": 173,
+      "lines": 13,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "edit_saved_quote",
+      "line": 102,
+      "lines": 13,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "_today",
+      "line": 133,
+      "lines": 2,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "_example_days",
+      "line": 137,
+      "lines": 18,
+      "complexity": 4,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "get_event_catalog",
+      "line": 158,
+      "lines": 21,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "get_example_selections",
+      "line": 182,
+      "lines": 36,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "map_custom_event",
+      "line": 221,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "build_plan",
+      "line": 227,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "get_plan_scenario_fixtures",
+      "line": 233,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "edit_plan_events",
+      "line": 241,
+      "lines": 15,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/onboarding_router.py",
+      "name": "assign_plan_vendor",
+      "line": 259,
+      "lines": 6,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/replan_router.py",
+      "name": "_build_templated_rationale",
+      "line": 84,
+      "lines": 14,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/routers/replan_router.py",
+      "name": "_run_deterministic_replan",
+      "line": 100,
+      "lines": 17,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/routers/replan_router.py",
+      "name": "_extract_replan_delta",
+      "line": 119,
+      "lines": 16,
+      "complexity": 7,
+      "nesting": 3
+    },
+    {
+      "file": "backend/app/routers/replan_router.py",
+      "name": "replan_event",
+      "line": 141,
+      "lines": 13,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/replan_router.py",
+      "name": "replan_stream",
+      "line": 160,
+      "lines": 70,
+      "complexity": 1,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/routers/replan_router.py",
+      "name": "get_quota_status",
+      "line": 236,
+      "lines": 7,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/replan_router.py",
+      "name": "event_generator",
+      "line": 169,
+      "lines": 51,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/routers/vendor_router.py",
+      "name": "compare_quote",
+      "line": 37,
+      "lines": 7,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/vendor_router.py",
+      "name": "upload_quote_document",
+      "line": 56,
+      "lines": 26,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/routers/vendor_router.py",
+      "name": "analyze_saved",
+      "line": 93,
+      "lines": 9,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/vendor_search_router.py",
+      "name": "search_vendors",
+      "line": 30,
+      "lines": 7,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/routers/vendor_search_router.py",
+      "name": "get_vendor_details",
+      "line": 40,
+      "lines": 6,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/routers/vendor_search_router.py",
+      "name": "nonempty_city",
+      "line": 22,
+      "lines": 5,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/schemas/plan_state.py",
+      "name": "require_catalog_or_custom_event",
+      "line": 62,
+      "lines": 5,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/schemas/plan_state.py",
+      "name": "validate_event_days",
+      "line": 248,
+      "lines": 14,
+      "complexity": 14,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/services/auth_session.py",
+      "name": "required",
+      "line": 16,
+      "lines": 3,
+      "complexity": 2,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/services/auth_session.py",
+      "name": "configured",
+      "line": 21,
+      "lines": 8,
+      "complexity": 4,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/services/auth_session.py",
+      "name": "serializer",
+      "line": 31,
+      "lines": 10,
+      "complexity": 3,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/services/auth_session.py",
+      "name": "read_cookie",
+      "line": 43,
+      "lines": 9,
+      "complexity": 4,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/services/custom_event_mapper.py",
+      "name": "_mapping_fixtures",
+      "line": 12,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/services/custom_event_mapper.py",
+      "name": "suggest_catalog_event",
+      "line": 17,
+      "lines": 16,
+      "complexity": 5,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/services/event_catalog.py",
+      "name": "load_event_catalog",
+      "line": 12,
+      "lines": 4,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/services/fallback_parser.py",
+      "name": "_parse_indian_amount",
+      "line": 100,
+      "lines": 8,
+      "complexity": 4,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/services/fallback_parser.py",
+      "name": "parse_user_intent",
+      "line": 110,
+      "lines": 103,
+      "complexity": 25,
+      "nesting": 4
+    },
+    {
+      "file": "backend/app/services/groq_extractor.py",
+      "name": "_cache_key",
+      "line": 29,
+      "lines": 3,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/services/groq_extractor.py",
+      "name": "_load_prompt_template",
+      "line": 34,
+      "lines": 2,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/services/groq_extractor.py",
+      "name": "is_groq_available",
+      "line": 38,
+      "lines": 4,
+      "complexity": 3,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/services/groq_extractor.py",
+      "name": "extract_intent_delta",
+      "line": 44,
+      "lines": 43,
+      "complexity": 6,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/services/quota_guard.py",
+      "name": "_refill_rpm",
+      "line": 32,
+      "lines": 7,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/services/quota_guard.py",
+      "name": "_reset_daily_if_needed",
+      "line": 40,
+      "lines": 6,
+      "complexity": 2,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/services/quota_guard.py",
+      "name": "try_acquire",
+      "line": 47,
+      "lines": 14,
+      "complexity": 3,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/services/quota_guard.py",
+      "name": "remaining_daily",
+      "line": 62,
+      "lines": 5,
+      "complexity": 1,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/services/quota_guard.py",
+      "name": "seconds_until_rpm_available",
+      "line": 68,
+      "lines": 8,
+      "complexity": 2,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/services/quote_analysis.py",
+      "name": "analyze_quotes",
+      "line": 45,
+      "lines": 104,
+      "complexity": 23,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/services/upload_validator.py",
+      "name": "detect_magic_type",
+      "line": 36,
+      "lines": 17,
+      "complexity": 7,
+      "nesting": 1
+    },
+    {
+      "file": "backend/app/services/upload_validator.py",
+      "name": "validate_quote_upload",
+      "line": 55,
+      "lines": 27,
+      "complexity": 5,
+      "nesting": 2
+    },
+    {
+      "file": "backend/app/services/upload_validator.py",
+      "name": "sanitize_untrusted_input",
+      "line": 84,
+      "lines": 4,
+      "complexity": 1,
+      "nesting": 0
+    },
+    {
+      "file": "backend/app/services/vendor_search.py",
+      "name": "maps_search_url",
+      "line": 6,
+      "lines": 7,
+      "complexity": 2,
+      "nesting": 1
+    }
+  ],
+  "missing_docs": [],
+  "duplication": {
+    "method": "exact normalized eight nonblank-line windows, minimum 200 characters, excluding comments/imports",
+    "duplicated_lines": 0,
+    "source_lines": 5236,
+    "percent": 0.0,
+    "groups": []
+  }
+}
