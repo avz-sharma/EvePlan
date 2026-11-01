@@ -82,6 +82,6 @@ def validate_quote_upload(content: bytes, filename: str = "quote") -> tuple[str,
 
 
 def sanitize_untrusted_input(raw_text: str) -> str:
-    """Wraps user input in defensive boundary tags to prevent prompt injection."""
+    """Mark user text as data; provider output still requires schema validation."""
     clean = raw_text.strip().replace("</untrusted_user_input>", "")
     return f"<untrusted_user_input>\n{clean}\n</untrusted_user_input>"

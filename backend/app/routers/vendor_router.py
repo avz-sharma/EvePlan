@@ -5,6 +5,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from starlette.concurrency import run_in_threadpool
 
 from ..engine.vendor_comparator import compare_vendor_quote
+from ..operation_errors import run_plan_operation
 from ..schemas.plan_state import EventPlan
 from ..schemas.vendor_quote import (
     NormalizedQuote,
@@ -25,7 +26,7 @@ router = APIRouter(prefix="/api/vendor", tags=["Vendor Coordination"])
 class CompareRequest(BaseModel):
     """Written quote values and a host-entered budget for deterministic comparison."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
 
     quote: NormalizedQuote
     allocated_budget_max_inr: float = Field(ge=0.0)
@@ -65,7 +66,7 @@ async def upload_quote_document(file: UploadFile = File(...)) -> None:
         ) from e
     except PayloadTooLargeError as e:
         raise HTTPException(
-            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            status_code=status.HTTP_413_CONTENT_TOO_LARGE,
             detail=str(e),
         ) from e
     except FileValidationError as e:
@@ -83,7 +84,7 @@ async def upload_quote_document(file: UploadFile = File(...)) -> None:
 class AnalyzeRequest(BaseModel):
     """Two to eight saved quotation IDs and their containing plan."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
     plan: EventPlan
     quote_ids: list[str] = Field(min_length=2, max_length=8)
 
@@ -91,10 +92,7 @@ class AnalyzeRequest(BaseModel):
 @router.post("/analyze-saved")
 async def analyze_saved(req: AnalyzeRequest) -> dict[str, object]:
     """Return optional provider advice without changing the host selection."""
-    try:
-        result = await run_in_threadpool(analyze_quotes, req.plan, req.quote_ids)
-    except (ValueError, StopIteration) as error:
-        raise HTTPException(status_code=422, detail=str(error)) from error
+    result = await run_plan_operation(analyze_quotes, req.plan, req.quote_ids)
     return {
         "analysis": result,
         "message": "Groq recommends a vendor; you make the final choice."

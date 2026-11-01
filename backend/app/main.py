@@ -8,6 +8,7 @@ from .config import settings
 from .middleware.auth import AuthenticationGate
 from .middleware.compression import CompressionMiddleware
 from .middleware.security import SecurityMiddleware
+from .operation_errors import configure_error_handlers
 from .routers import onboarding_router, replan_router, vendor_router, vendor_search_router
 from .routers.auth_router import router as auth_router
 
@@ -20,6 +21,7 @@ app = FastAPI(
 )
 
 app.add_middleware(AuthenticationGate)
+configure_error_handlers(app)
 app.include_router(auth_router)
 
 # Locked-down CORS

@@ -17,7 +17,7 @@ Remote HEAD points to `codex/optimization`, not `main`. No submission or deploym
 
 All 12 README commands passed before source edits: Ruff, strict mypy, pytest, engine coverage, Bandit, hashed dev pip-audit, frontend lint, Knip, Vitest coverage, production build, pnpm audit and Playwright smoke (8 tests).
 
-Baseline JavaScript: 381,961 bytes raw, 127,749 bytes summed gzip across chunks. CSS: 29,002 bytes reported by Vite (rounded build display: 29.00 kB). Engine/API timing and Lighthouse JSON are under `docs/measurements/quality-baseline-*`.
+Baseline JavaScript: 381,961 bytes raw, 127,749 bytes summed gzip across chunks. CSS: 29.00 kB in the rounded Vite build display. Engine/API timing and Lighthouse JSON are under `docs/measurements/quality-baseline-*`.
 
 `quality-baseline-source.json` records LOC for every authored production Python/TS/TSX file and Python function complexity/nesting; `quality-baseline-frontend-source.json` records TypeScript compiler AST function metrics. Complexity counts decisions, boolean alternatives and comprehensions; it is a reproducible static estimate, not Radon. Generated declarations, vendored assets and tests are excluded.
 

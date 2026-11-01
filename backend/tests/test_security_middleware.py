@@ -55,3 +55,21 @@ def test_exact_cors_compression_and_documentation_scripts():
             assert response.status_code == 200
             assert not re.search(r"<script(?:\s[^>]*)?>(?!\s*</script>)[\s\S]*?</script>", response.text)
         assert client.get("/static/docs/swagger-init.js").status_code == 200
+
+
+def test_invalid_length_and_rate_window_recovery(monkeypatch):
+    from types import SimpleNamespace
+
+    from app.middleware import security
+
+    clock = [100.0]
+    monkeypatch.setattr(security, "time", SimpleNamespace(monotonic=lambda: clock[0]))
+    with TestClient(protected_app(limit=10, rpm=2)) as client:
+        invalid = client.post("/echo", content=b"x", headers={"Content-Length": "invalid"})
+        assert invalid.status_code == 400
+        assert client.post("/echo", content=b"ok").status_code == 200
+        limited = client.post("/echo", content=b"ok")
+        assert limited.status_code == 429 and "retry-after" in limited.headers
+        assert limited.headers["x-content-type-options"] == "nosniff"
+        clock[0] += 61
+        assert client.post("/echo", content=b"ok").status_code == 200

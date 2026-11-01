@@ -50,7 +50,9 @@ def analyze_quotes(plan: EventPlan, quote_ids: list[str]) -> QuoteAnalysis | Non
     if len({(q.event_id, q.category) for q in quotes}) != 1:
         raise ValueError("Choose quotations for the same event and category")
 
-    event = next(e for d in plan.days for e in d.events if e.id == quotes[0].event_id)
+    event = next((e for d in plan.days for e in d.events if e.id == quotes[0].event_id), None)
+    if event is None:
+        raise ValueError("Quotation event was not found")
     data = json.dumps(
         {
             "event": event.model_dump(mode="json"),

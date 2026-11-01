@@ -492,7 +492,7 @@
           "Replanning"
         ],
         "summary": "Replan Stream",
-        "description": "3-stage SSE streaming endpoint for natural language replanning.\n\nStream sequence:\n  event: delta       \u2192 validated PlanDelta JSON\n  event: engine_diff \u2192 CascadeDiff + updated plan + trade-off options (immediate)\n  event: rationale   \u2192 human explanation (templated, with optional LLM enhancement)",
+        "description": "3-stage SSE streaming endpoint for natural language replanning.\n\nStream sequence:\n  event: delta       \u2192 validated PlanDelta JSON\n  event: engine_diff \u2192 CascadeDiff + updated plan + trade-off options (immediate)\n  event: rationale   \u2192 human explanation (templated from checked engine output)",
         "operationId": "replan_stream_api_plan_replan_stream_post",
         "requestBody": {
           "content": {

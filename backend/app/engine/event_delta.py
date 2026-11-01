@@ -2,9 +2,10 @@
 
 from dataclasses import dataclass, field
 from datetime import date, timedelta
+from math import isfinite
 
 from ..schemas.intent_delta import PlanDelta
-from ..schemas.plan_state import EventDay, EventPlan
+from ..schemas.plan_state import MAX_GUEST_COUNT, EventDay, EventPlan
 
 
 @dataclass
@@ -50,6 +51,8 @@ class EventDelta:
             if self.delta.guest_count_override is not None
             else max(1, self.old_guest_total + self.delta.guest_count_delta)
         )
+        if self.candidate.guest_count > MAX_GUEST_COUNT:
+            raise ValueError("Guest count must be between 1 and 100,000.")
         for day in self.days:
             day.events = [
                 event.model_copy(update={"guest_count": self.candidate.guest_count})
@@ -134,6 +137,8 @@ class EventDelta:
     def _budget(self) -> None:
         self.mutated = "budget_cap"
         new_cap = max(1.0, self.plan.total_budget_cap_inr + self.delta.budget_cap_inr_delta)
+        if not isfinite(new_cap):
+            raise ValueError("Budget is outside the supported numeric range")
         self.candidate.total_budget_cap_inr = new_cap
         self.candidate.budget_range_max_inr = new_cap
         self.candidate.budget_range_min_inr = min(self.plan.budget_range_min_inr, new_cap)

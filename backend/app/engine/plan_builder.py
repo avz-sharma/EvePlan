@@ -6,6 +6,7 @@ from datetime import date, timedelta
 
 from ..schemas.catalog import EventCatalog
 from ..schemas.plan_state import (
+    EventDay,
     EventPlan,
     PlanEvent,
 )
@@ -66,20 +67,16 @@ def build_event_plan(
         (assignment.event_id, VENDOR_CATEGORY_LABELS[assignment.category.value])
         for assignment in effective_assignments(resolved)
     }
-    resolved.tasks = [
-        task.model_copy(
-            update={
-                "status": (
-                    "COMPLETED"
-                    if prior_status.get(task.id) == "COMPLETED"
-                    else "IN_PROGRESS"
-                    if (task.event_id, task.budget_category) in assigned_categories
-                    else prior_status.get(task.id, "PENDING")
-                )
-            }
-        )
-        for task in tasks
-    ]
+    # These scheduled nodes are newly owned; copying them again adds no isolation.
+    for task in tasks:
+        previous_status = prior_status.get(task.id, "PENDING")
+        if previous_status == "COMPLETED":
+            task.status = "COMPLETED"
+        elif (task.event_id, task.budget_category) in assigned_categories:
+            task.status = "IN_PROGRESS"
+        else:
+            task.status = previous_status
+    resolved.tasks = tasks
     resolved.budget_buckets = build_budgets(resolved, catalog, index)
     resolved.days_until_event = max(0, (plan.first_event_date - today).days)
     resolved.dietary_split = resolved.dietary_split.model_copy(
@@ -93,3 +90,18 @@ def build_event_plan(
         update={"elderly_count": plan.elder_members}
     )
     return resolved
+
+
+def copy_event_days(days: list[EventDay]) -> list[EventDay]:
+    """Copy mutable event inputs while sharing only scalar and enum values."""
+    return [
+        day.model_copy(
+            update={
+                "events": [
+                    event.model_copy(update={"vendor_categories": list(event.vendor_categories)})
+                    for event in day.events
+                ]
+            }
+        )
+        for day in days
+    ]

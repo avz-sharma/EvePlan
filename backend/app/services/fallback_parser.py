@@ -8,6 +8,7 @@ in response metadata so the UI shows a transparent status badge.
 import re
 
 from ..schemas.intent_delta import PlanDelta
+from ..schemas.plan_state import MAX_GUEST_COUNT
 
 # Patterns accept both "40 extra guests" and "extra 40 guests" forms
 _GUEST_PATTERNS: list[re.Pattern[str]] = [
@@ -146,7 +147,7 @@ def parse_user_intent(user_text: str) -> tuple[PlanDelta, bool]:
         )
         if total:
             guest_total = int(next(group for group in total.groups() if group))
-            if not 1 <= guest_total <= 100_000:
+            if not 1 <= guest_total <= MAX_GUEST_COUNT:
                 raise ValueError("Guest count must be between 1 and 100,000.")
             extracted = True
 

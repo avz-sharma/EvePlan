@@ -1,5 +1,9 @@
 import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { expect, test } from "@playwright/test";
+
+const require = createRequire(import.meta.url);
+const axeSource = readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 
 test("wizard, plan, streamed replan and degraded vendor assignment", async ({ page }) => {
   await page.goto("/");
@@ -159,4 +163,52 @@ for (const width of [390, 1280]) test(`soothing overview theme and budget at ${w
   await page.getByRole("tab", { name: "Vendors", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Manual vendor entry", exact: true })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Compare Saved Quotes", exact: true })).toBeVisible();
+});
+
+test("keyboard navigation reaches every tab and restores focus after a dialog", async ({ page }) => {
+  const plan = JSON.parse(readFileSync("../backend/app/fixtures/scenario_outputs.json", "utf8")).fixtures[0].updated_plan;
+  await page.addInitScript(value => localStorage.setItem("eveplan_active_plan", JSON.stringify(value)), plan);
+  await page.goto("/#/overview");
+  await page.getByRole("tab", { name: "Overview", exact: true }).focus();
+  for (const name of ["Events", "Budget", "Timeline", "Vendors", "Scenarios", "Quotes", "How it works"]) {
+    await page.keyboard.press("ArrowRight");
+    await expect(page.getByRole("tab", { name, exact: true })).toHaveAttribute("aria-selected", "true");
+    await expect(page.getByRole("tab", { name, exact: true })).toBeFocused();
+    await expect(page.getByRole("tabpanel", { name, exact: true })).toBeVisible();
+  }
+  await page.keyboard.press("ArrowLeft");
+  const launch = page.getByRole("button", { name: "Snap a quote", exact: true });
+  await launch.focus();
+  await page.keyboard.press("Enter");
+  const dialog = page.getByRole("dialog", { name: "Compare a vendor quote" });
+  await expect(dialog).toBeVisible();
+  for (let index = 0; index < 16; index++) {
+    await page.keyboard.press(index % 2 ? "Shift+Tab" : "Tab");
+    expect(await page.evaluate(() => Boolean(document.activeElement?.closest('[role="dialog"]')))).toBe(true);
+  }
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(launch).toBeFocused();
+});
+
+test("budget recovery cards pass axe and apply from the keyboard", async ({ page }) => {
+  const plan = JSON.parse(readFileSync("../backend/app/fixtures/scenario_outputs.json", "utf8")).fixtures[0].updated_plan;
+  plan.total_budget_cap_inr = 100000;
+  plan.budget_range_min_inr = 80000;
+  plan.budget_range_max_inr = 100000;
+  await page.addInitScript(value => localStorage.setItem("eveplan_active_plan", JSON.stringify(value)), plan);
+  await page.goto("/#/budget");
+  await page.getByLabel("Describe a change", { exact: true }).fill("+40 guests");
+  await page.getByRole("button", { name: "Describe a change", exact: true }).press("Enter");
+  const apply = page.getByRole("button", { name: "Apply Trade-Off", exact: true }).first();
+  await expect(apply).toBeVisible();
+  await page.evaluate(axeSource);
+  const violations = await page.evaluate(async () => {
+    const audit = window as typeof window & { axe: { run: (root: Document) => Promise<{ violations: { id: string }[] }> } };
+    return (await audit.axe.run(document)).violations.map(item => item.id);
+  });
+  expect(violations).toEqual([]);
+  await apply.focus();
+  await page.keyboard.press("Enter");
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("eveplan_active_plan")!).notes.some((note: string) => note.startsWith("Applied trade-off:")))).toBe(true);
 });

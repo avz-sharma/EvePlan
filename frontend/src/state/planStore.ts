@@ -36,7 +36,7 @@ function persist(key: string, plan: EventPlan | null) {
     const saved = { ...plan };
     delete saved.profile_hints;
     localStorage.setItem(storageKey(key), JSON.stringify(saved));
-  } catch { /* A plan remains usable when browser storage is disabled. */ }
+  } catch { notify("Browser storage is unavailable. Changes will last only for this session."); }
 }
 
 type Action = { type: "patch"; patch: Partial<PlanState> } | { type: "update"; plan: EventPlan; patch?: Partial<PlanState> };
@@ -88,9 +88,9 @@ export const planActions = {
     dispatch({ type: "update", plan, patch: { lastDiff: diff } });
   },
   restore: () => {
-    const saved = localStorage.getItem(storageKey("eveplan_active_plan"));
-    if (!saved) return false;
     try {
+      const saved = localStorage.getItem(storageKey("eveplan_active_plan"));
+      if (!saved) return false;
       const plan = JSON.parse(saved) as EventPlan;
       delete plan.profile_hints;
       if (!Array.isArray(plan.days) || !plan.days.length || !Array.isArray(plan.tasks)) throw new Error("Invalid plan");
@@ -99,7 +99,12 @@ export const planActions = {
       if (forkedPlan) delete forkedPlan.profile_hints;
       patch({ plan, forkedPlan, history: [plan], historyIndex: 0, forkHistory: forkedPlan ? [forkedPlan] : [], forkHistoryIndex: forkedPlan ? 0 : -1 });
       return true;
-    } catch { localStorage.removeItem(storageKey("eveplan_active_plan")); return false; }
+    } catch {
+      try { localStorage.removeItem(storageKey("eveplan_active_plan")); }
+      catch { /* Storage may forbid both reads and removal; keep the in-memory plan usable. */ }
+      notify("Saved plans could not be loaded. You can still create a plan.");
+      return false;
+    }
   },
   undo: () => historyStep(-1), redo: () => historyStep(1),
   fork: () => { if (state.plan) { const forkedPlan = structuredClone(state.plan); patch({ forkedPlan, forkHistory: [forkedPlan], forkHistoryIndex: 0 }); notify("Plan fork created"); } },

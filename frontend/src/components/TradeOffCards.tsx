@@ -39,11 +39,11 @@ export const TradeOffCards: React.FC<TradeOffCardsProps> = ({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-semibold text-slate-100 flex items-center gap-2">
+          <h3 className="text-base font-semibold text-ink flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-amber-400" />
             Ways to adjust the budget
           </h3>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-muted">
             Preview an option before applying it to your plan.
           </p>
         </div>
@@ -54,7 +54,8 @@ export const TradeOffCards: React.FC<TradeOffCardsProps> = ({
           <motion.div
             key={opt.id}
             tabIndex={0}
-            role="button"
+            role="group"
+            aria-label={`Budget adjustment: ${opt.title}`}
             className="group relative bg-slate-900 border border-slate-800 hover:border-amber-500/70 rounded-xl p-4 transition-[transform,opacity] duration-200 flex flex-col justify-between focus:outline-none focus:ring-2 focus:ring-amber-500"
             onMouseEnter={() => onHoverOption(opt.bucket_adjustments)}
             onMouseLeave={() => onHoverOption(null)}

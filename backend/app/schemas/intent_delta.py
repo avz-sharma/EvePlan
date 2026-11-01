@@ -4,19 +4,19 @@ from typing import Annotated
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
 
-from .plan_state import SubEventType
+from .plan_state import MAX_GUEST_COUNT, SubEventType
 
 
 class PlanDelta(BaseModel):
     """Flat, validated intent fields; arithmetic belongs to the pure engine."""
 
-    model_config = ConfigDict(extra="forbid", frozen=True)
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid", frozen=True)
 
     guest_count_delta: int = Field(default=0, description="Change in total guest headcount")
     guest_count_override: int | None = Field(
         default=None,
         ge=1,
-        le=100_000,
+        le=MAX_GUEST_COUNT,
         description="Exact total guest count for the plan and all events; takes precedence over guest_count_delta",
     )
     sub_event_filter: list[SubEventType] | None = Field(
@@ -46,7 +46,7 @@ class PlanDelta(BaseModel):
 class CascadeDiff(BaseModel):
     """Deterministic affected tasks, budget categories, constraints and hop distances."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
 
     mutated_attribute: str = Field(
         description="Primary field changed, e.g., guest_count, date, per_plate"
@@ -69,7 +69,7 @@ class CascadeDiff(BaseModel):
 class TradeOffOption(BaseModel):
     """A budget adjustment with its host-visible trade-offs and estimated savings."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
 
     id: str = Field(description="Identifier for trade-off option, e.g. opt_trim_reception")
     title: str = Field(description="Brief title of the trade-off")

@@ -12,6 +12,11 @@ FORBIDDEN_MODULES = {
     "aiohttp",
     "fastapi",
     "starlette",
+    "pathlib",
+    "os",
+    "io",
+    "subprocess",
+    "time",
 }
 
 
@@ -24,7 +29,7 @@ def test_engine_has_zero_llm_or_network_imports() -> None:
     engine_dir = Path(__file__).resolve().parent.parent / "app" / "engine"
     assert engine_dir.is_dir(), f"Engine directory not found at {engine_dir}"
 
-    py_files = list(engine_dir.glob("*.py"))
+    py_files = list(engine_dir.rglob("*.py"))
     assert len(py_files) > 0, "No python files found in engine directory"
 
     violations: list[str] = []
@@ -32,6 +37,8 @@ def test_engine_has_zero_llm_or_network_imports() -> None:
     for py_file in py_files:
         tree = ast.parse(py_file.read_text(encoding="utf-8"), filename=str(py_file))
         for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "open":
+                violations.append(f"{py_file.name}:{node.lineno} opens a file inside the pure engine")
             if isinstance(node, ast.Import):
                 for alias in node.names:
                     root_name = alias.name.split(".")[0]

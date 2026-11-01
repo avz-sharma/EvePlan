@@ -14,6 +14,7 @@ from ..engine.vendor_operations import assign_vendor
 from ..operation_errors import run_plan_operation
 from ..schemas.catalog import EventCatalog
 from ..schemas.plan_state import (
+    MAX_GUEST_COUNT,
     EventDay,
     EventPlan,
     PlanEvent,
@@ -74,7 +75,7 @@ class EventEditRequest(BaseModel):
     day_number: int | None = Field(default=None, ge=1, le=5)
     target_day_number: int | None = Field(default=None, ge=1, le=5)
     event: PlanEvent | None = None
-    guest_count: int | None = Field(default=None, ge=1, le=100_000)
+    guest_count: int | None = Field(default=None, ge=1, le=MAX_GUEST_COUNT)
 
 
 class VendorAssignmentRequest(BaseModel):

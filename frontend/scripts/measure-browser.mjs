@@ -5,9 +5,14 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { createRequire } from 'node:module';
 
 const phase = process.argv[2] || 'baseline';
 const profiling = process.argv.includes('--profile');
+const checkAxe = process.argv.includes('--axe');
+const tabs = process.argv.includes('--all-tabs') ? ['overview', 'events', 'budget', 'timeline', 'vendors', 'scenarios', 'quotes', 'how-it-works'] : ['overview', 'vendors'];
+const require = createRequire(import.meta.url);
+const axeSource = checkAxe ? await readFile(require.resolve('axe-core/axe.min.js'), 'utf8') : '';
 const folder = resolve('../docs/measurements');
 await mkdir(folder, { recursive: true });
 const server = await preview({ build: { outDir: profiling ? 'dist-profile' : 'dist' },
@@ -55,22 +60,28 @@ try {
     console.log(JSON.stringify({ phase, react_commits: records.length, actual_duration_ms: records.map(record => record[2]) }));
   } else {
     const metrics = [];
-    for (const tab of ['overview', 'vendors']) {
+    for (const tab of tabs) {
       await call('navigate_page', { url: `http://127.0.0.1:4178/#/${tab}` });
       await page.waitForTimeout(500);
+      let violations = [];
+      if (checkAxe) {
+        await page.evaluate(axeSource);
+        violations = await page.evaluate(async () => (await window.axe.run(document)).violations.map(({ id, impact, description, nodes }) => ({ id, impact, description, targets: nodes.map(node => node.target) })));
+      }
       const report = await lighthouse(`http://127.0.0.1:4178/#/${tab}`, {
         port: 9228, output: 'json', logLevel: 'error', onlyCategories: ['performance', 'accessibility'],
         disableStorageReset: true, formFactor: 'mobile', throttlingMethod: 'simulate',
         throttling: { cpuSlowdownMultiplier: 4 },
       });
       await writeFile(`${folder}/${phase}-${tab}-lighthouse.json`, report.report);
-      metrics.push({ tab, performance: report.lhr.categories.performance.score * 100,
+      metrics.push({ tab, ...(checkAxe ? { axe_violations: violations } : {}), performance: report.lhr.categories.performance.score * 100,
         accessibility: report.lhr.categories.accessibility.score * 100,
         lcp_ms: report.lhr.audits['largest-contentful-paint'].numericValue,
         tbt_ms: report.lhr.audits['total-blocking-time'].numericValue });
       console.log(JSON.stringify(metrics.at(-1)));
     }
     await writeFile(`${folder}/${phase}-lighthouse-summary.json`, JSON.stringify(metrics, null, 2));
+    if (metrics.some(entry => entry.axe_violations?.length)) process.exitCode = 1;
   }
 } finally {
   await client.close();

@@ -11,7 +11,7 @@ from ..schemas.plan_state import (
     PlanEvent,
 )
 from .event_edits import EventEdit
-from .plan_builder import build_event_plan
+from .plan_builder import build_event_plan, copy_event_days
 from .plan_diff import (
     changed_budget_categories,
     dependent_hops,
@@ -32,7 +32,7 @@ def edit_event_plan(
     target_day_number: int | None = None,
 ) -> tuple[EventPlan, CascadeDiff]:
     """Apply one event/day edit and rebuild dependent dates, budgets, hints, and tasks."""
-    days = [day.model_copy(deep=True) for day in plan.days]
+    days = copy_event_days(plan.days)
     old_task_ids = {task.id for task in plan.tasks if task.event_id == event_id}
     roots, affected_categories = EventEdit(
         plan, days, event_id, day_number, event, guest_count, target_day_number

@@ -6,7 +6,6 @@ flowchart LR
   UI -->|HTTP and SSE| API[FastAPI boundary]
   API --> Engine[Pure builder, DAG and cascade]
   API --> Guards[Quota guards]
-  Guards --> Places[Optional Places API New]
   Guards --> Groq[Optional Groq intent extraction and quote analysis]
   UI --> Manual[Maps links and manual vendor entry]
 ```

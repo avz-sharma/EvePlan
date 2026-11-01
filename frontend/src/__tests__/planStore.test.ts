@@ -79,3 +79,27 @@ it("keeps branch history independent when an undone change is replaced", () => {
   act(() => { planActions.switchFork(); planActions.undo(); });
   expect(result.current?.title).toBe(plan.title);
 });
+
+it("keeps planning available and explains blocked browser storage", () => {
+  const { result } = renderHook(() => usePlanStore(state => state));
+  vi.stubGlobal("localStorage", {
+    getItem: () => { throw new DOMException("Blocked", "SecurityError"); },
+    setItem: () => { throw new DOMException("Blocked", "SecurityError"); },
+    removeItem: () => { throw new DOMException("Blocked", "SecurityError"); },
+  });
+  act(() => { expect(planActions.restore()).toBe(false); });
+  expect(result.current.toast).toContain("Saved plans could not be loaded");
+  act(() => planActions.update({ ...plan, title: "In-memory plan" }));
+  expect(result.current.plan?.title).toBe("In-memory plan");
+  expect(result.current.toast).toContain("Changes will last only for this session");
+});
+
+it("rejects a stale quote response without overwriting a newer plan", async () => {
+  let complete!: (response: Response) => void;
+  vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(resolve => { complete = resolve; })));
+  const mutation = planActions.mutateQuote("contingency", { contingency_percent: 20 });
+  planActions.update({ ...plan, title: "Newer edit" });
+  complete(new Response(JSON.stringify({ updated_plan: plan, diff: saved.fixtures[0].diff })));
+  await expect(mutation).rejects.toThrow("Plan changed while saving");
+  expect(renderHook(() => usePlanStore(state => state.plan)).result.current?.title).toBe("Newer edit");
+});

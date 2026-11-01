@@ -6,6 +6,8 @@ from typing import Annotated, Self
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
 
+MAX_GUEST_COUNT = 100_000
+
 HintKey = Annotated[str, StringConstraints(max_length=80)]
 HintText = Annotated[str, StringConstraints(max_length=500)]
 HintList = Annotated[list[HintText], Field(max_length=40)]
@@ -46,13 +48,13 @@ class VendorCategory(str, Enum):
 class PlanEvent(BaseModel):
     """An immutable event instance identified by a catalog choice or custom name."""
 
-    model_config = ConfigDict(extra="forbid", frozen=True)
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid", frozen=True)
 
     id: str = Field(min_length=1, max_length=80)
     catalog_id: str | None = Field(default=None, min_length=1, max_length=80)
     custom_name: str | None = Field(default=None, min_length=1, max_length=120)
     time_slot: TimeSlot = TimeSlot.EVENING
-    guest_count: int | None = Field(default=None, ge=1, le=100_000)
+    guest_count: int | None = Field(default=None, ge=1, le=MAX_GUEST_COUNT)
     venue_type: str | None = Field(default=None, min_length=1, max_length=80)
     vendor_categories: list[VendorCategory] = Field(default_factory=list, max_length=7)
 
@@ -67,7 +69,7 @@ class PlanEvent(BaseModel):
 class EventDay(BaseModel):
     """One ordered celebration day and its selected events."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
 
     day_number: int = Field(ge=1, le=5)
     date: CalendarDate | None = None
@@ -77,7 +79,7 @@ class EventDay(BaseModel):
 class DietarySplit(BaseModel):
     """Legacy dietary-count summary retained for saved-plan compatibility."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
 
     regular: int = Field(default=0, ge=0, description="Count of regular dietary guests")
     jain: int = Field(default=0, ge=0, description="Count of strictly Jain vegetarian guests")
@@ -88,7 +90,7 @@ class DietarySplit(BaseModel):
 class AccessibilityNeeds(BaseModel):
     """Legacy access requirements retained alongside host-entered needs."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
 
     elderly_count: int = Field(
         default=0, ge=0, description="Number of elderly guests requiring assistance"
@@ -104,7 +106,7 @@ class AccessibilityNeeds(BaseModel):
 class BudgetBucket(BaseModel):
     """Host-derived allocation range, reserve and category-cap status."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
 
     category: str = Field(
         min_length=1, max_length=80, description="Budget category, e.g., Catering, Decor, Venue"
@@ -124,7 +126,7 @@ class BudgetBucket(BaseModel):
 class TaskNode(BaseModel):
     """A dependency task with event-relative dates and calculated CPM values."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
 
     id: str = Field(
         min_length=1, max_length=120, description="Unique task identifier, e.g., task_venue_booking"
@@ -171,7 +173,7 @@ class TaskNode(BaseModel):
 class EventPlan(BaseModel):
     """Bounded client-persisted inputs and their deterministic derived plan state."""
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid")
 
     id: str = Field(min_length=1, max_length=80, description="Plan unique identifier")
     title: str = Field(min_length=1, max_length=120, description="Event celebration title")
@@ -179,7 +181,10 @@ class EventPlan(BaseModel):
         default="celebration", max_length=80, description="Selected event plan template"
     )
     guest_count: int = Field(
-        default=1, gt=0, le=100_000, description="Total guests; each event defaults to this count"
+        default=1,
+        gt=0,
+        le=MAX_GUEST_COUNT,
+        description="Total guests; each event defaults to this count",
     )
     total_budget_cap_inr: float = Field(
         default=0.0, ge=0.0, description="User-entered total budget ceiling"
@@ -224,7 +229,7 @@ class EventPlan(BaseModel):
     accessibility_needs: list[AccessibilityNeed] = Field(
         default_factory=list, max_length=40, description="User-entered accessibility needs"
     )
-    elder_members: int = Field(default=0, ge=0, le=100_000)
+    elder_members: int = Field(default=0, ge=0, le=MAX_GUEST_COUNT)
     vendor_assignments: list["VendorAssignment"] = Field(default_factory=list, max_length=700)
     saved_quotes: list["SavedQuote"] = Field(default_factory=list, max_length=700)
     contingency_percent: float = Field(default=10, ge=0, le=100, allow_inf_nan=False)
@@ -259,7 +264,7 @@ class EventPlan(BaseModel):
 class VendorAssignment(BaseModel):
     """A host-entered vendor offer for one event and service."""
 
-    model_config = ConfigDict(extra="forbid", frozen=True)
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid", frozen=True)
 
     event_id: str = Field(min_length=1, max_length=80)
     category: VendorCategory
@@ -267,13 +272,13 @@ class VendorAssignment(BaseModel):
     notes: str = Field(default="", max_length=2000)
     quoted_total_inr: float | None = Field(default=None, ge=0.0)
     category_budget_cap_inr: float | None = Field(default=None, ge=0.0)
-    capacity: int | None = Field(default=None, ge=1, le=100_000)
+    capacity: int | None = Field(default=None, ge=1, le=MAX_GUEST_COUNT)
 
 
 class SavedQuote(BaseModel):
     """A written vendor quotation and optional finalized budget selection."""
 
-    model_config = ConfigDict(extra="forbid", frozen=True)
+    model_config = ConfigDict(allow_inf_nan=False, extra="forbid", frozen=True)
 
     id: str = Field(min_length=1, max_length=80)
     vendor_id: str = Field(min_length=1, max_length=80)

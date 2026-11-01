@@ -2,8 +2,8 @@
 
 The SSE endpoint streams in strict sequence:
   1. event: delta    → validated PlanDelta JSON
-  2. event: engine_diff → deterministic CascadeDiff, updated EventPlan, and TradeOffOptions (<10ms)
-  3. event: rationale → human-friendly explanation (templated or LLM-generated)
+  2. event: engine_diff → deterministic CascadeDiff, updated EventPlan, and TradeOffOptions
+  3. event: rationale → human-friendly explanation (templated from checked engine output)
 """
 
 from __future__ import annotations
@@ -163,7 +163,7 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
     Stream sequence:
       event: delta       → validated PlanDelta JSON
       event: engine_diff → CascadeDiff + updated plan + trade-off options (immediate)
-      event: rationale   → human explanation (templated, with optional LLM enhancement)
+      event: rationale   → human explanation (templated from checked engine output)
     """
 
     async def event_generator() -> AsyncIterator[str]:
@@ -174,7 +174,7 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
             delta, source, degraded = await run_in_threadpool(
                 _extract_replan_delta, plan_json, req.user_prompt
             )
-        except ValueError as error:
+        except (ValueError, OverflowError) as error:
             yield f"event: error\ndata: {json.dumps({'message': str(error)})}\n\n"
             return
 
@@ -192,7 +192,7 @@ async def replan_stream(req: NaturalLanguageReplanRequest) -> StreamingResponse:
             updated_plan, diff, tradeoff_options = await run_in_threadpool(
                 _run_deterministic_replan, req.plan, delta
             )
-        except ValueError as error:
+        except (ValueError, OverflowError) as error:
             yield f"event: error\ndata: {json.dumps({'message': str(error)})}\n\n"
             return
 

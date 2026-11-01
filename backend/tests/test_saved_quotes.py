@@ -145,3 +145,12 @@ def test_replan_preserves_selected_prices_and_chosen_reserve():
     assert updated.saved_quotes == plan.saved_quotes
     assert updated.contingency_percent == 20
     assert all(b.contingency_inr == round(b.allocated_max_inr * .2, 2) for b in updated.budget_buckets)
+
+
+def test_analysis_rejects_orphaned_event_without_provider_work():
+    plan = analysis_plan()
+    orphaned = plan.model_copy(update={"saved_quotes": [q.model_copy(update={"event_id": "unknown"}) for q in plan.saved_quotes]})
+    with TestClient(app) as client:
+        response = client.post("/api/vendor/analyze-saved", json={"plan": orphaned.model_dump(mode="json"), "quote_ids": ["q1", "q2"]})
+    assert response.status_code == 422
+    assert response.json() == {"detail": "Quotation event was not found"}

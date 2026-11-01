@@ -280,7 +280,7 @@ export interface paths {
          *     Stream sequence:
          *       event: delta       → validated PlanDelta JSON
          *       event: engine_diff → CascadeDiff + updated plan + trade-off options (immediate)
-         *       event: rationale   → human explanation (templated, with optional LLM enhancement)
+         *       event: rationale   → human explanation (templated from checked engine output)
          */
         post: operations["replan_stream_api_plan_replan_stream_post"];
         delete?: never;

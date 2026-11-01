@@ -103,6 +103,8 @@ async def google_identity(code: str, verifier: str) -> dict[str, str]:
         )
         profile.raise_for_status()
         data: dict[str, object] = profile.json()
+        if not isinstance(data, dict):
+            raise ValueError("Google identity response must be an object")
         subject = data.get("sub")
         if not isinstance(subject, str) or not subject or data.get("email_verified") is not True:
             raise ValueError("Google identity is not verified")

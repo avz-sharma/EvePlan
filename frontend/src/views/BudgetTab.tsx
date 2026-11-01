@@ -20,6 +20,7 @@ export const BudgetTab: React.FC = () => {
   const projected = plan.budget_buckets.reduce((sum, bucket) => sum + bucket.allocated_max_inr + bucket.contingency_inr, 0);
   const overBudget = projected > plan.total_budget_cap_inr;
   return <div className="space-y-6">
+    <h1 className="sr-only">Budget</h1>
     <BudgetProgress used={projected} total={plan.total_budget_cap_inr} />
     <p className="text-sm text-muted">Allocated percentage = category maximums plus contingency, divided by your upper budget limit ({formatMoney(plan.total_budget_cap_inr)}), × 100. Catering uses attendance across all events × your per-plate range, with entered catering quotes replacing the estimate for those events. Categories without quotes contribute ₹0, so the remaining amount still needs to cover those costs.</p>
     <form className="flex flex-wrap items-end gap-3" onSubmit={e => { e.preventDefault(); void planActions.mutateQuote("contingency", { contingency_percent: Number(percent) }).then(() => setStatus("Reserve updated.")).catch(() => setStatus("Reserve could not be updated.")); }}><label>Plan contingency (%)<input className="field-control" type="number" required min={0} max={100} step="0.1" value={percent} onChange={e => setPercent(e.target.value)} /></label><Button type="submit">Update reserve</Button><p role="status">{status}</p></form>

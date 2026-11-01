@@ -7,7 +7,7 @@ from ..schemas.intent_delta import CascadeDiff, PlanDelta
 from ..schemas.plan_state import EventPlan
 from .event_delta import EventDelta
 from .legacy_replanner import apply_delta as apply_delta
-from .plan_builder import build_event_plan
+from .plan_builder import build_event_plan, copy_event_days
 from .plan_diff import changed_budget_categories, dependent_hops, vendor_capacity_violations
 
 
@@ -21,7 +21,7 @@ def apply_event_plan_delta(
     if not plan.days or plan.first_event_date is None:
         raise ValueError("An event plan with days and a first event date is required")
 
-    days = [day.model_copy(deep=True) for day in plan.days]
+    days = copy_event_days(plan.days)
     # Derived tasks/budgets are rebuilt, so only copy mutable inputs here.
     candidate = plan.model_copy(update={"notes": list(plan.notes)})
     change = EventDelta(plan, delta, days, candidate)
