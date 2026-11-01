@@ -61,8 +61,6 @@ class PlanEvent(BaseModel):
         """Require exactly one event identity source before engine construction."""
         if (self.catalog_id is None) == (self.custom_name is None):
             raise ValueError("Choose one catalog event or enter one custom event name")
-        if self.custom_name is not None and self.vendor_categories is None:
-            raise ValueError("Custom events require an explicit vendor category list")
         return self
 
 
